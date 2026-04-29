@@ -25,7 +25,7 @@ export function PhilosophySplit() {
             </p>
             <h2 className="font-display text-[clamp(2rem,4.5vw,3.75rem)] leading-[1.05] tracking-tight">
               Möbel, die nicht nur funktionieren, sondern{" "}
-              <span className="italic text-gradient-gold">erinnern.</span>
+              <span className="italic text-gradient-gold inline-block">erinnern.</span>
             </h2>
             <p className="mt-6 text-lg text-muted-foreground leading-relaxed">
               Ein Tisch ist mehr als eine Platte auf vier Beinen. Er trägt

@@ -24,9 +24,7 @@ export default function ServiceHubPage() {
             </Badge>
             <h1 className="font-display text-[clamp(2.75rem,7vw,7rem)] leading-[0.95] tracking-tight max-w-[14ch]">
               <MaskWords text="Schreinerei" />{" "}
-              <span className="italic text-gradient-gold">
-                <MaskWords text="in meiner Nähe." />
-              </span>
+              <span className="italic text-gradient-gold inline-block">in meiner Nähe.</span>
             </h1>
             <p className="mt-8 max-w-[58ch] text-lg sm:text-xl text-muted-foreground leading-relaxed">
               Zwölf Disziplinen – eine Werkstatt. Wir fertigen Möbel,

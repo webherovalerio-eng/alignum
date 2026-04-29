@@ -60,9 +60,14 @@ export function Hero() {
           <h1 className="font-display text-[clamp(3rem,7vw,7.5rem)] leading-[0.92] tracking-tight">
             <MaskWords text="Schreiner aus" />
             <br />
-            <span className="text-gradient-gold inline-block italic">
-              <MaskWords text="Leidenschaft." />
-            </span>
+            <motion.span
+              initial={reduce ? false : { opacity: 0, y: 24 }}
+              animate={reduce ? undefined : { opacity: 1, y: 0 }}
+              transition={{ duration: 1, delay: 0.6, ease: [0.19, 1, 0.22, 1] }}
+              className="text-gradient-gold inline-block italic"
+            >
+              Leidenschaft.
+            </motion.span>
           </h1>
 
           <motion.p

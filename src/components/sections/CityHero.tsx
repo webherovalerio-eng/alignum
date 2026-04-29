@@ -38,9 +38,14 @@ export function CityHero({ city, photo }: { city: City; photo?: string }) {
 
         <h1 className="font-display text-[clamp(2.75rem,8vw,7rem)] leading-[0.95] tracking-tight text-shadow-hero">
           <MaskWords text="Schreinerei" />{" "}
-          <span className="text-gradient-gold italic">
-            <MaskWords text={city.name} />
-          </span>
+          <motion.span
+            initial={reduce ? false : { opacity: 0, y: 20 }}
+            animate={reduce ? undefined : { opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.5, ease: [0.19, 1, 0.22, 1] }}
+            className="text-gradient-gold inline-block italic"
+          >
+            {city.name}
+          </motion.span>
         </h1>
 
         <motion.p

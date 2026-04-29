@@ -32,9 +32,7 @@ export default function AboutPage() {
             <h1 className="font-display text-[clamp(2.75rem,7vw,7rem)] leading-[0.95] tracking-tight">
               <MaskWords text="Wir sind Schreiner." />
               <br />
-              <span className="italic text-gradient-gold">
-                <MaskWords text="Aus Leidenschaft." />
-              </span>
+              <span className="italic text-gradient-gold inline-block">Aus Leidenschaft.</span>
             </h1>
           </Reveal>
           <Reveal className="lg:col-span-5">
