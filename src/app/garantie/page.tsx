@@ -2,7 +2,6 @@ import { ShieldCheck, Hammer, Leaf, RefreshCw, ScrollText } from "lucide-react";
 import { Reveal, MaskWords } from "@/components/ui/Reveal";
 import { Badge } from "@/components/ui/Badge";
 import { CTA } from "@/components/sections/CTA";
-import { OriginalCopy } from "@/components/sections/OriginalCopy";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata = buildMetadata({
@@ -105,7 +104,6 @@ export default function GarantiePage() {
         </div>
       </section>
 
-      <OriginalCopy slug="garantie" eyebrow="Unser Versprechen" maxParagraphs={5} />
       <CTA />
     </>
   );
