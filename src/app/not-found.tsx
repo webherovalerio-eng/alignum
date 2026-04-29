@@ -13,7 +13,7 @@ export default function NotFound() {
           <h1 className="font-display text-[clamp(3rem,9vw,9rem)] leading-[0.92] tracking-tight">
             <MaskWords text="Diese Seite" />
             <br />
-            <span className="italic text-gradient-gold inline-block">haben wir nicht gebaut.</span>
+            <span className="italic text-primary inline-block">haben wir nicht gebaut.</span>
           </h1>
           <p className="mt-10 text-lg text-muted-foreground max-w-md mx-auto">
             Vielleicht ist sie umgezogen, oder sie war nie da. Versuchen Sie

@@ -19,7 +19,7 @@ export function Reviews() {
             Was Kunden sagen
           </p>
           <h2 className="font-display text-[clamp(2.25rem,5vw,4rem)] leading-[1.05] tracking-tight">
-            <span className="text-gradient-gold">{REVIEW_SUMMARY.averageRating.toFixed(1)}</span> von 5
+            <span className="text-primary">{REVIEW_SUMMARY.averageRating.toFixed(1)}</span> von 5
             <span className="block text-muted-foreground italic">auf Google.</span>
           </h2>
           <div className="mt-6 flex items-center gap-3">

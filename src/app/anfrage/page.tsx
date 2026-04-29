@@ -24,7 +24,7 @@ export default function AnfragePage() {
             <h1 className="font-display text-[clamp(2.5rem,6vw,5.5rem)] leading-[0.95] tracking-tight">
               <MaskWords text="Lassen Sie uns" />
               <br />
-              <span className="italic text-gradient-gold">
+              <span className="italic text-primary">
                 <MaskWords text="zusammen bauen." />
               </span>
             </h1>

@@ -47,7 +47,7 @@ export default function GarantiePage() {
             </Badge>
             <h1 className="font-display text-[clamp(2.75rem,7vw,7rem)] leading-[0.95] tracking-tight max-w-[14ch]">
               <MaskWords text="Fünf Jahre." />{" "}
-              <span className="italic text-gradient-gold inline-block">Wort gehalten.</span>
+              <span className="italic text-primary inline-block">Wort gehalten.</span>
             </h1>
             <p className="mt-8 max-w-2xl text-lg sm:text-xl text-muted-foreground leading-relaxed">
               Wir geben Ihnen 5 Jahre Garantie auf jede Arbeit, die unsere

@@ -64,7 +64,7 @@ export function Hero() {
               initial={reduce ? false : { opacity: 0, y: 24 }}
               animate={reduce ? undefined : { opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.6, ease: [0.19, 1, 0.22, 1] }}
-              className="text-gradient-gold inline-block italic"
+              className="text-primary inline-block italic"
             >
               Leidenschaft.
             </motion.span>

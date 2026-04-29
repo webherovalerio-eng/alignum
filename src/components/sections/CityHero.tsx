@@ -42,7 +42,7 @@ export function CityHero({ city, photo }: { city: City; photo?: string }) {
             initial={reduce ? false : { opacity: 0, y: 20 }}
             animate={reduce ? undefined : { opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.5, ease: [0.19, 1, 0.22, 1] }}
-            className="text-gradient-gold inline-block italic"
+            className="text-primary inline-block italic"
           >
             {city.name}
           </motion.span>

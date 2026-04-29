@@ -32,7 +32,7 @@ export function CitySecretSauce({ city }: { city: City }) {
           <div className="rounded-3xl border border-border bg-background/85 backdrop-blur p-8 sm:p-12 shadow-[var(--shadow-elev)] grain-overlay max-w-3xl">
             <Sparkles className="size-6 text-primary mb-4" />
             <p className="text-2xl sm:text-3xl font-display leading-tight">
-              Wir sind Ihre Schreinerei in <span className="text-gradient-gold">{city.name}</span> – nicht
+              Wir sind Ihre Schreinerei in <span className="text-primary">{city.name}</span> – nicht
               eines von hundert Möbelhäusern, sondern eine echte Werkstatt mit Werkzeug,
               Holz und Menschen, die ihr Handwerk lieben.
             </p>

@@ -29,7 +29,7 @@ export default function StandortePage() {
             </Badge>
             <h1 className="font-display text-[clamp(2.75rem,7vw,6.5rem)] leading-[0.95] tracking-tight max-w-[16ch]">
               <MaskWords text="Projekte in" />{" "}
-              <span className="italic text-gradient-gold inline-block">der Region.</span>
+              <span className="italic text-primary inline-block">der Region.</span>
             </h1>
             <p className="mt-8 max-w-2xl text-lg sm:text-xl text-muted-foreground leading-relaxed">
               Wir liefern und montieren in der gesamten Rhein-Neckar-Region.
