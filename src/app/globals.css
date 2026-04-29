@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* Tailwind dark variant gebunden an next-themes data-theme */
+@variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
 /* ─────────────────────────────────────────────────────────────
    ALIGNUM DESIGN TOKENS
    Schwarz · Weiß · Gold (#d48408) — semantisch, light + dark.
@@ -11,6 +14,10 @@
   --brand-gold: 39 90% 43%;          /* #d48408 in HSL */
   --brand-gold-soft: 39 70% 60%;
   --brand-gold-deep: 32 95% 28%;
+
+  /* Surface-deep: in beiden Themes IMMER dunkel — für Statement-Panels */
+  --surface-deep: 0 0% 6%;
+  --surface-deep-foreground: 36 25% 95%;
 
   /* Surface */
   --background: 36 33% 97%;          /* warm parchment white */
@@ -69,6 +76,8 @@
 .dark {
   --background: 0 0% 5%;
   --foreground: 36 25% 95%;
+  --surface-deep: 0 0% 3%;
+  --surface-deep-foreground: 36 25% 95%;
   --card: 0 0% 8%;
   --card-foreground: 36 25% 95%;
   --muted: 0 0% 14%;
@@ -106,6 +115,8 @@
   --color-accent-foreground: hsl(var(--accent-foreground));
   --color-destructive: hsl(var(--destructive));
   --color-destructive-foreground: hsl(var(--destructive-foreground));
+  --color-surface-deep: hsl(var(--surface-deep));
+  --color-surface-deep-foreground: hsl(var(--surface-deep-foreground));
 
   --font-sans: var(--font-sans-stack);
   --font-display: var(--font-display-stack);

@@ -31,51 +31,51 @@ export function Materials() {
         </Reveal>
 
         <div className="grid lg:grid-cols-12 gap-10 items-start">
-          {/* Tab list with wood swatches */}
+          {/* Tab list (links) */}
           <div className="lg:col-span-5">
-            <ul className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-2 gap-2">
+            <ul className="flex lg:flex-col gap-1 overflow-x-auto lg:overflow-visible -mx-4 px-4 lg:mx-0 lg:px-0">
               {MATERIALS.map((mat, i) => (
-                <li key={mat.slug}>
+                <li key={mat.slug} className="shrink-0 lg:shrink">
                   <button
                     type="button"
                     onClick={() => setActive(i)}
                     className={cn(
-                      "group relative w-full text-left rounded-xl overflow-hidden",
-                      "transition-all border",
+                      "group relative w-full text-left px-5 py-4 rounded-xl transition-all border",
                       i === active
-                        ? "border-primary shadow-[var(--shadow-glow)] scale-[1.02]"
-                        : "border-border hover:border-primary/40",
+                        ? "border-primary/60 bg-card shadow-[var(--shadow-soft)]"
+                        : "border-transparent hover:bg-muted/60",
                     )}
                     aria-pressed={i === active}
                   >
-                    <div className="relative aspect-[16/10] w-full">
-                      <Image
-                        src={mat.image}
-                        alt={`${mat.name} Holzmaserung`}
-                        fill
-                        sizes="(max-width: 1024px) 50vw, 25vw"
-                        className="object-cover"
+                    <div className="flex items-center gap-3">
+                      <span
+                        aria-hidden
+                        className="size-3 rounded-full ring-2 ring-offset-2 ring-offset-background transition-all"
+                        style={{
+                          background: `hsl(${mat.color})`,
+                          boxShadow: i === active ? `0 0 0 2px hsl(var(--primary))` : "none",
+                        }}
                       />
-                      <div
-                        className={cn(
-                          "absolute inset-0 transition-opacity",
-                          i === active ? "bg-foreground/10" : "bg-foreground/30 group-hover:bg-foreground/15",
-                        )}
-                      />
+                      <span className="font-display text-lg">{mat.name}</span>
+                      <span className="ml-auto text-[10px] uppercase tracking-wider text-muted-foreground">
+                        {mat.hardness === "hart" ? "Hart" : mat.hardness === "mittel" ? "Mittel" : "Weich"}
+                      </span>
                     </div>
-                    <div className="px-3 py-2.5 bg-card">
-                      <p className="font-display text-sm leading-tight">{mat.name}</p>
-                      <p className="text-[10px] uppercase tracking-wider text-muted-foreground mt-0.5">
-                        {mat.hardness === "hart" ? "Hartholz" : mat.hardness === "mittel" ? "Mittel" : "Weich"}
-                      </p>
-                    </div>
+                    <p
+                      className={cn(
+                        "text-xs mt-1 transition-colors",
+                        i === active ? "text-foreground" : "text-muted-foreground",
+                      )}
+                    >
+                      {mat.short}
+                    </p>
                   </button>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Detail */}
+          {/* Detail (rechts) – mit großem Holzbild */}
           <div className="lg:col-span-7 lg:sticky lg:top-28">
             <AnimatePresence mode="wait">
               <motion.article
@@ -86,7 +86,7 @@ export function Materials() {
                 transition={{ duration: 0.5, ease: [0.19, 1, 0.22, 1] }}
                 className="relative rounded-2xl overflow-hidden border border-border bg-card shadow-[var(--shadow-elev)]"
               >
-                {/* Wood macro hero */}
+                {/* Holz-Macro-Bild */}
                 <div className="relative aspect-[5/3] w-full">
                   <Image
                     src={m.image}

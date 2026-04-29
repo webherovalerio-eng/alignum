@@ -6,8 +6,8 @@ import { CITIES } from "@/data/cities";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata = buildMetadata({
-  title: "Standorte – Schreinerei für die ganze Region",
-  description: `Alle Standorte, an denen wir Schreinerarbeiten anbieten – ${CITIES.length} Städte rund um Mannheim. Massivholzmöbel, Küchen, Treppen vor Ort.`,
+  title: "Projekte in der Region – Schreinerei Alignum",
+  description: `Projekte in ${CITIES.length} Städten rund um Mannheim. Massivholzmöbel, Küchen, Treppen und Türen vor Ort.`,
   path: "/standorte/",
 });
 
@@ -28,12 +28,14 @@ export default function StandortePage() {
               {CITIES.length} Städte
             </Badge>
             <h1 className="font-display text-[clamp(2.75rem,7vw,6.5rem)] leading-[0.95] tracking-tight max-w-[16ch]">
-              <MaskWords text="Standorte" />
+              <MaskWords text="Projekte in" />{" "}
+              <span className="italic text-gradient-gold">
+                <MaskWords text="der Region." />
+              </span>
             </h1>
             <p className="mt-8 max-w-2xl text-lg sm:text-xl text-muted-foreground leading-relaxed">
               Wir liefern und montieren in der gesamten Rhein-Neckar-Region.
-              Wählen Sie Ihre Stadt – jede Seite zeigt, was wir für Sie vor
-              Ort tun.
+              Wählen Sie Ihre Stadt – jede Seite zeigt, was wir vor Ort tun.
             </p>
           </Reveal>
         </div>

@@ -54,7 +54,7 @@ export function Footer() {
           </div>
 
           <div className="lg:col-span-3 space-y-4">
-            <p className="font-medium">Standorte</p>
+            <p className="font-medium">Projekte in</p>
             <ul className="grid grid-cols-2 gap-x-3 gap-y-2 text-sm">
               {featuredCities.map((c) => (
                 <li key={c.slug}>

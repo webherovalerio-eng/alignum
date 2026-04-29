@@ -10,14 +10,15 @@ export function CityMosaic({ exclude }: { exclude?: string }) {
       <div className="container-prose">
         <Reveal className="max-w-3xl mb-12">
           <p className="text-sm tracking-widest uppercase text-primary font-medium mb-4">
-            Standorte
+            Projekte in
           </p>
           <h2 className="font-display text-[clamp(2.25rem,5vw,4rem)] leading-[1.05] tracking-tight">
             Vor Ort, wo Sie wohnen.
           </h2>
           <p className="mt-6 text-lg text-muted-foreground max-w-xl">
-            Wir kommen zu Ihnen – ob Mannheim, Heidelberg, Ludwigshafen,
-            Darmstadt oder weiter im Rhein-Neckar-Kreis.
+            Wir liefern und montieren in der gesamten Rhein-Neckar-Region und
+            darüber hinaus – ob Mannheim, Heidelberg, Ludwigshafen oder
+            Darmstadt.
           </p>
         </Reveal>
 
@@ -36,7 +37,7 @@ export function CityMosaic({ exclude }: { exclude?: string }) {
         </ul>
         <div className="mt-8">
           <Link href="/standorte/" className="text-sm text-primary underline-grain">
-            Alle {CITIES.length} Standorte ansehen →
+            Alle {CITIES.length} Projekt-Regionen ansehen →
           </Link>
         </div>
       </div>

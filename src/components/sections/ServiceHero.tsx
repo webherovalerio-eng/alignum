@@ -3,8 +3,7 @@
 import Image from "next/image";
 import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
 import { useRef } from "react";
-import Link from "next/link";
-import { ArrowRight, ChevronRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { LinkButton } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { MaskWords } from "@/components/ui/Reveal";
@@ -30,14 +29,6 @@ export function ServiceHero({ service, photo }: { service: Service; photo?: stri
       <div aria-hidden className="absolute inset-x-0 bottom-0 -z-10 h-1/2 scrim-bottom" />
 
       <div className="relative z-10 container-prose pt-36 pb-16 min-h-[88svh] flex flex-col justify-end text-white">
-        <nav aria-label="Breadcrumb" className="mb-8 text-sm text-white/85 flex items-center gap-1.5 text-shadow-lg">
-          <Link href="/" className="hover:text-primary">Start</Link>
-          <ChevronRight className="size-3.5" />
-          <Link href="/schreinerei-in-meiner-naehe/" className="hover:text-primary">Leistungen</Link>
-          <ChevronRight className="size-3.5" />
-          <span className="text-white">{service.name}</span>
-        </nav>
-
         <Badge
           variant="outline"
           className="self-start mb-5 border-white/30 bg-black/30 text-white backdrop-blur-sm"
