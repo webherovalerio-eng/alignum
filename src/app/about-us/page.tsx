@@ -2,6 +2,7 @@ import Image from "next/image";
 import { Reveal, MaskWords } from "@/components/ui/Reveal";
 import { Badge } from "@/components/ui/Badge";
 import { CTA } from "@/components/sections/CTA";
+import { Philosophy } from "@/components/sections/Philosophy";
 import { Reviews } from "@/components/sections/Reviews";
 import { buildMetadata } from "@/lib/seo";
 import { SITE } from "@/data/site";
@@ -113,6 +114,8 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+
+      <Philosophy />
 
       <section className="relative py-24 border-t border-border">
         <div className="container-prose">

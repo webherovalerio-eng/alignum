@@ -2,6 +2,7 @@ import { Hero } from "@/components/sections/Hero";
 import { TrustBar } from "@/components/sections/TrustBar";
 import { ServicesGrid } from "@/components/sections/ServicesGrid";
 import { PhilosophySplit } from "@/components/sections/PhilosophySplit";
+import { Philosophy } from "@/components/sections/Philosophy";
 import { Process } from "@/components/sections/Process";
 import { Materials } from "@/components/sections/Materials";
 import { Reviews } from "@/components/sections/Reviews";
@@ -25,6 +26,7 @@ export default function HomePage() {
       <TrustBar />
       <ServicesGrid />
       <PhilosophySplit />
+      <Philosophy />
       <Process />
       <Materials />
       <Reviews />
