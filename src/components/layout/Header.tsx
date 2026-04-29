@@ -38,19 +38,32 @@ export function Header() {
 
   return (
     <>
+      {/* Top contrast veil — sorgt dafür, dass Header-Text auf JEDEM Hero-Bild lesbar ist */}
+      <div
+        aria-hidden
+        className={cn(
+          "fixed top-0 inset-x-0 z-40 h-32 pointer-events-none transition-opacity duration-500",
+          scrolled ? "opacity-0" : "opacity-100",
+        )}
+        style={{
+          background:
+            "linear-gradient(to bottom, hsl(0 0% 0% / 0.55) 0%, hsl(0 0% 0% / 0.25) 50%, hsl(0 0% 0% / 0) 100%)",
+        }}
+      />
+
       <motion.header
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.8, ease: [0.19, 1, 0.22, 1] }}
         className={cn(
-          "fixed top-0 inset-x-0 z-50 transition-[backdrop-filter,background-color,padding] duration-500",
+          "fixed top-0 inset-x-0 z-50 transition-[backdrop-filter,background-color,padding,border-color] duration-500",
           scrolled
-            ? "py-2 backdrop-blur-xl bg-background/75 border-b border-border/60"
-            : "py-4 bg-transparent",
+            ? "py-2 backdrop-blur-xl bg-background/85 border-b border-border"
+            : "py-4 backdrop-blur-md bg-background/10 border-b border-transparent",
         )}
       >
         <div className="container-prose flex items-center justify-between gap-4">
-          <Logo />
+          <Logo onDark={!scrolled} />
 
           <nav className="hidden lg:flex items-center gap-1">
             {NAV_PRIMARY.map((item) =>
@@ -63,7 +76,12 @@ export function Header() {
                 >
                   <Link
                     href={item.href}
-                    className="inline-flex items-center gap-1 px-4 py-2 text-sm text-foreground/80 hover:text-foreground transition-colors"
+                    className={cn(
+                      "inline-flex items-center gap-1 px-4 py-2 text-sm transition-colors",
+                      scrolled
+                        ? "text-foreground/80 hover:text-foreground"
+                        : "text-white/95 hover:text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)]",
+                    )}
                   >
                     {item.label}
                     <ChevronDown className="size-3.5" />
@@ -114,7 +132,12 @@ export function Header() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className="px-4 py-2 text-sm text-foreground/80 hover:text-foreground transition-colors"
+                  className={cn(
+                    "px-4 py-2 text-sm transition-colors",
+                    scrolled
+                      ? "text-foreground/80 hover:text-foreground"
+                      : "text-white/95 hover:text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)]",
+                  )}
                 >
                   {item.label}
                 </Link>
@@ -131,7 +154,12 @@ export function Header() {
               type="button"
               aria-label="Menü öffnen"
               onClick={() => setMobileOpen((s) => !s)}
-              className="lg:hidden inline-flex size-10 items-center justify-center rounded-full border border-border bg-card"
+              className={cn(
+                "lg:hidden inline-flex size-10 items-center justify-center rounded-full border transition-colors",
+                scrolled
+                  ? "border-border bg-card text-foreground"
+                  : "border-white/40 bg-foreground/30 text-white backdrop-blur",
+              )}
             >
               {mobileOpen ? <X className="size-5" /> : <Menu className="size-5" />}
             </button>

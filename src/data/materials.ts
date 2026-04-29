@@ -6,7 +6,8 @@ export type Material = {
   description: string;
   uses: string[];
   hardness: "weich" | "mittel" | "hart";
-  color: string; // hsl token reference, used as accent
+  color: string; // hsl token reference, used as accent fallback
+  image: string; // /images/woods/...
 };
 
 export const MATERIALS: Material[] = [
@@ -19,6 +20,7 @@ export const MATERIALS: Material[] = [
     uses: ["Tische", "Treppen", "Türen", "Küchen", "Massivholzparkett"],
     hardness: "hart",
     color: "32 45% 45%",
+    image: "/images/woods/stiel-eiche.jpg",
   },
   {
     slug: "nussbaum",
@@ -29,6 +31,7 @@ export const MATERIALS: Material[] = [
     uses: ["Kommoden", "Schreibtische", "Esstische", "Wandverkleidungen"],
     hardness: "hart",
     color: "22 40% 22%",
+    image: "/images/woods/nussbaum.jpg",
   },
   {
     slug: "esche",
@@ -39,6 +42,7 @@ export const MATERIALS: Material[] = [
     uses: ["Stühle", "Bänke", "Bücherregale", "Sportgeräte"],
     hardness: "hart",
     color: "40 25% 70%",
+    image: "/images/woods/esche.jpg",
   },
   {
     slug: "kirschbaum",
@@ -49,6 +53,7 @@ export const MATERIALS: Material[] = [
     uses: ["Schreibtische", "Sideboards", "Musikinstrumente", "Schatullen"],
     hardness: "mittel",
     color: "12 50% 40%",
+    image: "/images/woods/kirschbaum.jpg",
   },
   {
     slug: "buche",
@@ -59,6 +64,7 @@ export const MATERIALS: Material[] = [
     uses: ["Treppenstufen", "Arbeitsplatten", "Sitzmöbel", "Spielzeug"],
     hardness: "hart",
     color: "28 30% 65%",
+    image: "/images/woods/buche.jpg",
   },
   {
     slug: "laerche",
@@ -69,6 +75,7 @@ export const MATERIALS: Material[] = [
     uses: ["Außentüren", "Tore", "Fassaden", "Saunabau"],
     hardness: "mittel",
     color: "30 60% 50%",
+    image: "/images/woods/laerche.jpg",
   },
   {
     slug: "birnbaum",
@@ -79,6 +86,7 @@ export const MATERIALS: Material[] = [
     uses: ["Furniere", "Drechselarbeiten", "Intarsien", "Designmöbel"],
     hardness: "hart",
     color: "30 35% 55%",
+    image: "/images/woods/birnbaum.jpg",
   },
   {
     slug: "ahorn",
@@ -89,5 +97,50 @@ export const MATERIALS: Material[] = [
     uses: ["Küchenfronten", "Schreibtische", "Bodenbeläge", "Treppen"],
     hardness: "hart",
     color: "44 30% 75%",
+    image: "/images/woods/ahorn.jpg",
+  },
+  {
+    slug: "kirschbaum-alt",
+    name: "Birke",
+    short: "Nordisch, fein, leicht.",
+    description:
+      "Hell, sehr feinporig, mit sanften Maserwellen. Weich genug für Drechselarbeiten, fest genug für anspruchsvolle Möbel.",
+    uses: ["Schubladenkästen", "Skulpturen", "Instrumente", "Paneele"],
+    hardness: "mittel",
+    color: "44 22% 80%",
+    image: "/images/woods/birke.jpg",
+  },
+  {
+    slug: "zwetschge",
+    name: "Zwetschge",
+    short: "Tief, warm, selten.",
+    description:
+      "Eine Rarität in unserer Werkstatt. Kontrastreiche Maserung mit purpurnen Tönen, eignet sich für Statement-Stücke.",
+    uses: ["Schmuckschatullen", "Furniere", "Drechselarbeiten"],
+    hardness: "hart",
+    color: "10 40% 30%",
+    image: "/images/woods/zwetschge.jpg",
+  },
+  {
+    slug: "elsbeere",
+    name: "Elsbeere",
+    short: "Geheimtipp aus dem Wald.",
+    description:
+      "Eine der seltensten heimischen Holzarten. Sehr dichte Struktur, golden-rötlicher Schimmer. Liebhaberholz im Möbelbau.",
+    uses: ["Designerstücke", "Furniere", "Streichinstrumente"],
+    hardness: "hart",
+    color: "22 30% 50%",
+    image: "/images/woods/elsbeere.jpg",
+  },
+  {
+    slug: "platane",
+    name: "Platane",
+    short: "Lebendig, ungewöhnlich, echt.",
+    description:
+      "Mittlerer Härtegrad, beige bis hell-rötlich, mit charakteristischer Spiegelmaserung – ein Holz mit Persönlichkeit.",
+    uses: ["Furniere", "Schubladenfronten", "Sideboards"],
+    hardness: "mittel",
+    color: "28 25% 60%",
+    image: "/images/woods/platane.jpg",
   },
 ];

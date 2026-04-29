@@ -35,25 +35,33 @@ export function Hero() {
           sizes="100vw"
           className="object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-foreground/30 via-foreground/20 to-background" />
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
       </motion.div>
 
+      {/* Strong scrim — sorgt für Lesbarkeit, IMMER */}
+      <div aria-hidden className="absolute inset-0 -z-10 scrim-readable" />
+      <div aria-hidden className="absolute inset-x-0 bottom-0 -z-10 h-2/3 scrim-bottom" />
+
       {/* Decorative giant brand letter */}
-      <div aria-hidden className="pointer-events-none absolute -bottom-[8vw] -right-[2vw] z-10 select-none">
-        <span className="font-display text-[clamp(12rem,28vw,40rem)] leading-[0.85] text-foreground/[0.05] tracking-tighter">
+      <div aria-hidden className="pointer-events-none absolute -bottom-[8vw] -right-[2vw] z-0 select-none">
+        <span className="font-display text-[clamp(12rem,28vw,40rem)] leading-[0.85] text-white/[0.07] tracking-tighter">
           A
         </span>
       </div>
 
       {/* Content */}
-      <motion.div style={{ opacity }} className="relative z-20 container-prose pt-40 pb-20 min-h-[100svh] flex flex-col justify-center">
-        <Badge variant="outline" className="self-start mb-6">
+      <motion.div
+        style={{ opacity }}
+        className="relative z-20 container-prose pt-40 pb-20 min-h-[100svh] flex flex-col justify-center text-white"
+      >
+        <Badge
+          variant="outline"
+          className="self-start mb-6 border-white/30 bg-black/30 text-white backdrop-blur-sm"
+        >
           <span className="size-1.5 rounded-full bg-primary" />
           Schreinerei seit 1992 · Mannheim
         </Badge>
 
-        <h1 className="font-display text-[clamp(2.75rem,8.5vw,8.5rem)] leading-[0.92] tracking-tight max-w-[16ch]">
+        <h1 className="font-display text-[clamp(2.75rem,8.5vw,8.5rem)] leading-[0.92] tracking-tight max-w-[16ch] text-shadow-hero">
           <MaskWords text="Schreiner aus" />
           <br />
           <span className="text-gradient-gold">
@@ -65,7 +73,7 @@ export function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 1, ease: [0.19, 1, 0.22, 1] }}
-          className="mt-8 max-w-[58ch] text-lg sm:text-xl text-muted-foreground leading-relaxed"
+          className="mt-8 max-w-[58ch] text-lg sm:text-xl text-white/90 leading-relaxed text-shadow-lg"
         >
           Maßgefertigte Möbel aus Massivholz – Küchen, Treppen, Türen, Shoji
           und mehr. Eine Schreinerei in Mannheim, die noch zeichnet, bevor sie sägt.
@@ -80,7 +88,12 @@ export function Hero() {
           <LinkButton href="/anfrage/" size="lg" variant="primary">
             Anfrage starten <ArrowRight className="size-4" />
           </LinkButton>
-          <LinkButton href="/schreinerei-in-meiner-naehe/" size="lg" variant="outline">
+          <LinkButton
+            href="/schreinerei-in-meiner-naehe/"
+            size="lg"
+            variant="outline"
+            className="border-white/50 text-white hover:border-white hover:text-white bg-black/20 backdrop-blur-sm"
+          >
             Leistungen entdecken
           </LinkButton>
         </motion.div>
@@ -90,7 +103,7 @@ export function Hero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 1.6 }}
-          className="mt-14 flex flex-wrap items-center gap-6 text-sm text-muted-foreground"
+          className="mt-14 flex flex-wrap items-center gap-6 text-sm text-white/85 text-shadow-lg"
         >
           <div className="flex items-center gap-2">
             <span className="flex">
@@ -98,9 +111,9 @@ export function Hero() {
                 <Star key={i} className="size-4 text-primary fill-current" />
               ))}
             </span>
-            <span className="font-medium text-foreground">{REVIEW_SUMMARY.averageRating.toFixed(1)}</span>
+            <span className="font-medium text-white">{REVIEW_SUMMARY.averageRating.toFixed(1)}</span>
             <span>·</span>
-            <Link href="#bewertungen" className="underline-grain">
+            <Link href="#bewertungen" className="underline-grain text-white">
               {REVIEW_SUMMARY.count}+ Google-Bewertungen
             </Link>
           </div>
@@ -115,7 +128,7 @@ export function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 0.7, y: 0 }}
           transition={{ duration: 1.5, delay: 2 }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-xs text-muted-foreground tracking-wider uppercase"
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-xs text-white/70 tracking-wider uppercase"
         >
           <span>Scroll</span>
           <div className="h-12 w-px bg-gradient-to-b from-primary to-transparent" />

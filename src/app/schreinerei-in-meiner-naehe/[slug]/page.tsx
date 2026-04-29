@@ -4,6 +4,7 @@ import { ServiceContent } from "@/components/sections/ServiceContent";
 import { Materials } from "@/components/sections/Materials";
 import { Process } from "@/components/sections/Process";
 import { Reviews } from "@/components/sections/Reviews";
+import { GmbGallery } from "@/components/sections/GmbGallery";
 import { RelatedServices } from "@/components/sections/RelatedServices";
 import { FAQ } from "@/components/sections/FAQ";
 import { CTA } from "@/components/sections/CTA";
@@ -69,6 +70,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
       <Process />
       <Materials />
       <Reviews />
+      <GmbGallery limit={9} />
       <FAQ items={faqs} title={`Häufige Fragen zum ${service.name}`} />
       <RelatedServices exclude={service.slug} />
       <CTA

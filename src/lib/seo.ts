@@ -40,14 +40,21 @@ export function buildMetadata({ title, description, path = "/", image, noindex }
 export function localBusinessJsonLd() {
   return {
     "@context": "https://schema.org",
-    "@type": "LocalBusiness",
+    "@type": ["LocalBusiness", "FurnitureStore"],
     "@id": `${SITE.url}#business`,
-    name: `Alignum Schreinerei`,
-    image: `${SITE.url}/images/hero/og-default.jpg`,
+    name: `Alignum Möbelbau – Schreinerei Mannheim`,
+    image: `${SITE.url}/images/hero/hero-01.jpg`,
     url: SITE.url,
     telephone: SITE.phone,
     email: SITE.email,
     priceRange: "€€€",
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: 5.0,
+      reviewCount: 26,
+      bestRating: 5,
+      worstRating: 1,
+    },
     address: {
       "@type": "PostalAddress",
       streetAddress: SITE.address.street,
@@ -55,7 +62,7 @@ export function localBusinessJsonLd() {
       addressLocality: SITE.address.city,
       addressCountry: "DE",
     },
-    geo: { "@type": "GeoCoordinates", latitude: 49.4875, longitude: 8.466 },
+    geo: { "@type": "GeoCoordinates", latitude: 49.4542161, longitude: 8.5940851 },
     openingHoursSpecification: SITE.hours.map((h) => ({
       "@type": "OpeningHoursSpecification",
       dayOfWeek: h.day,

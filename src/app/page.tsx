@@ -5,6 +5,7 @@ import { PhilosophySplit } from "@/components/sections/PhilosophySplit";
 import { Process } from "@/components/sections/Process";
 import { Materials } from "@/components/sections/Materials";
 import { Reviews } from "@/components/sections/Reviews";
+import { GmbGallery } from "@/components/sections/GmbGallery";
 import { CityMosaic } from "@/components/sections/CityMosaic";
 import { CTA } from "@/components/sections/CTA";
 import { buildMetadata } from "@/lib/seo";
@@ -27,6 +28,7 @@ export default function HomePage() {
       <Process />
       <Materials />
       <Reviews />
+      <GmbGallery />
       <CityMosaic />
       <CTA />
     </>

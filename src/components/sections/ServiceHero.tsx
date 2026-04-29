@@ -23,35 +23,30 @@ export function ServiceHero({ service, photo }: { service: Service; photo?: stri
     <section ref={ref} className="relative min-h-[88svh] w-full overflow-hidden grain-overlay">
       <motion.div style={{ y, scale }} className="absolute inset-0 -z-10">
         {photo && (
-          <Image
-            src={photo}
-            alt=""
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover"
-          />
+          <Image src={photo} alt="" fill priority sizes="100vw" className="object-cover" />
         )}
-        <div className="absolute inset-0 bg-gradient-to-b from-foreground/40 via-foreground/20 to-background" />
-        <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent" />
       </motion.div>
+      <div aria-hidden className="absolute inset-0 -z-10 scrim-readable" />
+      <div aria-hidden className="absolute inset-x-0 bottom-0 -z-10 h-1/2 scrim-bottom" />
 
-      <div className="relative z-10 container-prose pt-36 pb-16 min-h-[88svh] flex flex-col justify-end">
-        {/* Breadcrumbs */}
-        <nav aria-label="Breadcrumb" className="mb-8 text-sm text-foreground/70 flex items-center gap-1.5">
+      <div className="relative z-10 container-prose pt-36 pb-16 min-h-[88svh] flex flex-col justify-end text-white">
+        <nav aria-label="Breadcrumb" className="mb-8 text-sm text-white/85 flex items-center gap-1.5 text-shadow-lg">
           <Link href="/" className="hover:text-primary">Start</Link>
           <ChevronRight className="size-3.5" />
           <Link href="/schreinerei-in-meiner-naehe/" className="hover:text-primary">Leistungen</Link>
           <ChevronRight className="size-3.5" />
-          <span className="text-foreground">{service.name}</span>
+          <span className="text-white">{service.name}</span>
         </nav>
 
-        <Badge variant="outline" className="self-start mb-5">
+        <Badge
+          variant="outline"
+          className="self-start mb-5 border-white/30 bg-black/30 text-white backdrop-blur-sm"
+        >
           <span className="size-1.5 rounded-full bg-primary" />
           {service.short}
         </Badge>
 
-        <h1 className="font-display text-[clamp(2.75rem,8vw,7rem)] leading-[0.95] tracking-tight max-w-[14ch]">
+        <h1 className="font-display text-[clamp(2.75rem,8vw,7rem)] leading-[0.95] tracking-tight max-w-[14ch] text-shadow-hero">
           <MaskWords text={service.name} />
         </h1>
 
@@ -59,7 +54,7 @@ export function ServiceHero({ service, photo }: { service: Service; photo?: stri
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.8, ease: [0.19, 1, 0.22, 1] }}
-          className="mt-6 max-w-[58ch] text-lg sm:text-xl text-foreground/85 leading-relaxed"
+          className="mt-6 max-w-[58ch] text-lg sm:text-xl text-white/90 leading-relaxed text-shadow-lg"
         >
           {service.intro}
         </motion.p>
@@ -73,10 +68,10 @@ export function ServiceHero({ service, photo }: { service: Service; photo?: stri
           <LinkButton href={`/anfrage/?service=${service.slug}`} size="lg" variant="primary">
             {service.name} anfragen <ArrowRight className="size-4" />
           </LinkButton>
-          <div className="flex items-center gap-2 text-sm text-foreground/85">
+          <div className="flex items-center gap-2 text-sm text-white/85 text-shadow-lg">
             <Stars rating={5} />
             <span>
-              <strong className="font-medium text-foreground">{REVIEW_SUMMARY.averageRating.toFixed(1)}</strong> /{" "}
+              <strong className="font-medium text-white">{REVIEW_SUMMARY.averageRating.toFixed(1)}</strong> /{" "}
               {REVIEW_SUMMARY.count}+ Google-Bewertungen
             </span>
           </div>

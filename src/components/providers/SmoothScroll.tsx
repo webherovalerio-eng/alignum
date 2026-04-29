@@ -1,9 +1,18 @@
 "use client";
 
 import { useEffect } from "react";
+import { usePathname } from "next/navigation";
 import Lenis from "lenis";
 
+let lenisInstance: Lenis | null = null;
+
+export function getLenis() {
+  return lenisInstance;
+}
+
 export function SmoothScroll() {
+  const pathname = usePathname();
+
   useEffect(() => {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduce) return;
@@ -15,6 +24,7 @@ export function SmoothScroll() {
       wheelMultiplier: 1.0,
       touchMultiplier: 1.4,
     });
+    lenisInstance = lenis;
 
     let raf = 0;
     const tick = (time: number) => {
@@ -26,8 +36,20 @@ export function SmoothScroll() {
     return () => {
       cancelAnimationFrame(raf);
       lenis.destroy();
+      lenisInstance = null;
     };
   }, []);
+
+  // Auf Routenwechsel: Lenis hart auf 0 setzen
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    if (window.location.hash) return;
+    const lenis = lenisInstance;
+    if (lenis) {
+      lenis.scrollTo(0, { immediate: true, force: true });
+    }
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+  }, [pathname]);
 
   return null;
 }

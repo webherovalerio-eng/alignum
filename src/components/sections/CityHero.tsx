@@ -24,25 +24,28 @@ export function CityHero({ city, photo }: { city: City; photo?: string }) {
         {photo && (
           <Image src={photo} alt="" fill priority sizes="100vw" className="object-cover" />
         )}
-        <div className="absolute inset-0 bg-gradient-to-b from-foreground/40 via-foreground/20 to-background" />
-        <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent" />
       </motion.div>
+      <div aria-hidden className="absolute inset-0 -z-10 scrim-readable" />
+      <div aria-hidden className="absolute inset-x-0 bottom-0 -z-10 h-1/2 scrim-bottom" />
 
-      <div className="relative z-10 container-prose pt-36 pb-16 min-h-[88svh] flex flex-col justify-end">
-        <nav aria-label="Breadcrumb" className="mb-8 text-sm text-foreground/70 flex items-center gap-1.5">
+      <div className="relative z-10 container-prose pt-36 pb-16 min-h-[88svh] flex flex-col justify-end text-white">
+        <nav aria-label="Breadcrumb" className="mb-8 text-sm text-white/85 flex items-center gap-1.5 text-shadow-lg">
           <Link href="/" className="hover:text-primary">Start</Link>
           <ChevronRight className="size-3.5" />
           <Link href="/standorte/" className="hover:text-primary">Standorte</Link>
           <ChevronRight className="size-3.5" />
-          <span className="text-foreground">Schreinerei {city.name}</span>
+          <span className="text-white">Schreinerei {city.name}</span>
         </nav>
 
-        <Badge variant="outline" className="self-start mb-5">
+        <Badge
+          variant="outline"
+          className="self-start mb-5 border-white/30 bg-black/30 text-white backdrop-blur-sm"
+        >
           <MapPin className="size-3 text-primary" />
           {city.state} · {city.distanceKm ?? "–"} km von Mannheim
         </Badge>
 
-        <h1 className="font-display text-[clamp(2.75rem,8vw,7rem)] leading-[0.95] tracking-tight">
+        <h1 className="font-display text-[clamp(2.75rem,8vw,7rem)] leading-[0.95] tracking-tight text-shadow-hero">
           <MaskWords text="Schreinerei" />{" "}
           <span className="text-gradient-gold italic">
             <MaskWords text={city.name} />
@@ -53,7 +56,7 @@ export function CityHero({ city, photo }: { city: City; photo?: string }) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.7, ease: [0.19, 1, 0.22, 1] }}
-          className="mt-6 max-w-[58ch] text-lg sm:text-xl text-foreground/85 leading-relaxed"
+          className="mt-6 max-w-[58ch] text-lg sm:text-xl text-white/90 leading-relaxed text-shadow-lg"
         >
           Maßgefertigte Möbel, Küchen, Treppen und Türen für {city.name}. Eine
           Schreinerei mit über 30 Jahren Handwerk – persönlich, geplant, vor
@@ -69,10 +72,10 @@ export function CityHero({ city, photo }: { city: City; photo?: string }) {
           <LinkButton href={`/anfrage/?city=${city.slug}`} size="lg" variant="primary">
             Schreiner in {city.name} anfragen <ArrowRight className="size-4" />
           </LinkButton>
-          <div className="flex items-center gap-2 text-sm text-foreground/85">
+          <div className="flex items-center gap-2 text-sm text-white/85 text-shadow-lg">
             <Stars rating={5} />
             <span>
-              <strong className="font-medium text-foreground">{REVIEW_SUMMARY.averageRating.toFixed(1)}</strong> /{" "}
+              <strong className="font-medium text-white">{REVIEW_SUMMARY.averageRating.toFixed(1)}</strong> /{" "}
               {REVIEW_SUMMARY.count}+ Google-Bewertungen
             </span>
           </div>

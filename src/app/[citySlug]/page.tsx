@@ -6,6 +6,7 @@ import { ServicesGrid } from "@/components/sections/ServicesGrid";
 import { Process } from "@/components/sections/Process";
 import { Materials } from "@/components/sections/Materials";
 import { Reviews } from "@/components/sections/Reviews";
+import { GmbGallery } from "@/components/sections/GmbGallery";
 import { FAQ } from "@/components/sections/FAQ";
 import { CTA } from "@/components/sections/CTA";
 import { Reveal } from "@/components/ui/Reveal";
@@ -52,6 +53,7 @@ export default async function CityPage({ params }: { params: Promise<{ citySlug:
       <ServicesGrid heading />
       <Process />
       <Reviews />
+      <GmbGallery limit={13} />
       <Materials />
       <FAQ
         items={GENERAL_FAQS.map((f) => ({
