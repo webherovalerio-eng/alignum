@@ -6,6 +6,7 @@ import { Process } from "@/components/sections/Process";
 import { Materials } from "@/components/sections/Materials";
 import { Reviews } from "@/components/sections/Reviews";
 import { GmbGallery } from "@/components/sections/GmbGallery";
+import { OriginalCopy } from "@/components/sections/OriginalCopy";
 import { CityMosaic } from "@/components/sections/CityMosaic";
 import { CTA } from "@/components/sections/CTA";
 import { buildMetadata } from "@/lib/seo";
@@ -25,6 +26,7 @@ export default function HomePage() {
       <TrustBar />
       <ServicesGrid />
       <PhilosophySplit />
+      <OriginalCopy slug="home" eyebrow="Die Werkstatt" maxParagraphs={6} />
       <Process />
       <Materials />
       <Reviews />

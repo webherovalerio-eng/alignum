@@ -2,6 +2,7 @@ import Image from "next/image";
 import { Reveal, MaskWords } from "@/components/ui/Reveal";
 import { Badge } from "@/components/ui/Badge";
 import { CTA } from "@/components/sections/CTA";
+import { OriginalCopy } from "@/components/sections/OriginalCopy";
 import { Reviews } from "@/components/sections/Reviews";
 import { buildMetadata } from "@/lib/seo";
 import { SITE } from "@/data/site";
@@ -148,6 +149,7 @@ export default function AboutPage() {
         </div>
       </section>
 
+      <OriginalCopy slug="about-us" eyebrow="Wer wir sind" maxParagraphs={8} />
       <Reviews />
       <CTA
         heading="Werkstatt­besuch?"

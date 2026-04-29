@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { ServiceHero } from "@/components/sections/ServiceHero";
 import { ServiceContent } from "@/components/sections/ServiceContent";
+import { OriginalCopy } from "@/components/sections/OriginalCopy";
 import { Materials } from "@/components/sections/Materials";
 import { Process } from "@/components/sections/Process";
 import { Reviews } from "@/components/sections/Reviews";
@@ -67,6 +68,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
     <>
       <ServiceHero service={service} photo={cover} />
       <ServiceContent service={service} photos={photos} />
+      <OriginalCopy slug={service.slug} eyebrow={`Über ${service.name.toLowerCase()}`} />
       <Process />
       <Materials />
       <Reviews />
