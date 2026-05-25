@@ -1,12 +1,13 @@
 import { notFound } from "next/navigation";
 import { CityHero } from "@/components/sections/CityHero";
+import { WerkstattZuIhnen } from "@/components/sections/WerkstattZuIhnen";
 import { CityIntent } from "@/components/sections/CityIntent";
 import { CitySecretSauce } from "@/components/sections/CitySecretSauce";
+import { ReferenceProjects } from "@/components/sections/ReferenceProjects";
 import { ServicesGrid } from "@/components/sections/ServicesGrid";
 import { Process } from "@/components/sections/Process";
 import { Materials } from "@/components/sections/Materials";
 import { Reviews } from "@/components/sections/Reviews";
-import { GmbGallery } from "@/components/sections/GmbGallery";
 import { FAQ } from "@/components/sections/FAQ";
 import { CTA } from "@/components/sections/CTA";
 import { Reveal } from "@/components/ui/Reveal";
@@ -29,8 +30,8 @@ export async function generateMetadata({ params }: { params: Promise<{ citySlug:
   const city = CITIES.find((c) => c.slug === citySlug);
   if (!city) return {};
   return buildMetadata({
-    title: `Schreinerei ${city.name} – Maßmöbel, Küchen, Treppen | Alignum`,
-    description: `Ihre Schreinerei in ${city.name}: Massivholzmöbel, Küchen, Treppen, Türen und Shoji nach Maß. Schreinermeister-Betrieb mit über 30 Jahren Erfahrung – Anfahrt aus ${city.name} ${city.distanceKm ?? "wenige"} km.`,
+    title: `Schreinerei ${city.name} – Maßmöbel aus unserer Werkstatt | Alignum`,
+    description: `Schreiner für ${city.name}: Aus unserer Werkstatt in ${SITE.address.city} liefern und montieren wir Maßmöbel, Küchen, Treppen und Türen bei Ihnen vor Ort. ${city.distanceKm ?? "Wenige"} km Anfahrt.`,
     path: `/${city.slug}/`,
   });
 }
@@ -48,17 +49,20 @@ export default async function CityPage({ params }: { params: Promise<{ citySlug:
   return (
     <>
       <CityHero city={city} photo={heroPhoto} />
+      <WerkstattZuIhnen city={city} />
       <CityIntent city={city} />
+      <ReferenceProjects />
       <CitySecretSauce city={city} />
       <ServicesGrid heading />
       <Process />
       <Reviews />
-      <GmbGallery limit={13} />
       <Materials />
       <FAQ
         items={GENERAL_FAQS.map((f) => ({
           q: f.q.replace("Mannheim", city.name),
-          a: f.a.replace("Mannheim", city.name).replace("Rhein-Neckar-Raum", `${city.name} und Umgebung`),
+          a: f.a
+            .replace("Mannheim", city.name)
+            .replace("Rhein-Neckar-Raum", `${city.name} und Umgebung`),
         }))}
         title={`Häufige Fragen aus ${city.name}`}
       />
@@ -92,11 +96,12 @@ function buildLocalBusinessLD(city: City) {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
     "@id": `${SITE.url}/${city.slug}/#business`,
-    name: `Alignum Schreinerei – ${city.name}`,
+    name: `Alignum Möbelbau – Schreinerei für ${city.name}`,
     image: `${SITE.url}/images/hero/hero-01.jpg`,
     url: `${SITE.url}/${city.slug}/`,
     telephone: SITE.phone,
     email: SITE.email,
+    // WICHTIG: Adresse bleibt IMMER Edingen-Neckarhausen — wir haben keine Filiale in der Stadt
     address: {
       "@type": "PostalAddress",
       streetAddress: SITE.address.street,
@@ -104,9 +109,19 @@ function buildLocalBusinessLD(city: City) {
       addressLocality: SITE.address.city,
       addressCountry: "DE",
     },
+    // city.name geht in areaServed, NICHT in address
     areaServed: {
       "@type": "City",
       name: city.name,
+    },
+    serviceArea: {
+      "@type": "GeoCircle",
+      geoMidpoint: {
+        "@type": "GeoCoordinates",
+        latitude: 49.4542161,
+        longitude: 8.5940851,
+      },
+      geoRadius: 60000,
     },
     priceRange: "€€€",
   };

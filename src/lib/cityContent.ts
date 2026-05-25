@@ -1,19 +1,28 @@
 import { spin } from "./spintax";
 import { type City } from "@/data/cities";
 
+/**
+ * Spintax-Templates für Alignum City-Pages.
+ *
+ * WICHTIG (alignum-city-pages Skill): Sprache muss klar machen, dass Alignum
+ * NICHT lokal in der Stadt sitzt, sondern dort ARBEITET / LIEFERT / MONTIERT.
+ * - „Schreinerei {Stadt}" als Keyword in der H1 – OK
+ * - „Schreiner FÜR {Stadt}", „Schreinerei AUS Edingen-Neckarhausen für {Stadt}" – PRÄFERIERT
+ * - „Schreinerei IN {Stadt}", „lokal IN {Stadt}", „ansässig IN {Stadt}" – TABU
+ */
+
 export function buildCityIntro(city: City) {
   const seed = `intro-${city.slug}`;
-  const intro = spin(
-    `{Sie suchen|Sie wollen|Sie wünschen sich} {eine Schreinerei|einen Schreiner|einen Tischlermeister} in ${city.name}, {die|der} {nicht nur sägt, sondern denkt|nicht nur fertigt, sondern gestaltet|jedes Möbel als Unikat versteht}? Bei {Alignum|uns} {bauen wir|fertigen wir|entwickeln wir} {seit über 30 Jahren|seit Jahrzehnten|seit 1992} {Massivholzmöbel|Möbel aus Massivholz|maßgefertigte Möbel} {für Privatkunden|für anspruchsvolle Auftraggeber|für Kunden} in {ganz ${city.name}|${city.name} und Umgebung|${city.name} sowie der gesamten Rhein-Neckar-Region}.`,
+  return spin(
+    `{Sie suchen|Sie wünschen sich|Sie wollen} {einen Schreiner|eine Schreinerei|einen Tischlermeister-Betrieb} {für|in} ${city.name}, {der|die|das} {bei Ihnen vor Ort arbeitet|Aufmaß und Montage vor Ort übernimmt|persönlich zu Ihnen kommt}? {Alignum|Unsere Werkstatt|Wir bei Alignum} {sitzt|ist ansässig|hat seinen Sitz} in Edingen-Neckarhausen und {fertigt|baut|produziert} {seit über 30 Jahren|seit 1992|seit Jahrzehnten} {Möbel aus Massivholz|maßgefertigte Schreiner­arbeiten|individuelle Massivholzmöbel} {für Kunden in|für Auftraggeber aus|für Häuser und Wohnungen in} ${city.name} und der gesamten Rhein-Neckar-Region.`,
     seed,
   );
-  return intro;
 }
 
 export function buildCityWhyUs(city: City) {
   const seed = `why-${city.slug}`;
   return spin(
-    `{Warum|Weshalb} {Kunden|Bauherren|Hausbesitzer} aus ${city.name} {regelmäßig|immer wieder|gerne} {zu uns kommen|in unsere Werkstatt finden|den Weg zu Alignum suchen}? {Drei Gründe|Im Wesentlichen drei Dinge|Im Kern}: {echtes Handwerk|gelebte Schreiner­tradition|kompromissloses Handwerk}, {ehrliche Materialien|ehrliche Hölzer|ausschließlich Massivholz} {und|sowie} {Zeit|Sorgfalt|Geduld} – {drei Dinge|drei Werte|drei Selbstverständlichkeiten}, die {anderswo|in der Branche|im Möbelhandel} {immer seltener werden|kaum noch zu finden sind|leider verschwinden}.`,
+    `{Warum|Weshalb} {Kunden aus|Bauherren aus|Hausbesitzer in} ${city.name} {regelmäßig|immer wieder|gerne} {bei uns anfragen|den Weg zu unserer Werkstatt finden|Alignum beauftragen}? {Drei Gründe|Im Wesentlichen drei Dinge|Im Kern}: {echtes Handwerk|gelebte Schreiner­tradition|kompromissloses Handwerk}, {ehrliche Materialien|ausschließlich Massivholz|heimische Hölzer} {und|sowie} {persönlicher Kontakt|persönliche Betreuung|der direkte Draht zum Meister} – {ohne|kein|null} {Filialen, Verkäufer oder Zwischenhändler|anonyme Beratung|Möbelhaus-Schema}.`,
     seed,
   );
 }
@@ -21,17 +30,9 @@ export function buildCityWhyUs(city: City) {
 export function buildCityArea(city: City) {
   const seed = `area-${city.slug}`;
   const distance = city.distanceKm ?? 0;
-  const distanceText =
-    distance === 0
-      ? "in unserer direkten Nachbarschaft"
-      : distance < 15
-        ? "praktisch direkt vor unserer Werkstatttür"
-        : distance < 30
-          ? "in kurzer Anfahrt von unserer Werkstatt"
-          : "im erweiterten Liefergebiet unserer Werkstatt";
 
   return spin(
-    `{Mit ${distance} km Entfernung|Bei einer Anfahrt von etwa ${distance} km|${city.name} liegt ${distanceText}, ca. ${distance} km} {liegt ${city.name}|von unserer Werkstatt im Rhein-Neckar-Raum|entfernt}. {Wir kommen|Unser Team kommt|Wolf Preussner persönlich kommt} {selbstverständlich|natürlich|gerne} {zu Ihnen|vor Ort|nach ${city.name}} – {für das Aufmaß|für ein Erstgespräch|für die Beratung} {ohne Mehrkosten|kostenfrei|inklusive}. {Auch Lieferung und Montage|Lieferung wie Montage|Sowohl Anlieferung als auch Montage} {erfolgen|erledigen wir|übernimmt unser Team} {durch unsere eigenen Schreiner|mit eigenem Werkstatt­personal|durch ausgebildete Tischler}.`,
+    `{Von unserer Werkstatt in Edingen-Neckarhausen|Aus Edingen-Neckarhausen|Unsere Werkstatt liegt} {sind es nur|sind es etwa|liegen} ${distance} km {nach|bis} ${city.name}. {Diese Strecke|Die Anfahrt|Den Weg} {fahren wir|legen wir zurück|nehmen wir} {gerne|selbstverständlich|ohne Mehrkosten} – {für das Aufmaß|für ein Beratungs­gespräch|für die Besichtigung} {ebenso|genauso} {wie für|wie zur} {Lieferung und Montage|die Endmontage|den Aufbau bei Ihnen}. {Schreiner­arbeiten für|Möbel für|Auftrags­arbeiten für} ${city.name} {sind für uns Alltag|gehören zu unserem täglichen Geschäft|sind kein Sonderfall}.`,
     seed,
   );
 }
@@ -39,7 +40,7 @@ export function buildCityArea(city: City) {
 export function buildCityClosing(city: City) {
   const seed = `close-${city.slug}`;
   return spin(
-    `{Egal ob|Ob nun|Gleich ob} {Küche|Treppe|Tür|Schrank|Bett|Esstisch}, {Massivholzbett|Schiebetür|Shoji|Regal|Sideboard|Kommode} {oder|beziehungsweise|sowie} {Sonderanfertigung|Spezialprojekt|Auftragsarbeit} – {wir sind|Alignum ist|unsere Werkstatt ist} {Ihre Schreinerei|Ihr Tischlermeister|Ihr Ansprechpartner} {in|für|aus} ${city.name}. {Lassen Sie uns sprechen|Schreiben Sie uns|Vereinbaren Sie ein Erstgespräch} – {unverbindlich|ohne Verpflichtung|wir freuen uns}.`,
+    `{Egal ob|Ob nun|Gleich ob} {Küche|Treppe|Tür|Schrank|Bett|Esstisch}, {Massivholzbett|Schiebetür|Shoji|Regal|Sideboard|Kommode} {oder|beziehungsweise|sowie} {Sonderanfertigung|Spezialprojekt|Auftragsarbeit} – {Alignum ist Ihre Schreinerei für|wir sind Ihre Schreiner für|wir sind der Tischlermeister für} ${city.name}. {Lassen Sie uns sprechen|Schreiben Sie uns|Vereinbaren Sie ein Erstgespräch} – {unverbindlich|ohne Verpflichtung|wir freuen uns}.`,
     seed,
   );
 }

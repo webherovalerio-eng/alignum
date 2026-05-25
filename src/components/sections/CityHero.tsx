@@ -3,22 +3,22 @@
 import Image from "next/image";
 import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
 import { useRef } from "react";
-import { ArrowRight, MapPin } from "lucide-react";
+import { ArrowRight, MapPin, Hammer } from "lucide-react";
 import { LinkButton } from "@/components/ui/Button";
-import { Badge } from "@/components/ui/Badge";
 import { MaskWords } from "@/components/ui/Reveal";
 import { Stars } from "@/components/ui/Stars";
 import { type City } from "@/data/cities";
 import { REVIEW_SUMMARY } from "@/data/reviews";
+import { SITE } from "@/data/site";
 
 export function CityHero({ city, photo }: { city: City; photo?: string }) {
   const ref = useRef<HTMLDivElement>(null);
   const reduce = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
-  const y = useTransform(scrollYProgress, [0, 1], [0, reduce ? 0 : 140]);
+  const y = useTransform(scrollYProgress, [0, 1], [0, reduce ? 0 : 100]);
 
   return (
-    <section ref={ref} className="relative min-h-[88svh] w-full overflow-hidden grain-overlay">
+    <section ref={ref} className="relative min-h-[75svh] w-full overflow-hidden grain-overlay">
       <motion.div style={{ y }} className="absolute inset-0 -z-10">
         {photo && (
           <Image src={photo} alt="" fill priority sizes="100vw" className="object-cover" />
@@ -27,46 +27,51 @@ export function CityHero({ city, photo }: { city: City; photo?: string }) {
       <div aria-hidden className="absolute inset-0 -z-10 scrim-readable" />
       <div aria-hidden className="absolute inset-x-0 bottom-0 -z-10 h-1/2 scrim-bottom" />
 
-      <div className="relative z-10 container-prose pt-36 pb-16 min-h-[88svh] flex flex-col justify-end text-white">
-        <Badge
-          variant="outline"
-          className="self-start mb-5 border-white/30 bg-black/30 text-white backdrop-blur-sm"
+      <div className="relative z-10 container-prose pt-36 pb-16 min-h-[75svh] flex flex-col justify-end text-white">
+        {/* TRANSPARENZ-LEISTE — sofort sichtbar, wo Alignum sitzt */}
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.2, ease: [0.19, 1, 0.22, 1] }}
+          className="inline-flex flex-wrap items-center gap-x-3 gap-y-1.5 self-start mb-5 rounded-full border border-white/25 bg-black/40 backdrop-blur-md px-4 py-2 text-xs sm:text-sm text-white/90"
         >
-          <MapPin className="size-3 text-primary" />
-          {city.state} · {city.distanceKm ?? "–"} km von Mannheim
-        </Badge>
+          <span className="inline-flex items-center gap-1.5">
+            <Hammer className="size-3.5 text-primary" />
+            Werkstatt in {SITE.address.city}
+          </span>
+          <span className="text-white/30">·</span>
+          <span className="inline-flex items-center gap-1.5">
+            <MapPin className="size-3.5 text-primary" />
+            Liefergebiet {city.name} ({city.distanceKm ?? "—"} km)
+          </span>
+        </motion.div>
 
-        <h1 className="font-display text-[clamp(2.75rem,8vw,7rem)] leading-[0.95] tracking-tight text-shadow-hero">
-          <MaskWords text="Schreinerei" />{" "}
-          <motion.span
-            initial={reduce ? false : { opacity: 0, y: 20 }}
-            animate={reduce ? undefined : { opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.5, ease: [0.19, 1, 0.22, 1] }}
-            className="text-primary inline-block italic"
-          >
-            {city.name}
-          </motion.span>
+        {/* H1 — bleibt Haupt-Keyword, aber in normaler Größe */}
+        <h1 className="font-display text-[clamp(1.75rem,4vw,3.5rem)] leading-[1.1] tracking-tight max-w-[28ch] text-shadow-hero">
+          <MaskWords text={`Schreinerei ${city.name} — aus unserer Werkstatt in ${SITE.address.city}.`} />
         </h1>
 
+        {/* Klar-Subtitle — räumt jedes Missverständnis aus */}
         <motion.p
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.7, ease: [0.19, 1, 0.22, 1] }}
-          className="mt-6 max-w-[58ch] text-lg sm:text-xl text-white/90 leading-relaxed text-shadow-lg"
+          className="mt-6 max-w-[62ch] text-base sm:text-lg text-white/85 leading-relaxed text-shadow-lg"
         >
-          Maßgefertigte Möbel, Küchen, Treppen und Türen für {city.name}. Eine
-          Schreinerei mit über 30 Jahren Handwerk – persönlich, geplant, vor
-          Ort.
+          Wir sind keine Filiale in {city.name} – wir sind eine Schreinerei in{" "}
+          {SITE.address.city}, die für Kunden in {city.name} und Umgebung arbeitet.
+          Aufmaß, Beratung und Montage übernehmen wir persönlich vor Ort.
+          Gefertigt wird in unserer Werkstatt, 30+ Jahre Schreiner­handwerk.
         </motion.p>
 
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.9, ease: [0.19, 1, 0.22, 1] }}
           className="mt-8 flex flex-wrap items-center gap-4"
         >
           <LinkButton href={`/anfrage/?city=${city.slug}`} size="lg" variant="primary">
-            Schreiner in {city.name} anfragen <ArrowRight className="size-4" />
+            Aufmaß in {city.name} anfragen <ArrowRight className="size-4" />
           </LinkButton>
           <div className="flex items-center gap-2 text-sm text-white/85 text-shadow-lg">
             <Stars rating={5} />
