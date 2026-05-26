@@ -10,6 +10,7 @@ import { Badge } from "@/components/ui/Badge";
 import { MaskWords } from "@/components/ui/Reveal";
 import { REVIEW_SUMMARY } from "@/data/reviews";
 import { HERO_PHOTOS } from "@/data/photos";
+import { SITE } from "@/data/site";
 
 export function Hero() {
   const heroSrc = HERO_PHOTOS[1] ?? HERO_PHOTOS[0] ?? "/images/hero/hero-02.jpg";
@@ -150,7 +151,7 @@ export function Hero() {
           className="absolute left-0 inset-y-0 w-px bg-gradient-to-b from-transparent via-primary/40 to-transparent"
         />
 
-        {/* Floating accent card */}
+        {/* Floating accent card — Jan, der Schreiner hinter Alignum */}
         <motion.div
           style={{ y: yAccent }}
           initial={{ opacity: 0, scale: 0.9 }}
@@ -159,22 +160,22 @@ export function Hero() {
           className="absolute bottom-8 left-8 right-8 lg:bottom-12 lg:left-auto lg:right-12 lg:w-72"
         >
           <div className="relative rounded-2xl overflow-hidden border border-white/20 shadow-[var(--shadow-elev)]">
-            <div className="relative aspect-[4/3]">
+            <div className="relative aspect-[4/5]">
               <Image
-                src={accentSrc}
-                alt=""
+                src={SITE.owner.image}
+                alt={`${SITE.owner.name} – ${SITE.owner.role} bei Alignum`}
                 fill
                 sizes="(max-width: 1024px) 100vw, 280px"
                 className="object-cover"
               />
             </div>
-            <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
             <div className="absolute inset-x-0 bottom-0 p-4 text-white">
-              <p className="text-xs uppercase tracking-widest text-primary mb-1">
-                Aus der Werkstatt
+              <p className="text-[10px] uppercase tracking-[0.25em] text-primary mb-1">
+                Der Schreiner hinter Alignum
               </p>
-              <p className="text-sm font-medium">Mannheimer Str. 80</p>
-              <p className="text-xs text-white/70">68535 Edingen-Neckarhausen</p>
+              <p className="font-display text-xl">{SITE.owner.name}</p>
+              <p className="text-xs text-white/70">{SITE.owner.role}</p>
             </div>
           </div>
         </motion.div>

@@ -20,7 +20,7 @@ export function WerkstattZuIhnen({ city }: { city: City }) {
       n: "01",
       Icon: ClipboardList,
       title: `Erstgespräch & Aufmaß in ${city.name}`,
-      body: `Wir kommen kostenlos zu Ihnen nach ${city.name}, hören zu, vermessen den Raum bis auf den Millimeter und besprechen Ideen, Material und Budget. Wolf Preussner persönlich – oder ein Mitglied seines Teams.`,
+      body: `Wir kommen kostenlos zu Ihnen nach ${city.name}, hören zu, vermessen den Raum bis auf den Millimeter und besprechen Ideen, Material und Budget. Jan persönlich – als Tischlermeister und Inhaber.`,
       tag: "Vor Ort",
     },
     {

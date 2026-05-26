@@ -27,11 +27,13 @@ export const SITE = {
     instagram: "",
   },
   founded: 1992,
+  owner: {
+    name: "Jan",
+    role: "Tischlermeister & Inhaber",
+    image: "/images/team/jan-schreinerei.jpg",
+  },
   team: [
-    { name: "Wolf Preussner", role: "Tischlermeister & Inhaber" },
-    { name: "Ute Rieckmann", role: "Innenarchitektin & Planung" },
-    { name: "Christian Dehling", role: "Tischlergeselle" },
-    { name: "Mathew Colligan", role: "Tischlergeselle" },
+    { name: "Jan", role: "Tischlermeister & Inhaber" },
   ],
   brandStatement:
     "Bei der Auswahl unserer Materialien liegen die Kriterien neben der Gestaltungsfrage auch immer in der Berücksichtigung der ökologischen und gesundheitlichen Auswirkungen.",

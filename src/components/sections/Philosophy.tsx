@@ -131,7 +131,7 @@ export function Philosophy() {
             „Wir bauen Möbel, die nicht weggeworfen werden."
           </p>
           <p className="mt-4 text-sm text-muted-foreground">
-            – Wolf Preussner, Tischlermeister & Inhaber
+            – Jan, Tischlermeister & Inhaber
           </p>
         </Reveal>
       </div>
