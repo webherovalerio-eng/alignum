@@ -23,7 +23,7 @@ import { cn } from "@/lib/cn";
 
 type Step = "stars" | "positive" | "negative" | "ai-text" | "contact" | "done";
 
-const GOOGLE_REVIEW_URL = SITE.social.google;
+const GOOGLE_REVIEW_URL = SITE.social.googleReview;
 const NEGATIVE_THRESHOLD = 4; // <= 4 Sterne → Negativ-Branch
 
 export function BewertungFlow() {

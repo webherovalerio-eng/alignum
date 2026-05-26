@@ -93,7 +93,7 @@ export const REVIEW_SUMMARY = {
   averageRating: 5.0,
   count: 26,
   source: "Google",
-  url: "https://www.google.com/maps/place/ALIGNUM+M%C3%96BELBAU/@49.4542161,8.5940851,17z/data=!4m6!3m5!1s0x4797c5e0297caf2f:0x3570da2f91f2f8e4",
+  url: "https://www.google.com/maps/place/ALIGNUM+M%C3%96BELBAU/@49.4542161,8.5940851,17z/data=!4m8!3m7!1s0x4797c5e0297caf2f:0x3570da2f91f2f8e4!8m2!3d49.4542161!4d8.5940851!9m1!1b1",
 };
 
 // ──────────────────────────────────────────────────────────────
