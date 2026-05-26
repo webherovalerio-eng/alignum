@@ -71,17 +71,17 @@ export function ServicesGrid({ heading = true }: { heading?: boolean }) {
                     {String(i + 1).padStart(2, "0")}
                   </span>
 
-                  {/* Caption — klare Typo, kein direkter Text auf Bild */}
-                  <div className="absolute inset-x-0 bottom-0 p-5 sm:p-6 text-white">
+                  {/* Caption — feste Mindesthöhe, Inhalt unten verankert */}
+                  <div className="absolute inset-x-0 bottom-0 p-5 sm:p-6 text-white min-h-[150px] sm:min-h-[170px] flex flex-col justify-end">
                     <div className="flex items-end justify-between gap-3 mb-2">
-                      <h3 className="font-display text-2xl sm:text-3xl tracking-tight leading-[1.1]">
+                      <h3 className="font-display text-2xl sm:text-3xl tracking-tight leading-[1.1] line-clamp-2">
                         {s.name}
                       </h3>
                       <span className="shrink-0 inline-flex size-9 items-center justify-center rounded-full border border-white/40 bg-white/5 backdrop-blur-md transition-all duration-500 group-hover:bg-primary group-hover:border-primary group-hover:-translate-y-1">
                         <ArrowUpRight className="size-4 text-white transition-transform group-hover:rotate-0" />
                       </span>
                     </div>
-                    <p className="text-sm text-white/80 leading-snug max-w-[24ch]">
+                    <p className="text-sm text-white/80 leading-snug min-h-[2.5em] line-clamp-2">
                       {s.short}
                     </p>
                     {/* Fine gold rule above caption */}
