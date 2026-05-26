@@ -4,6 +4,7 @@ import { WerkstattZuIhnen } from "@/components/sections/WerkstattZuIhnen";
 import { CityIntent } from "@/components/sections/CityIntent";
 import { CitySecretSauce } from "@/components/sections/CitySecretSauce";
 import { ReferenceProjects } from "@/components/sections/ReferenceProjects";
+import { MeetJan } from "@/components/sections/MeetJan";
 import { ServicesGrid } from "@/components/sections/ServicesGrid";
 import { Materials } from "@/components/sections/Materials";
 import { Reviews } from "@/components/sections/Reviews";
@@ -40,21 +41,41 @@ export default async function CityPage({ params }: { params: Promise<{ citySlug:
   const city = CITIES.find((c) => c.slug === citySlug);
   if (!city) notFound();
 
-  const heroPhoto = HERO_PHOTOS[Math.abs(hashString(city.slug)) % Math.max(HERO_PHOTOS.length, 1)] ?? HERO_PHOTOS[0];
+  const heroPhoto =
+    HERO_PHOTOS[Math.abs(hashString(city.slug)) % Math.max(HERO_PHOTOS.length, 1)] ?? HERO_PHOTOS[0];
   const closing = buildCityClosing(city);
-
   const ld = buildLocalBusinessLD(city);
 
   return (
     <>
+      {/* 1. Hero — Keyword in H1-Badge, Spintax-Display, CTA */}
       <CityHero city={city} photo={heroPhoto} />
-      <WerkstattZuIhnen city={city} />
-      <CityIntent city={city} />
-      <ReferenceProjects />
+
+      {/* 2. So arbeiten wir mit {Stadt} — Statement-Strip */}
       <CitySecretSauce city={city} />
-      <ServicesGrid heading />
+
+      {/* 3. Was Kunden sagen — Social Proof */}
       <Reviews />
+
+      {/* 4. Unser Handwerk — Services */}
+      <ServicesGrid />
+
+      {/* 5. Der Schreiner hinter Alignum — Jan persönlich */}
+      <MeetJan city={city} />
+
+      {/* 6. Vier Schritte — wie wir arbeiten */}
+      <WerkstattZuIhnen city={city} />
+
+      {/* 7. Schreinerei {Stadt} — Body + Spintax-Content */}
+      <CityIntent city={city} />
+
+      {/* 8. Referenz-Projekte */}
+      <ReferenceProjects />
+
+      {/* 9. Holzarten */}
       <Materials />
+
+      {/* 10. FAQ */}
       <FAQ
         items={GENERAL_FAQS.map((f) => ({
           q: f.q.replace("Mannheim", city.name),
@@ -65,10 +86,13 @@ export default async function CityPage({ params }: { params: Promise<{ citySlug:
         title={`Häufige Fragen aus ${city.name}`}
       />
 
+      {/* 11. Closing + CTA */}
       <section className="relative py-20">
         <div className="container-tight">
           <Reveal>
-            <p className="text-lg sm:text-xl leading-relaxed text-muted-foreground italic">{closing}</p>
+            <p className="text-lg sm:text-xl leading-relaxed text-muted-foreground italic">
+              {closing}
+            </p>
           </Reveal>
         </div>
       </section>
@@ -99,7 +123,6 @@ function buildLocalBusinessLD(city: City) {
     url: `${SITE.url}/${city.slug}/`,
     telephone: SITE.phone,
     email: SITE.email,
-    // WICHTIG: Adresse bleibt IMMER Edingen-Neckarhausen — wir haben keine Filiale in der Stadt
     address: {
       "@type": "PostalAddress",
       streetAddress: SITE.address.street,
@@ -107,11 +130,7 @@ function buildLocalBusinessLD(city: City) {
       addressLocality: SITE.address.city,
       addressCountry: "DE",
     },
-    // city.name geht in areaServed, NICHT in address
-    areaServed: {
-      "@type": "City",
-      name: city.name,
-    },
+    areaServed: { "@type": "City", name: city.name },
     serviceArea: {
       "@type": "GeoCircle",
       geoMidpoint: {
