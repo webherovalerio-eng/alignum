@@ -36,7 +36,7 @@ export function MeetJan({ city }: { city?: City }) {
             >
               <Hand className="size-4 text-primary" />
               <span className="text-xs font-medium tracking-wider uppercase">
-                {city ? `Kommt nach ${city.name}` : "Schreiner­meister"}
+                Schreiner­meister
               </span>
             </motion.div>
           </div>

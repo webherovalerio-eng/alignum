@@ -54,14 +54,14 @@ export default async function CityPage({ params }: { params: Promise<{ citySlug:
       {/* 2. So arbeiten wir mit {Stadt} — Statement-Strip */}
       <CitySecretSauce city={city} />
 
-      {/* 3. Was Kunden sagen — Social Proof */}
+      {/* 3. Der Schreiner hinter Alignum — Jan persönlich */}
+      <MeetJan city={city} />
+
+      {/* 4. Was Kunden sagen — Social Proof */}
       <Reviews />
 
-      {/* 4. Unser Handwerk — Services */}
+      {/* 5. Unser Handwerk — Services */}
       <ServicesGrid />
-
-      {/* 5. Der Schreiner hinter Alignum — Jan persönlich */}
-      <MeetJan city={city} />
 
       {/* 6. Vier Schritte — wie wir arbeiten */}
       <WerkstattZuIhnen city={city} />
