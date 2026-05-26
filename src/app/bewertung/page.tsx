@@ -24,12 +24,6 @@ export default function BewertungPage() {
             <h1 className="font-display text-[clamp(2rem,5vw,3.5rem)] leading-[1.05] tracking-tight">
               Wie war Ihre <span className="italic text-primary">Erfahrung</span> mit uns?
             </h1>
-            <p className="mt-5 max-w-xl mx-auto text-base sm:text-lg text-muted-foreground leading-relaxed">
-              Ein kurzer, anonymer Flow in vier Schritten. Bei 5 ⭐ helfen wir
-              Ihnen mit einem Vorschlag fürs Posten bei Google – bei
-              weniger Sternen bekommen wir Ihr Feedback intern, nicht
-              öffentlich.
-            </p>
           </Reveal>
         </div>
       </section>
