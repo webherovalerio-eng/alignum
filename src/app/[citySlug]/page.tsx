@@ -5,7 +5,6 @@ import { CityIntent } from "@/components/sections/CityIntent";
 import { CitySecretSauce } from "@/components/sections/CitySecretSauce";
 import { ReferenceProjects } from "@/components/sections/ReferenceProjects";
 import { ServicesGrid } from "@/components/sections/ServicesGrid";
-import { Process } from "@/components/sections/Process";
 import { Materials } from "@/components/sections/Materials";
 import { Reviews } from "@/components/sections/Reviews";
 import { FAQ } from "@/components/sections/FAQ";
@@ -54,7 +53,6 @@ export default async function CityPage({ params }: { params: Promise<{ citySlug:
       <ReferenceProjects />
       <CitySecretSauce city={city} />
       <ServicesGrid heading />
-      <Process />
       <Reviews />
       <Materials />
       <FAQ
