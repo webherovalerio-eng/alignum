@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
 import { useRef } from "react";
-import { ArrowRight, Star, Hammer, ShieldCheck } from "lucide-react";
+import { ArrowRight, Star, Hammer, Trees } from "lucide-react";
 import { LinkButton } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { MaskWords } from "@/components/ui/Reveal";
@@ -123,9 +123,9 @@ export function Hero() {
               label="Jahre Handwerk"
             />
             <TrustItem
-              icon={<ShieldCheck className="size-4 text-primary" />}
-              value="5"
-              label="Jahre Garantie"
+              icon={<Trees className="size-4 text-primary" />}
+              value="12"
+              label="Heimische Hölzer"
             />
           </motion.div>
         </div>

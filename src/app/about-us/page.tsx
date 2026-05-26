@@ -100,7 +100,7 @@ export default function AboutPage() {
                   { label: "Jahre Erfahrung", value: `${new Date().getFullYear() - SITE.founded}+` },
                   { label: "Gefertigte Möbel", value: "1.500+" },
                   { label: "Hölzer im Lager", value: "12" },
-                  { label: "Garantie", value: "5 Jahre" },
+                  { label: "Werkstatt", value: "Eigene" },
                 ].map((s) => (
                   <div key={s.label} className="rounded-xl border border-border bg-background p-5">
                     <p className="font-display text-3xl text-primary">{s.value}</p>

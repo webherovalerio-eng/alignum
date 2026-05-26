@@ -16,10 +16,6 @@ export const GENERAL_FAQS = [
     a: "Ja. Unser regulärer Liefer- und Montage­bereich umfasst den gesamten Rhein-Neckar-Raum, Südhessen, die Vorderpfalz und das nördliche Baden. Auf Anfrage realisieren wir auch Projekte deutschlandweit.",
   },
   {
-    q: "Wie viel Garantie gibt Alignum?",
-    a: "Auf unsere Schreinerarbeiten geben wir 5 Jahre Garantie auf Material und Verarbeitung – deutlich über der gesetzlichen Gewährleistung. Details auf der Garantie-Seite.",
-  },
-  {
     q: "Bietet Alignum auch Reparaturen oder Restaurationen an?",
     a: "Ja. Wir restaurieren historische Türen, reparieren beschädigte Massivholzmöbel, bauen Antiquitäten um und passen alte Möbel an neue Räume an. Sprechen Sie uns einfach an.",
   },

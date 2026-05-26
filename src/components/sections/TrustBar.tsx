@@ -1,11 +1,11 @@
-import { Award, Hammer, Leaf, ShieldCheck, Sparkles, Trees } from "lucide-react";
+import { Award, Hammer, Leaf, PenTool, Sparkles, Trees } from "lucide-react";
 import { Reveal } from "@/components/ui/Reveal";
 
 const SIGNALS = [
   { Icon: Hammer, label: "30+ Jahre Erfahrung" },
   { Icon: Award, label: "Tischlermeister-Betrieb" },
   { Icon: Trees, label: "Heimische Hölzer" },
-  { Icon: ShieldCheck, label: "5 Jahre Garantie" },
+  { Icon: PenTool, label: "Eigene Planung" },
   { Icon: Sparkles, label: "Unikate auf Maß" },
   { Icon: Leaf, label: "Ökologisch geleimt" },
 ];

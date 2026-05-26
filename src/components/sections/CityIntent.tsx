@@ -1,5 +1,5 @@
 import { Reveal } from "@/components/ui/Reveal";
-import { Hammer, Compass, Trees, Heart } from "lucide-react";
+import { Quote } from "lucide-react";
 import { type City } from "@/data/cities";
 import {
   buildCityIntro,
@@ -7,14 +7,6 @@ import {
   buildCityArea,
   buildCityProjectsCopy,
 } from "@/lib/cityContent";
-import { SITE } from "@/data/site";
-
-const PILLARS = [
-  { Icon: Hammer, t: "Echtes Handwerk", b: "Tischlermeister-Betrieb mit eigener Werkstatt." },
-  { Icon: Trees, t: "Heimisches Holz", b: "Eiche, Nuss, Esche, Kirsche – aus regionalen Wäldern." },
-  { Icon: Compass, t: "Maß­anfertigung", b: "Jedes Stück passt millimetergenau in Ihren Raum." },
-  { Icon: Heart, t: "Persönlich", b: "Wolf Preussner berät Sie persönlich vor Ort." },
-];
 
 /**
  * Sucht­intention für „Schreinerei {Stadt}" sofort befriedigen — innerhalb der
@@ -22,7 +14,8 @@ const PILLARS = [
  *
  * Heading-Hierarchie:
  * - <h2>Schreinerei {Stadt}</h2> — Keyword nochmal in H2 (oben)
- * - <p>{Spintax über Alignum-Projekte in der Stadt}</p>
+ * - Pull-Quote-Lead aus Spintax-Projekt-Copy
+ * - Body in zwei Spalten (kein Wall-of-Text mehr)
  */
 export function CityIntent({ city }: { city: City }) {
   const projectsCopy = buildCityProjectsCopy(city);
@@ -31,44 +24,48 @@ export function CityIntent({ city }: { city: City }) {
   const area = buildCityArea(city);
 
   return (
-    <section className="relative py-16 sm:py-24">
-      <div className="container-prose grid lg:grid-cols-12 gap-10 lg:gap-16 items-start">
-        <Reveal className="lg:col-span-7 space-y-6">
-          <h2 className="font-display text-[clamp(1.75rem,3.5vw,3rem)] leading-[1.1] tracking-tight">
-            Schreinerei {city.name}
-          </h2>
-          <p className="text-lg text-foreground/90 leading-relaxed">{projectsCopy}</p>
-          <p className="text-lg text-muted-foreground leading-relaxed">{intro}</p>
-          <p className="text-lg text-muted-foreground leading-relaxed">{whyUs}</p>
-          <p className="text-lg text-muted-foreground leading-relaxed">{area}</p>
+    <section className="relative py-20 sm:py-28">
+      <div className="container-prose">
+        {/* Eyebrow */}
+        <Reveal className="max-w-3xl mb-3">
+          <p className="text-xs uppercase tracking-[0.25em] text-primary font-medium">
+            Für Sie in {city.name}
+          </p>
         </Reveal>
 
-        <Reveal className="lg:col-span-5 lg:sticky lg:top-28">
-          <div className="rounded-2xl border border-border bg-card p-6 sm:p-8">
-            <p className="text-xs uppercase tracking-widest text-primary font-medium mb-4">
-              Was wir für Kunden in {city.name} tun
-            </p>
-            <ul className="space-y-4">
-              {PILLARS.map((p) => (
-                <li key={p.t} className="flex items-start gap-4">
-                  <span className="inline-flex size-10 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
-                    <p.Icon className="size-5" />
-                  </span>
-                  <div>
-                    <p className="font-medium">{p.t}</p>
-                    <p className="text-sm text-muted-foreground">{p.b}</p>
-                  </div>
-                </li>
-              ))}
-            </ul>
-            <div className="mt-6 pt-5 border-t border-border">
-              <p className="text-xs text-muted-foreground">
-                <strong className="text-foreground">Werkstatt:</strong>{" "}
-                {SITE.address.street}, {SITE.address.zip} {SITE.address.city}
-              </p>
-            </div>
-          </div>
+        {/* H2 */}
+        <Reveal className="max-w-3xl mb-10">
+          <h2 className="font-display text-[clamp(2rem,4.5vw,3.75rem)] leading-[1.05] tracking-tight">
+            Schreinerei {city.name}
+          </h2>
         </Reveal>
+
+        {/* Pull-Quote-Lead */}
+        <Reveal className="max-w-3xl mb-16 border-l-2 border-primary pl-6 sm:pl-8">
+          <Quote className="size-5 text-primary mb-3" />
+          <p className="font-display text-xl sm:text-2xl leading-snug text-foreground/95">
+            {projectsCopy}
+          </p>
+        </Reveal>
+
+        {/* Body in zwei Spalten — bricht den Wall-of-Text auf */}
+        <div className="grid md:grid-cols-2 gap-x-12 gap-y-8 max-w-5xl">
+          <Reveal>
+            <p className="text-base sm:text-lg text-foreground/85 leading-relaxed">
+              {intro}
+            </p>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <p className="text-base sm:text-lg text-foreground/85 leading-relaxed">
+              {whyUs}
+            </p>
+          </Reveal>
+          <Reveal delay={0.15} className="md:col-span-2">
+            <p className="text-base sm:text-lg text-foreground/85 leading-relaxed max-w-3xl">
+              {area}
+            </p>
+          </Reveal>
+        </div>
       </div>
     </section>
   );
