@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
 import { useRef } from "react";
-import { ArrowRight, MapPin, Hammer } from "lucide-react";
+import { ArrowRight, MapPin } from "lucide-react";
 import { LinkButton } from "@/components/ui/Button";
 import { Stars } from "@/components/ui/Stars";
 import { type City } from "@/data/cities";
@@ -47,21 +47,6 @@ export function CityHero({ city, photo }: { city: City; photo?: string }) {
           <MapPin className="size-3 text-primary" />
           Schreinerei {city.name}
         </motion.h1>
-
-        {/* Werkstatt-Klarheit */}
-        <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.3, ease: [0.19, 1, 0.22, 1] }}
-          className="inline-flex flex-wrap items-center gap-x-3 gap-y-1 self-start mb-7 text-xs sm:text-sm text-white/70"
-        >
-          <span className="inline-flex items-center gap-1.5">
-            <Hammer className="size-3.5 text-primary" />
-            Werkstatt in {SITE.address.city}
-          </span>
-          <span className="text-white/30">·</span>
-          <span>Liefergebiet {city.name}</span>
-        </motion.div>
 
         {/* Display-Headline als <p> mit Spintax */}
         <motion.p
