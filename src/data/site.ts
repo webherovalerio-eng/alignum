@@ -25,16 +25,20 @@ export const SITE = {
   social: {
     google: "https://share.google/Lm0M38HvoFrCuOAfF",
     /**
-     * Direkter Link zum Bewertungsformular von Google für Alignum Möbelbau.
-     * Öffnet Google Maps mit aktiviertem Reviews-Tab (!9m1!1b1) — der
-     * „Eine Bewertung schreiben"-Button ist dann sofort prominent oben.
+     * Direkter Link zum „Bewertung schreiben"-Dialog im Google Knowledge
+     * Panel — NICHT zum Profil. Der #lrd-Hash mit ",3,l" am Ende triggert
+     * direkt das Write-Review-Modal.
      *
-     * Wenn Jan in seinem GMB-Dashboard einen kürzeren g.page/r/.../review-
-     * Link generiert, kann der hier eingetragen werden — der ist noch
-     * einen Klick direkter.
+     * Format: https://www.google.com/search?q=...&...#lrd={ftid},3,l
+     * - ftid = first hex (lat/long) : second hex (CID) aus den GMB-Daten
+     * - ,3,l = Aktion „write review", Sprache local
+     *
+     * Wenn Jan einen kürzeren g.page/r/.../review-Link aus seinem GMB-
+     * Dashboard liefert, hier ersetzen — das ist noch direkter (1 Tap
+     * statt 2 auf Mobile).
      */
     googleReview:
-      "https://www.google.com/maps/place/ALIGNUM+M%C3%96BELBAU/@49.4542161,8.5940851,17z/data=!4m8!3m7!1s0x4797c5e0297caf2f:0x3570da2f91f2f8e4!8m2!3d49.4542161!4d8.5940851!9m1!1b1",
+      "https://www.google.com/search?q=Alignum+M%C3%B6belbau+Edingen-Neckarhausen&hl=de#lrd=0x4797c5e0297caf2f:0x3570da2f91f2f8e4,3,l",
     instagram: "",
   },
   founded: 1992,
