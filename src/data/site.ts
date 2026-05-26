@@ -25,20 +25,15 @@ export const SITE = {
   social: {
     google: "https://share.google/Lm0M38HvoFrCuOAfF",
     /**
-     * Direkter Link zum „Bewertung schreiben"-Dialog im Google Knowledge
-     * Panel — NICHT zum Profil. Der #lrd-Hash mit ",3,l" am Ende triggert
-     * direkt das Write-Review-Modal.
+     * Signierter Direkt-Link zum „Bewertung schreiben"-Dialog für Alignum.
+     * Öffnet das Write-Review-Modal direkt im Knowledge Panel — kein
+     * Profil-Zwischenstop. Enthält ludocid (CID) und lsig (Google-Signatur)
+     * für authentifizierte Direktansteuerung des Modals.
      *
-     * Format: https://www.google.com/search?q=...&...#lrd={ftid},3,l
-     * - ftid = first hex (lat/long) : second hex (CID) aus den GMB-Daten
-     * - ,3,l = Aktion „write review", Sprache local
-     *
-     * Wenn Jan einen kürzeren g.page/r/.../review-Link aus seinem GMB-
-     * Dashboard liefert, hier ersetzen — das ist noch direkter (1 Tap
-     * statt 2 auf Mobile).
+     * Quelle: vom GMB-Dashboard via „Bewertung anfordern" generiert.
      */
     googleReview:
-      "https://www.google.com/search?q=Alignum+M%C3%B6belbau+Edingen-Neckarhausen&hl=de#lrd=0x4797c5e0297caf2f:0x3570da2f91f2f8e4,3,l",
+      "https://www.google.com/search?hl=de-DE&gl=de&q=ALIGNUM+M%C3%96BELBAU,+Mannheimer+Str.+80,+68535+Edingen-Neckarhausen&ludocid=3850817579248711908&lsig=AB86z5Uz-R0mYnw1glilE3t_J5KU#lrd=0x4797c5e0297caf2f:0x3570da2f91f2f8e4,3",
     instagram: "",
   },
   founded: 1992,
