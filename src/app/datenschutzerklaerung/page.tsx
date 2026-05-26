@@ -20,7 +20,7 @@ export default function DatenschutzPage() {
             <h2 className="font-display text-2xl mt-8 mb-2 text-foreground">1. Verantwortlicher</h2>
             <p>
               Verantwortlich für die Datenverarbeitung auf dieser Website ist:<br />
-              {SITE.name} Schreinerei, Inhaber Wolf Preussner<br />
+              {SITE.name} Möbelbau, Inhaber {SITE.owner.fullName}<br />
               {SITE.address.street}, {SITE.address.zip} {SITE.address.city}<br />
               E-Mail: {SITE.email}
             </p>

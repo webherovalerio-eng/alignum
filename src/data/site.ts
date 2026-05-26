@@ -29,11 +29,12 @@ export const SITE = {
   founded: 1992,
   owner: {
     name: "Jan",
+    fullName: "Jan Gerathewohl",
     role: "Tischlermeister & Inhaber",
     image: "/images/team/jan-schreinerei.jpg",
   },
   team: [
-    { name: "Jan", role: "Tischlermeister & Inhaber" },
+    { name: "Jan Gerathewohl", role: "Tischlermeister & Inhaber" },
   ],
   brandStatement:
     "Bei der Auswahl unserer Materialien liegen die Kriterien neben der Gestaltungsfrage auch immer in der Berücksichtigung der ökologischen und gesundheitlichen Auswirkungen.",

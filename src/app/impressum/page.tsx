@@ -20,8 +20,8 @@ export default function ImpressumPage() {
           <div className="prose-invert space-y-6 text-foreground/85 leading-relaxed">
             <h2 className="font-display text-2xl mt-8 mb-2 text-foreground">Angaben gemäß § 5 TMG</h2>
             <p>
-              {SITE.name} Schreinerei<br />
-              Inhaber: Wolf Preussner<br />
+              {SITE.name} Möbelbau<br />
+              Inhaber: {SITE.owner.fullName}<br />
               {SITE.address.street}<br />
               {SITE.address.zip} {SITE.address.city}<br />
               Deutschland
@@ -40,7 +40,7 @@ export default function ImpressumPage() {
             </p>
 
             <h2 className="font-display text-2xl mt-8 mb-2 text-foreground">Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV</h2>
-            <p>Wolf Preussner, Anschrift wie oben.</p>
+            <p>{SITE.owner.fullName}, Anschrift wie oben.</p>
 
             <h2 className="font-display text-2xl mt-8 mb-2 text-foreground">EU-Streitschlichtung</h2>
             <p>
