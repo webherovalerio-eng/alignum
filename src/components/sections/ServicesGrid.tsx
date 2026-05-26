@@ -62,20 +62,33 @@ export function ServicesGrid({ heading = true }: { heading?: boolean }) {
                   ) : (
                     <div className="absolute inset-0 bg-gradient-to-br from-muted via-card to-muted" />
                   )}
-                  <div className="absolute inset-0 bg-gradient-to-t from-foreground/85 via-foreground/30 to-transparent" />
 
-                  <div className="absolute inset-0 flex flex-col justify-end p-6 text-background">
-                    <p className="text-xs tracking-widest uppercase text-background/60 mb-2">
-                      {String(i + 1).padStart(2, "0")} / {String(SERVICES.length).padStart(2, "0")}
-                    </p>
-                    <h3 className="font-display text-2xl sm:text-3xl tracking-tight mb-2">
-                      {s.name}
-                    </h3>
-                    <p className="text-sm text-background/80 max-w-xs">{s.short}</p>
-                    <div className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-primary">
-                      Entdecken
-                      <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                  {/* Permanenter Bottom-Scrim für Lesbarkeit der Card-Caption */}
+                  <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black/85 via-black/40 to-transparent" />
+
+                  {/* Top-right number badge */}
+                  <span className="absolute top-4 right-4 inline-flex items-center justify-center size-9 rounded-full bg-background/15 backdrop-blur-md border border-white/20 text-[10px] font-medium tracking-wider text-white">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+
+                  {/* Caption — klare Typo, kein direkter Text auf Bild */}
+                  <div className="absolute inset-x-0 bottom-0 p-5 sm:p-6 text-white">
+                    <div className="flex items-end justify-between gap-3 mb-2">
+                      <h3 className="font-display text-2xl sm:text-3xl tracking-tight leading-[1.1]">
+                        {s.name}
+                      </h3>
+                      <span className="shrink-0 inline-flex size-9 items-center justify-center rounded-full border border-white/40 bg-white/5 backdrop-blur-md transition-all duration-500 group-hover:bg-primary group-hover:border-primary group-hover:-translate-y-1">
+                        <ArrowUpRight className="size-4 text-white transition-transform group-hover:rotate-0" />
+                      </span>
                     </div>
+                    <p className="text-sm text-white/80 leading-snug max-w-[24ch]">
+                      {s.short}
+                    </p>
+                    {/* Fine gold rule above caption */}
+                    <span
+                      aria-hidden
+                      className="absolute top-0 inset-x-5 sm:inset-x-6 h-px bg-gradient-to-r from-transparent via-primary/60 to-transparent"
+                    />
                   </div>
                 </Link>
               </motion.div>

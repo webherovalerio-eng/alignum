@@ -24,10 +24,10 @@
   --foreground: 0 0% 8%;             /* near black */
   --card: 36 33% 99%;
   --card-foreground: 0 0% 8%;
-  --muted: 36 16% 92%;
+  --muted: 36 18% 93%;
   --muted-foreground: 0 0% 32%;
-  --subtle: 36 20% 88%;
-  --border: 36 12% 84%;
+  --subtle: 36 22% 88%;
+  --border: 32 14% 78%;              /* deutlich sichtbarer im Light-Mode */
   --input: 36 12% 90%;
   --ring: var(--brand-gold);
 
@@ -330,6 +330,35 @@ body {
 }
 .text-shadow-lg {
   text-shadow: 0 1px 3px hsl(0 0% 0% / 0.5);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   SECTION-RHYTHM — visuelle Struktur ohne aufdringliche Borders.
+   .section-band setzt im Light-Mode subtil cremiges Surface ab,
+   im Dark-Mode bleibt es bei card/30.
+   ──────────────────────────────────────────────────────────── */
+
+.section-band {
+  background: hsl(var(--muted) / 0.5);
+  position: relative;
+}
+[data-theme="dark"] .section-band {
+  background: hsl(var(--card) / 0.3);
+}
+
+/* Dezente Trennlinie mit Gold-Mittelpunkt — als Bereichs-Abschluss */
+.section-divider {
+  position: relative;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    hsl(var(--border)) 35%,
+    hsl(var(--primary) / 0.6) 50%,
+    hsl(var(--border)) 65%,
+    transparent 100%
+  );
+  margin-block: 0;
 }
 
 /* Marquee mask fade */

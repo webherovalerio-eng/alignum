@@ -24,7 +24,6 @@ const SPANS = [
 
 /**
  * Werkstatt-Galerie — kuratierte Möbelbilder aus allen Kategorien.
- * Diversifiziert Hero-Photos quer durch Küchen, Treppen, Türen, Schränke etc.
  */
 function getCuratedPhotos(limit: number): { src: string; cat: string }[] {
   const order = ["kuechen", "treppen", "schraenke", "tische", "betten", "tueren", "shoji", "regale", "badmoebel", "bueromoebel", "kunstvolles"];
@@ -94,8 +93,10 @@ export function GmbGallery({ limit = 13 }: { limit?: number }) {
                   sizes="(max-width: 768px) 50vw, 33vw"
                   className="object-cover transition-transform duration-[1.4s] ease-out group-hover:scale-110"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-foreground/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                <span className="absolute top-3 left-3 inline-block px-2.5 py-1 rounded-full bg-background/80 backdrop-blur text-[10px] uppercase tracking-wider text-foreground opacity-0 group-hover:opacity-100 transition-opacity">
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+                {/* Floating glass label — kein Text on Bild, sondern auf einer eigenen Card */}
+                <span className="absolute bottom-3 left-3 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-background/85 backdrop-blur-md border border-border text-[11px] font-medium tracking-wider text-foreground shadow-[var(--shadow-soft)]">
+                  <span className="size-1.5 rounded-full bg-primary" />
                   {labels[p.cat] ?? "Möbel"}
                 </span>
               </motion.figure>

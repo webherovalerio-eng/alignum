@@ -7,13 +7,6 @@ import { PHOTOS } from "@/data/photos";
 
 const CATEGORIES = ["kuechen", "treppen", "schraenke", "tische", "betten", "tueren"] as const;
 
-/**
- * Referenzprojekte aus der Region.
- *
- * Wichtig: KEINE Stadt-Zuordnung. Bilder werden generisch beschriftet
- * („Maßküche", „Treppe in Eiche", etc.) — wir suggerieren NICHT, dass
- * Alignum konkret in der Stadt X ein Projekt gebaut hat.
- */
 const LABELS: Record<string, string> = {
   kuechen: "Maßküche in Eiche",
   treppen: "Freitragende Holztreppe",
@@ -23,6 +16,18 @@ const LABELS: Record<string, string> = {
   tueren: "Pivot-Haustür",
 };
 
+const KIND: Record<string, string> = {
+  kuechen: "Küche",
+  treppen: "Treppe",
+  schraenke: "Schrank",
+  tische: "Tisch",
+  betten: "Bett",
+  tueren: "Tür",
+};
+
+/**
+ * Referenzprojekte aus der Region — generische Beschriftung, keine Stadt-Zuordnung.
+ */
 export function ReferenceProjects() {
   const photos = CATEGORIES.flatMap((cat) => {
     const list = PHOTOS[cat] ?? [];
@@ -64,12 +69,15 @@ export function ReferenceProjects() {
                 sizes="(max-width: 1024px) 50vw, 33vw"
                 className="object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-110"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-foreground/85 via-foreground/15 to-transparent" />
-              <figcaption className="absolute inset-x-0 bottom-0 p-5 text-background">
-                <p className="text-xs uppercase tracking-widest text-primary mb-1">
-                  Referenz
+
+              {/* Caption-Card: schwebt unten auf der Bildkante, frosted glass */}
+              <figcaption className="absolute inset-x-3 bottom-3 rounded-xl bg-background/90 backdrop-blur-md border border-border p-4 shadow-[var(--shadow-soft)]">
+                <p className="text-[10px] uppercase tracking-[0.25em] text-primary mb-1">
+                  {KIND[p.cat]}
                 </p>
-                <p className="font-display text-lg sm:text-xl">{LABELS[p.cat]}</p>
+                <p className="font-display text-base sm:text-lg leading-tight text-foreground">
+                  {LABELS[p.cat]}
+                </p>
               </figcaption>
             </motion.figure>
           ))}
