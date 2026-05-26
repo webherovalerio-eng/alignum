@@ -1,7 +1,12 @@
 import { Reveal } from "@/components/ui/Reveal";
 import { Hammer, Compass, Trees, Heart } from "lucide-react";
 import { type City } from "@/data/cities";
-import { buildCityIntro, buildCityWhyUs, buildCityArea } from "@/lib/cityContent";
+import {
+  buildCityIntro,
+  buildCityWhyUs,
+  buildCityArea,
+  buildCityProjectsCopy,
+} from "@/lib/cityContent";
 import { SITE } from "@/data/site";
 
 const PILLARS = [
@@ -13,9 +18,14 @@ const PILLARS = [
 
 /**
  * Sucht­intention für „Schreinerei {Stadt}" sofort befriedigen — innerhalb der
- * ersten 30 % der Seite. Sprache durchgängig „für {Stadt}", nicht „in {Stadt}".
+ * ersten 30 % der Seite.
+ *
+ * Heading-Hierarchie:
+ * - <h2>Schreinerei {Stadt}</h2> — Keyword nochmal in H2 (oben)
+ * - <p>{Spintax über Alignum-Projekte in der Stadt}</p>
  */
 export function CityIntent({ city }: { city: City }) {
+  const projectsCopy = buildCityProjectsCopy(city);
   const intro = buildCityIntro(city);
   const whyUs = buildCityWhyUs(city);
   const area = buildCityArea(city);
@@ -25,9 +35,10 @@ export function CityIntent({ city }: { city: City }) {
       <div className="container-prose grid lg:grid-cols-12 gap-10 lg:gap-16 items-start">
         <Reveal className="lg:col-span-7 space-y-6">
           <h2 className="font-display text-[clamp(1.75rem,3.5vw,3rem)] leading-[1.1] tracking-tight">
-            Schreiner­arbeiten für {city.name}
+            Schreinerei {city.name}
           </h2>
-          <p className="text-lg text-foreground/85 leading-relaxed">{intro}</p>
+          <p className="text-lg text-foreground/90 leading-relaxed">{projectsCopy}</p>
+          <p className="text-lg text-muted-foreground leading-relaxed">{intro}</p>
           <p className="text-lg text-muted-foreground leading-relaxed">{whyUs}</p>
           <p className="text-lg text-muted-foreground leading-relaxed">{area}</p>
         </Reveal>

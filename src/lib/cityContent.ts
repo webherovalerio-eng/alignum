@@ -1,5 +1,43 @@
 import { spin } from "./spintax";
+import { hash, mulberry32 } from "./spintax-internals";
 import { type City } from "@/data/cities";
+
+/**
+ * Display-Title für die City-Hero — visuell die große Headline (rendert
+ * als <p>, nicht als <h1>!). Das Haupt-Keyword steckt separat in der H1
+ * (siehe CityHero). Hier rotieren wir kreative Varianten pro Stadt,
+ * sodass jede City-Page eine andere Hauptzeile bekommt.
+ *
+ * Rückgabe als { prefix, suffix } damit der city.name als hervorgehobenes
+ * <span> dazwischen rendert werden kann.
+ */
+const DISPLAY_TITLE_TEMPLATES: { prefix: string; suffix: string }[] = [
+  { prefix: "Unsere Projekte in", suffix: "" },
+  { prefix: "Referenzen in", suffix: "" },
+  { prefix: "Wir für", suffix: "" },
+  { prefix: "Schreinerei für", suffix: "" },
+  { prefix: "Wir kommen nach", suffix: "" },
+  { prefix: "Möbel für", suffix: "" },
+  { prefix: "Maßarbeit für", suffix: "" },
+];
+
+export function buildCityDisplayTitle(city: City): { prefix: string; suffix: string } {
+  const rng = mulberry32(hash(`display-${city.slug}`));
+  const idx = Math.floor(rng() * DISPLAY_TITLE_TEMPLATES.length);
+  return DISPLAY_TITLE_TEMPLATES[idx];
+}
+
+/**
+ * Body-Text mit Spintax über Alignum-Projekte für die jeweilige Stadt.
+ * Wird unter dem H2 in CityIntent verwendet.
+ */
+export function buildCityProjectsCopy(city: City): string {
+  const seed = `projects-${city.slug}`;
+  return spin(
+    `{Für Kunden aus|Für Auftraggeber in|Für Häuser und Wohnungen in} ${city.name} {haben wir|fertigen wir|bauen wir} {seit Jahren|seit über drei Jahrzehnten|seit Jahrzehnten} {Möbelstücke|Schreiner­arbeiten|Einbauten} {nach Maß|als Unikat|in Massivholz}. {Vom|Vom kleinen|Vom maßgefertigten} {Esstisch über die freitragende Treppe bis zur kompletten Einbauküche|Sideboard über die Innentür bis zum kompletten Bad|Massivholzbett über das Bücherregal bis zur Schiebewand} – {jedes Projekt|jede Arbeit|jedes Stück} {beginnt mit einem|startet mit einem|fängt mit einem} {Aufmaß bei Ihnen vor Ort|persönlichen Gespräch|Besuch bei Ihnen zu Hause}.`,
+    seed,
+  );
+}
 
 /**
  * Spintax-Templates für Alignum City-Pages.
