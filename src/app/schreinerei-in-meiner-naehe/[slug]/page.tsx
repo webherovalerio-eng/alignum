@@ -25,7 +25,7 @@ export function generateMetadata({ params }: { params: { slug: string } }) {
   const s = SERVICES.find((x) => x.slug === params.slug);
   if (!s) return {};
   const photoCat = s.imageCategory;
-  const cover = PHOTOS[photoCat]?.[0];
+  const cover = s.cover ?? PHOTOS[photoCat]?.[0];
   return buildMetadata({
     title: `${s.name} aus Mannheim – ${s.short}`,
     description: `${s.intro} Ihr ${s.name}-Spezialist von Alignum aus Mannheim – Massivholz, Maßanfertigung, 30+ Jahre Erfahrung.`,
@@ -40,7 +40,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
   if (!service) notFound();
 
   const photos = PHOTOS[service.imageCategory] ?? [];
-  const cover = photos[0];
+  const cover = service.cover ?? photos[0];
   const faqs = SERVICE_FAQS[service.slug] ?? GENERAL_FAQS.slice(0, 4);
 
   const serviceLd = {

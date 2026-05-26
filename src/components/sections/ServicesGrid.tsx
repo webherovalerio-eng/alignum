@@ -34,7 +34,7 @@ export function ServicesGrid({ heading = true }: { heading?: boolean }) {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
           {SERVICES.map((s, i) => {
             const photos = PHOTOS[s.imageCategory] ?? [];
-            const cover = photos[0];
+            const cover = s.cover ?? photos[0];
             return (
               <motion.div
                 key={s.slug}

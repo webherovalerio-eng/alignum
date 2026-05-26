@@ -20,7 +20,7 @@ export function RelatedServices({ exclude }: { exclude?: string }) {
         </Reveal>
         <div className="grid sm:grid-cols-3 gap-4">
           {others.map((s) => {
-            const cover = PHOTOS[s.imageCategory]?.[0];
+            const cover = s.cover ?? PHOTOS[s.imageCategory]?.[0];
             return (
               <Link
                 key={s.slug}

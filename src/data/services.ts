@@ -8,6 +8,9 @@ export type Service = {
   imageCategory: string;
   hubPath: string;
   keywords: string[];
+  /** Optional override — wenn gesetzt, wird dieses Bild als Hero-/Card-Cover
+   *  verwendet statt PHOTOS[imageCategory][0]. */
+  cover?: string;
 };
 
 export const SERVICE_HUB = "schreinerei-in-meiner-naehe";
@@ -156,6 +159,7 @@ export const SERVICES: Service[] = [
     imageCategory: "shoji",
     hubPath: SERVICE_HUB,
     keywords: ["Shoji Mannheim", "Japanische Schiebewand", "Reispapier-Wand"],
+    cover: "/images/services/shoji/shoji-cover.jpg",
   },
   {
     slug: "regale-und-raumtrenner",
