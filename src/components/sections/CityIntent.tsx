@@ -53,8 +53,7 @@ export function CityIntent({ city }: { city: City }) {
             <div className="mt-6 pt-5 border-t border-border">
               <p className="text-xs text-muted-foreground">
                 <strong className="text-foreground">Werkstatt:</strong>{" "}
-                {SITE.address.street}, {SITE.address.zip} {SITE.address.city}{" "}
-                ({city.distanceKm ?? "—"} km nach {city.name})
+                {SITE.address.street}, {SITE.address.zip} {SITE.address.city}
               </p>
             </div>
           </div>

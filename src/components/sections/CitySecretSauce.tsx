@@ -47,7 +47,7 @@ export function CitySecretSauce({ city }: { city: City }) {
 
             <div className="mt-8 grid grid-cols-3 gap-4 text-center">
               <Stat Icon={Clock} value="30+" label="Jahre" />
-              <Stat Icon={Truck} value={`${city.distanceKm ?? "—"}`} label="km Anfahrt" />
+              <Stat Icon={Truck} value="✓" label="Anfahrt inklusive" />
               <Stat Icon={Hammer} value="1" label="Werkstatt" />
             </div>
           </div>

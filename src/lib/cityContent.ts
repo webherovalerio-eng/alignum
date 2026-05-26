@@ -29,10 +29,9 @@ export function buildCityWhyUs(city: City) {
 
 export function buildCityArea(city: City) {
   const seed = `area-${city.slug}`;
-  const distance = city.distanceKm ?? 0;
 
   return spin(
-    `{Von unserer Werkstatt in Edingen-Neckarhausen|Aus Edingen-Neckarhausen|Unsere Werkstatt liegt} {sind es nur|sind es etwa|liegen} ${distance} km {nach|bis} ${city.name}. {Diese Strecke|Die Anfahrt|Den Weg} {fahren wir|legen wir zurück|nehmen wir} {gerne|selbstverständlich|ohne Mehrkosten} – {für das Aufmaß|für ein Beratungs­gespräch|für die Besichtigung} {ebenso|genauso} {wie für|wie zur} {Lieferung und Montage|die Endmontage|den Aufbau bei Ihnen}. {Schreiner­arbeiten für|Möbel für|Auftrags­arbeiten für} ${city.name} {sind für uns Alltag|gehören zu unserem täglichen Geschäft|sind kein Sonderfall}.`,
+    `{Von unserer Werkstatt in Edingen-Neckarhausen|Aus Edingen-Neckarhausen|Unsere Werkstatt liegt} {erreichen wir|fahren wir|kommen wir} ${city.name} {im Liefergebiet|in unserem Liefer­radius|in der Region} regelmäßig an. {Diese Anfahrt|Den Weg zu Ihnen|Die Strecke} {fahren wir|legen wir zurück|nehmen wir} {gerne|selbstverständlich|ohne Mehrkosten} – {für das Aufmaß|für ein Beratungs­gespräch|für die Besichtigung} {ebenso|genauso} {wie für|wie zur} {Lieferung und Montage|die Endmontage|den Aufbau bei Ihnen}. {Schreiner­arbeiten für|Möbel für|Auftrags­arbeiten für} ${city.name} {sind für uns Alltag|gehören zu unserem täglichen Geschäft|sind kein Sonderfall}.`,
     seed,
   );
 }

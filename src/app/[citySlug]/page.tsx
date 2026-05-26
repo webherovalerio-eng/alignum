@@ -31,7 +31,7 @@ export async function generateMetadata({ params }: { params: Promise<{ citySlug:
   if (!city) return {};
   return buildMetadata({
     title: `Schreinerei ${city.name} – Maßmöbel aus unserer Werkstatt | Alignum`,
-    description: `Schreiner für ${city.name}: Aus unserer Werkstatt in ${SITE.address.city} liefern und montieren wir Maßmöbel, Küchen, Treppen und Türen bei Ihnen vor Ort. ${city.distanceKm ?? "Wenige"} km Anfahrt.`,
+    description: `Schreiner für ${city.name}: Aus unserer Werkstatt in ${SITE.address.city} liefern und montieren wir Maßmöbel, Küchen, Treppen und Türen bei Ihnen vor Ort. Anfahrt inklusive.`,
     path: `/${city.slug}/`,
   });
 }

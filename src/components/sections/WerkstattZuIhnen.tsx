@@ -32,8 +32,8 @@ export function WerkstattZuIhnen({ city }: { city: City }) {
       n: "03",
       Icon: Truck,
       title: `Lieferung & Montage in ${city.name}`,
-      body: `Eigenes Montage-Team, ca. ${city.distanceKm ?? "—"} km Anfahrt. Wir liefern, montieren, justieren – und nehmen den Schutt wieder mit.`,
-      tag: `${city.distanceKm ?? "—"} km`,
+      body: `Eigenes Montage-Team kommt zu Ihnen nach ${city.name}. Wir liefern, montieren, justieren – und nehmen den Schutt wieder mit.`,
+      tag: "Bei Ihnen",
     },
   ];
 
@@ -94,7 +94,7 @@ export function WerkstattZuIhnen({ city }: { city: City }) {
         <Reveal className="mt-12 text-center">
           <p className="text-sm text-muted-foreground">
             Liefergebiet umfasst Mannheim, Heidelberg, Ludwigshafen, Darmstadt
-            und alle Städte der Rhein-Neckar-Region innerhalb ca. 60 km um{" "}
+            und alle Städte der Rhein-Neckar-Region rund um{" "}
             {SITE.address.city}.
           </p>
         </Reveal>

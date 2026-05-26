@@ -58,14 +58,7 @@ export default function StandortePage() {
                           href={`/${c.slug}/`}
                           className="group flex items-center justify-between gap-3 rounded-lg border border-transparent hover:border-border hover:bg-card px-4 py-3 transition-colors"
                         >
-                          <span>
-                            <span className="font-medium">{c.name}</span>
-                            {c.distanceKm !== undefined && (
-                              <span className="ml-2 text-xs text-muted-foreground">
-                                · {c.distanceKm} km
-                              </span>
-                            )}
-                          </span>
+                          <span className="font-medium">{c.name}</span>
                           <ChevronRight className="size-4 text-muted-foreground transition-transform group-hover:translate-x-1 group-hover:text-primary" />
                         </Link>
                       </li>

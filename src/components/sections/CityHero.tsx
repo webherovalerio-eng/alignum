@@ -42,7 +42,7 @@ export function CityHero({ city, photo }: { city: City; photo?: string }) {
           <span className="text-white/30">·</span>
           <span className="inline-flex items-center gap-1.5">
             <MapPin className="size-3.5 text-primary" />
-            Liefergebiet {city.name} ({city.distanceKm ?? "—"} km)
+            Liefergebiet {city.name}
           </span>
         </motion.div>
 
