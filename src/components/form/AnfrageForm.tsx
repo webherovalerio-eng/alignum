@@ -64,34 +64,107 @@ export function AnfrageForm({ initialService }: { initialService?: string }) {
   const serviceObj = SERVICES.find((s) => s.slug === form.service);
 
   function buildMailto() {
-    const subject = `Neue Anfrage von ${form.name} – ${serviceObj?.name ?? "Schreinerei"}`;
+    const serviceName = serviceObj?.name ?? form.service;
+    const city = form.city ? ` aus ${form.city}` : "";
+    const subject = `🪵 Neue Anfrage · ${serviceName} · ${form.name}${city}`;
+
+    // Locale-Datum/Uhrzeit
+    const now = new Date();
+    const dateStr = now.toLocaleDateString("de-DE", {
+      weekday: "long",
+      day: "2-digit",
+      month: "long",
+      year: "numeric",
+    });
+    const timeStr = now.toLocaleTimeString("de-DE", {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+
+    const contactPrefLabel: Record<string, string> = {
+      email: "E-Mail bevorzugt",
+      phone: "Telefon bevorzugt",
+      either: "Egal — E-Mail oder Telefon",
+    };
+
+    // Strukturierte Mail mit Box-Drawing-Trennern.
+    // Mailto verschickt nur Plain Text — aber wenn Mail-Clients es in
+    // monospace darstellen (Apple Mail, iOS Mail, Outlook), wirkt es wie
+    // ein sauberer Steckbrief.
+    const SEP = "━".repeat(46);
+    const SUB = "─".repeat(46);
+
     const lines = [
-      `Anfrage über alignum.de`,
-      `————————————————————`,
+      `╔${SEP}╗`,
+      `   ALIGNUM · NEUE ANFRAGE`,
+      `╚${SEP}╝`,
       ``,
-      `LEISTUNG`,
-      `${serviceObj?.name ?? form.service}`,
+      `Eingegangen am ${dateStr}`,
+      `um ${timeStr} Uhr · über alignum.de/anfrage`,
       ``,
-      `PROJEKT`,
-      `Umfang: ${form.scope}`,
-      `Budget: ${form.budget || "—"}`,
-      `Timeline: ${form.timeline}`,
+      SEP,
       ``,
-      `BESCHREIBUNG`,
-      form.description,
+      `▸ LEISTUNG`,
       ``,
-      `MASSE / RÄUME`,
-      form.measurements || "—",
+      `   ${serviceName}`,
       ``,
-      `KONTAKT`,
-      `Name: ${form.name}`,
-      `E-Mail: ${form.email}`,
-      `Telefon: ${form.phone || "—"}`,
-      `Ort: ${form.city || "—"}`,
-      `Bevorzugte Erreichbarkeit: ${form.contactPref}`,
+      SUB,
+      ``,
+      `▸ PROJEKT-RAHMEN`,
+      ``,
+      `   Umfang     ${form.scope}`,
+      `   Budget     ${form.budget || "— keine Angabe —"}`,
+      `   Zeitrahmen ${form.timeline}`,
+      ``,
+      SUB,
+      ``,
+      `▸ BESCHREIBUNG`,
+      ``,
+      indent(form.description, "   "),
+      ``,
+      SUB,
+      ``,
+      `▸ MAßE / RÄUME`,
+      ``,
+      `   ${form.measurements || "— keine Angabe —"}`,
+      ``,
+      SUB,
+      ``,
+      `▸ KONTAKT`,
+      ``,
+      `   Name          ${form.name}`,
+      `   E-Mail        ${form.email}`,
+      `   Telefon       ${form.phone || "—"}`,
+      `   Ort           ${form.city || "—"}`,
+      `   Erreichbar    ${contactPrefLabel[form.contactPref] ?? form.contactPref}`,
+      ``,
+      SEP,
+      ``,
+      `📩 SCHNELLE ANTWORT`,
+      ``,
+      `   Klicke „Antworten" — die Mail geht direkt`,
+      `   an ${form.name} (${form.email}).`,
+      ``,
+      `   Tipp für Telefon-Rückruf:`,
+      `   ${form.phone ? `tel:${form.phone.replace(/[^\d+]/g, "")}` : "— keine Nummer hinterlegt —"}`,
+      ``,
+      SEP,
+      ``,
+      `Diese Anfrage wurde über das Multistep-Formular auf`,
+      `alignum.de eingereicht. Bei Rückfragen zur Website:`,
+      `${SITE.formMailto}`,
     ];
+
     const body = encodeURIComponent(lines.join("\n"));
     return `mailto:${SITE.formMailto}?subject=${encodeURIComponent(subject)}&body=${body}`;
+  }
+
+  /** Multi-line text mit Prefix einrücken — für Beschreibungsblock. */
+  function indent(text: string, prefix: string): string {
+    return (text || "—")
+      .split(/\r?\n/)
+      .map((l) => `${prefix}${l}`)
+      .join("\n");
   }
 
   function handleSubmit() {
@@ -494,20 +567,71 @@ function SuccessState() {
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.6, ease: [0.19, 1, 0.22, 1] }}
-      className="rounded-2xl border border-border bg-card p-10 text-center grain-overlay"
+      className="text-center"
     >
-      <span className="inline-flex size-16 items-center justify-center rounded-full bg-primary text-primary-foreground mb-6">
-        <Sparkles className="size-7" />
-      </span>
-      <h2 className="font-display text-3xl sm:text-4xl mb-3">Danke!</h2>
-      <p className="text-muted-foreground max-w-sm mx-auto">
-        Ihre Anfrage ist auf dem Weg. Falls sich Ihr E-Mail-Programm nicht
-        geöffnet hat, schreiben Sie uns einfach an{" "}
-        <a className="text-primary" href={`mailto:${SITE.formMailto}`}>
-          {SITE.formMailto}
-        </a>
-        .
-      </p>
+      <div className="relative rounded-2xl border border-border bg-card p-8 sm:p-12 grain-overlay">
+        {/* Animated check ring */}
+        <motion.span
+          initial={{ scale: 0, rotate: -90 }}
+          animate={{ scale: 1, rotate: 0 }}
+          transition={{ duration: 0.7, delay: 0.2, ease: [0.19, 1, 0.22, 1] }}
+          className="relative inline-flex size-20 items-center justify-center rounded-full bg-primary text-primary-foreground mb-6 shadow-[var(--shadow-glow)]"
+        >
+          <Sparkles className="size-9" />
+          <motion.span
+            aria-hidden
+            initial={{ scale: 0.8, opacity: 0.6 }}
+            animate={{ scale: 1.4, opacity: 0 }}
+            transition={{ duration: 1.4, delay: 0.4, ease: "easeOut" }}
+            className="absolute inset-0 rounded-full bg-primary"
+          />
+        </motion.span>
+
+        <h2 className="font-display text-3xl sm:text-4xl mb-3">
+          Danke, Ihre Anfrage ist <span className="text-primary italic">unterwegs.</span>
+        </h2>
+
+        <p className="text-base sm:text-lg text-muted-foreground max-w-md mx-auto leading-relaxed">
+          Jan liest jede Anfrage persönlich und meldet sich innerhalb von{" "}
+          <strong className="text-foreground">einem Werktag</strong> bei Ihnen
+          – per E-Mail oder Telefon, je nachdem wie Sie es bevorzugen.
+        </p>
+
+        {/* Was als nächstes passiert */}
+        <div className="mt-8 pt-8 border-t border-border text-left max-w-sm mx-auto space-y-3">
+          <p className="text-xs uppercase tracking-[0.25em] text-primary font-medium mb-3 text-center">
+            So geht es weiter
+          </p>
+
+          {[
+            { n: "1", t: "Wir prüfen Ihre Anfrage", b: "Jan schaut sich Ihre Skizze, Maße und Wünsche an." },
+            { n: "2", t: "Wir melden uns binnen 24 h", b: "Per E-Mail mit ersten Rückfragen oder direkt mit Terminvorschlag." },
+            { n: "3", t: "Aufmaß bei Ihnen vor Ort", b: "Kostenlos und unverbindlich. Erst danach gibt's ein Angebot." },
+          ].map((s) => (
+            <div key={s.n} className="flex items-start gap-3">
+              <span className="shrink-0 inline-flex size-7 items-center justify-center rounded-full bg-primary/15 text-primary text-xs font-medium font-display">
+                {s.n}
+              </span>
+              <div>
+                <p className="text-sm font-medium text-foreground">{s.t}</p>
+                <p className="text-xs text-muted-foreground leading-relaxed">{s.b}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Fallback */}
+        <p className="mt-8 pt-6 border-t border-border text-xs text-muted-foreground max-w-sm mx-auto leading-relaxed">
+          Falls sich Ihr E-Mail-Programm nicht geöffnet hat:{" "}
+          <a className="text-primary underline-grain" href={`mailto:${SITE.formMailto}`}>
+            {SITE.formMailto}
+          </a>{" "}
+          oder direkt anrufen:{" "}
+          <a className="text-primary underline-grain" href={`tel:${SITE.phone.replace(/\s/g, "")}`}>
+            {SITE.phoneDisplay}
+          </a>
+        </p>
+      </div>
     </motion.div>
   );
 }
