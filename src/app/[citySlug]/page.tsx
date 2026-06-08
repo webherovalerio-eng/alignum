@@ -4,6 +4,7 @@ import { WerkstattZuIhnen } from "@/components/sections/WerkstattZuIhnen";
 import { CityIntent } from "@/components/sections/CityIntent";
 import { CitySecretSauce } from "@/components/sections/CitySecretSauce";
 import { ReferenceProjects } from "@/components/sections/ReferenceProjects";
+import { ProjectsByCity } from "@/components/sections/ProjectsByCity";
 import { MeetJan } from "@/components/sections/MeetJan";
 import { ServicesGrid } from "@/components/sections/ServicesGrid";
 import { Materials } from "@/components/sections/Materials";
@@ -53,6 +54,9 @@ export default async function CityPage({ params }: { params: Promise<{ citySlug:
 
       {/* 2. So arbeiten wir mit {Stadt} — Statement-Strip */}
       <CitySecretSauce city={city} />
+
+      {/* 2b. Echte Projekte in dieser Stadt (rendert nichts wenn keine Einträge) */}
+      <ProjectsByCity city={city} />
 
       {/* 3. Der Schreiner hinter Alignum — Jan persönlich */}
       <MeetJan city={city} />

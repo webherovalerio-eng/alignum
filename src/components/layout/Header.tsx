@@ -12,8 +12,8 @@ import { cn } from "@/lib/cn";
 
 const NAV_PRIMARY = [
   { href: `/${SERVICE_HUB}/`, label: "Leistungen", hasMenu: true },
+  { href: "/projekte/", label: "Projekte" },
   { href: "/about-us/", label: "Über uns" },
-  { href: "/garantie/", label: "Garantie" },
   { href: "/kontakt/", label: "Kontakt" },
 ];
 
