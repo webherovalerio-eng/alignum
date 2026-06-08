@@ -6,6 +6,10 @@ import { SmoothScroll } from "@/components/providers/SmoothScroll";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { JsonLd } from "@/components/seo/JsonLd";
+import { ConsentProvider } from "@/components/consent/ConsentContext";
+import { GoogleAnalytics } from "@/components/consent/GoogleAnalytics";
+import { CookieBanner } from "@/components/consent/CookieBanner";
+import { ConsentSettings } from "@/components/consent/ConsentSettings";
 import { SITE } from "@/data/site";
 import { localBusinessJsonLd } from "@/lib/seo";
 
@@ -56,11 +60,18 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="de" suppressHydrationWarning className={`${inter.variable} ${fraunces.variable}`}>
       <body className="min-h-dvh antialiased">
         <ThemeProvider>
-          <SmoothScroll />
-          <Header />
-          <main className="relative">{children}</main>
-          <Footer />
-          <JsonLd id="ld-business" data={localBusinessJsonLd()} />
+          <ConsentProvider>
+            <SmoothScroll />
+            <Header />
+            <main className="relative">{children}</main>
+            <Footer />
+            <JsonLd id="ld-business" data={localBusinessJsonLd()} />
+
+            {/* DSGVO — GA wird nur geladen wenn consent.analytics === true */}
+            <GoogleAnalytics />
+            <CookieBanner />
+            <ConsentSettings />
+          </ConsentProvider>
         </ThemeProvider>
       </body>
     </html>

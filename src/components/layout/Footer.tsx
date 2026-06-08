@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Logo } from "./Logo";
+import { CookieSettingsLink } from "@/components/consent/CookieSettingsLink";
 import { SITE } from "@/data/site";
 import { SERVICES, SERVICE_HUB } from "@/data/services";
 import { CITIES } from "@/data/cities";
@@ -76,6 +77,9 @@ export function Footer() {
               <li><Link href="/garantie/" className="text-muted-foreground hover:text-foreground">Garantie</Link></li>
               <li><Link href="/impressum/" className="text-muted-foreground hover:text-foreground">Impressum</Link></li>
               <li><Link href="/datenschutzerklaerung/" className="text-muted-foreground hover:text-foreground">Datenschutz</Link></li>
+              <li>
+                <CookieSettingsLink className="text-muted-foreground hover:text-foreground transition-colors" />
+              </li>
             </ul>
           </div>
         </div>
