@@ -45,13 +45,16 @@ const material = MATERIALS.find((m) => m.slug === project.material);
 const outDir = path.join(OUTPUT_BASE, slug);
 await fs.mkdir(outDir, { recursive: true });
 
-/**
- * Konvertiert ein Repo-Image-Path zu file:// URL für lokalen Chromium-Zugriff.
- */
 function imgUrl(relPath: string): string {
   const absPath = path.join(WEB_ROOT, "public", relPath.replace(/^\//, ""));
   return pathToFileURL(absPath).href;
 }
+
+// Logo as inline base64 — funktioniert ohne Server-Setup
+const logoLight = await fs.readFile(path.join(WEB_ROOT, "public", "logo.png"));
+const logoDark = await fs.readFile(path.join(WEB_ROOT, "public", "logo-dark.png"));
+const logoLightUri = `data:image/png;base64,${logoLight.toString("base64")}`;
+const logoDarkUri = `data:image/png;base64,${logoDark.toString("base64")}`;
 
 // ─────────────── SLIDES ───────────────
 
@@ -64,16 +67,15 @@ const slides = [
   <div class="slide" id="slide-1">
     <img class="bg" src="${imgUrl(project.cover)}" />
     <div class="scrim-bottom"></div>
-    <div class="brand-top">
-      <div class="brand-letter">A</div>
-      <div class="brand-name">alignum</div>
+    <div class="brand-top brand-top--light">
+      <img src="${logoLightUri}" class="brand-logo" alt="Alignum" />
     </div>
     <div class="hero-bottom">
       <div class="eyebrow">Referenz · ${city?.name ?? ""}${project.year ? " · " + project.year : ""}</div>
       <h1 class="hero-title">${project.title}</h1>
       <div class="hero-sub">${project.summary}</div>
     </div>
-    <div class="page-pill">1 / 6</div>
+    <div class="page-pill page-pill--light">1 / 6</div>
   </div>
   `,
 
@@ -82,9 +84,8 @@ const slides = [
   <div class="slide" id="slide-2">
     <div class="surface-deep"></div>
     <div class="watermark">${city?.name ?? "Projekt"}</div>
-    <div class="brand-top">
-      <div class="brand-letter brand-letter--gold">A</div>
-      <div class="brand-name brand-name--light">alignum</div>
+    <div class="brand-top brand-top--light">
+      <img src="${logoLightUri}" class="brand-logo" alt="Alignum" />
     </div>
     <div class="statement-block">
       <div class="eyebrow eyebrow--gold">Die Idee</div>
@@ -98,11 +99,10 @@ const slides = [
   `
   <div class="slide" id="slide-3">
     <img class="bg-half" src="${imgUrl(project.images[1] ?? project.cover)}" />
+    <div class="brand-top">
+      <img src="${logoDarkUri}" class="brand-logo" alt="Alignum" />
+    </div>
     <div class="bottom-card">
-      <div class="brand-mini">
-        <div class="brand-letter">A</div>
-        <div class="brand-name">alignum</div>
-      </div>
       <div class="eyebrow eyebrow--gold">Die Lösung</div>
       <p class="body-text">${project.body[1] ?? project.summary}</p>
     </div>
@@ -115,9 +115,8 @@ const slides = [
   <div class="slide" id="slide-4">
     <img class="bg" src="${imgUrl(`/images/woods/${material?.slug ?? "stiel-eiche"}.jpg`)}" />
     <div class="scrim-full"></div>
-    <div class="brand-top">
-      <div class="brand-letter brand-letter--gold">A</div>
-      <div class="brand-name brand-name--light">alignum</div>
+    <div class="brand-top brand-top--light">
+      <img src="${logoLightUri}" class="brand-logo" alt="Alignum" />
     </div>
     <div class="center-block">
       <div class="eyebrow eyebrow--gold">Das Holz</div>
@@ -134,8 +133,7 @@ const slides = [
     <div class="cream-surface"></div>
     <div class="watermark watermark--dark">Details</div>
     <div class="brand-top">
-      <div class="brand-letter">A</div>
-      <div class="brand-name">alignum</div>
+      <img src="${logoDarkUri}" class="brand-logo" alt="Alignum" />
     </div>
     <div class="features-block">
       <div class="eyebrow eyebrow--gold">Was wir gebaut haben</div>
@@ -153,9 +151,8 @@ const slides = [
   <div class="slide" id="slide-6">
     <div class="surface-deep"></div>
     <div class="watermark">alignum</div>
-    <div class="brand-top">
-      <div class="brand-letter brand-letter--gold">A</div>
-      <div class="brand-name brand-name--light">alignum</div>
+    <div class="brand-top brand-top--light">
+      <img src="${logoLightUri}" class="brand-logo" alt="Alignum" />
     </div>
     <div class="cta-block">
       <div class="eyebrow eyebrow--gold">Ihr Projekt ist als nächstes dran</div>
@@ -178,7 +175,7 @@ const slides = [
 // ─────────────── STYLES ───────────────
 
 const css = `
-  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Fraunces:opsz,wght,SOFT@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap');
 
   :root {
     --gold: #d48408;
@@ -197,6 +194,7 @@ const css = `
     -webkit-font-smoothing: antialiased;
   }
   .font-display { font-family: 'Fraunces', Georgia, 'Times New Roman', serif; letter-spacing: -0.02em; }
+  .font-brand { font-family: 'Cinzel', 'Trajan Pro', Georgia, serif; letter-spacing: 0.08em; text-transform: uppercase; }
   .italic { font-style: italic; }
   .gold { color: var(--gold); }
 
@@ -269,48 +267,19 @@ const css = `
     position: absolute;
     top: 56px;
     left: 64px;
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    z-index: 2;
+    z-index: 3;
   }
-  .brand-mini {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 24px;
+  .brand-logo {
+    height: 62px;
+    width: auto;
+    display: block;
   }
-  .brand-letter {
-    width: 44px; height: 44px;
-    display: flex; align-items: center; justify-content: center;
-    background: var(--bg-deep);
-    color: var(--gold);
-    font-family: 'Fraunces', serif;
-    font-weight: 700;
-    font-size: 30px;
-    border-radius: 8px;
-  }
-  .brand-letter--gold {
-    background: var(--gold);
-    color: var(--bg-deep);
-  }
-  .brand-mini .brand-letter {
-    width: 36px; height: 36px; font-size: 24px;
-  }
-  .brand-name {
-    font-family: 'Fraunces', serif;
-    font-size: 28px;
-    font-weight: 500;
-    color: var(--fg-dark);
-    letter-spacing: -0.01em;
-  }
-  .brand-mini .brand-name { font-size: 22px; }
-  .brand-name--light { color: var(--fg-light); }
 
   .eyebrow {
+    font-family: 'Cinzel', 'Trajan Pro', Georgia, serif;
     font-size: 14px;
     text-transform: uppercase;
-    letter-spacing: 0.28em;
+    letter-spacing: 0.32em;
     font-weight: 500;
     color: rgba(255,255,255,0.7);
     margin-bottom: 18px;
@@ -530,13 +499,12 @@ console.log("HTML written:", htmlFile);
 const browser = await chromium.launch();
 const context = await browser.newContext({
   viewport: { width: SLIDE_W, height: SLIDE_H },
-  deviceScaleFactor: 2, // Retina/2x für scharfe PNGs
+  deviceScaleFactor: 2,
 });
 const page = await context.newPage();
 await page.goto(pathToFileURL(htmlFile).href);
-// Wait for fonts to load
 await page.evaluateHandle("document.fonts.ready");
-await page.waitForTimeout(500);
+await page.waitForTimeout(800);
 
 for (let i = 1; i <= 6; i++) {
   const slide = await page.locator(`#slide-${i}`);

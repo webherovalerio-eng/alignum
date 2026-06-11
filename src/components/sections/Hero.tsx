@@ -30,12 +30,28 @@ export function Hero() {
       {/* ──────────── LEFT: Statement panel ──────────── */}
       <motion.div
         style={{ opacity }}
-        className="relative lg:col-span-7 bg-surface-deep text-surface-deep-foreground flex flex-col justify-center px-6 sm:px-10 lg:px-16 xl:px-24 pt-32 pb-20 lg:pt-28 lg:pb-32 min-h-[70svh] lg:min-h-[100svh] grain-overlay"
+        className="relative lg:col-span-7 bg-surface-charcoal text-surface-charcoal-foreground flex flex-col justify-center px-6 sm:px-10 lg:px-16 xl:px-24 pt-32 pb-20 lg:pt-28 lg:pb-32 min-h-[70svh] lg:min-h-[100svh] grain-overlay"
       >
+        {/* Shoji background atmosphere — sehr dezent, gibt dem Panel Tiefe */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 overflow-hidden"
+        >
+          <Image
+            src="/images/services/shoji/shoji-cover.jpg"
+            alt=""
+            fill
+            priority
+            sizes="(max-width: 1024px) 100vw, 60vw"
+            className="object-cover opacity-[0.18] mix-blend-luminosity"
+          />
+          <div className="absolute inset-0 bg-gradient-to-br from-surface-charcoal/85 via-surface-charcoal/70 to-surface-charcoal/90" />
+        </div>
+
         {/* Giant decorative letter */}
         <div
           aria-hidden
-          className="pointer-events-none absolute -bottom-[10vw] -left-[2vw] select-none font-display text-[clamp(20rem,40vw,52rem)] leading-[0.85] text-white/[0.04] tracking-tighter"
+          className="pointer-events-none absolute -bottom-[10vw] -left-[2vw] select-none font-display text-[clamp(20rem,40vw,52rem)] leading-[0.85] text-white/[0.05] tracking-tighter"
         >
           A
         </div>

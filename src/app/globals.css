@@ -19,6 +19,10 @@
   --surface-deep: 0 0% 6%;
   --surface-deep-foreground: 36 25% 95%;
 
+  /* Surface-charcoal: dunkles Warm-Grau (nicht ganz schwarz) — für Hero-Panel */
+  --surface-charcoal: 30 6% 14%;
+  --surface-charcoal-foreground: 36 25% 95%;
+
   /* Surface */
   --background: 36 33% 97%;          /* warm parchment white */
   --foreground: 0 0% 8%;             /* near black */
@@ -78,6 +82,8 @@
   --foreground: 36 25% 95%;
   --surface-deep: 0 0% 3%;
   --surface-deep-foreground: 36 25% 95%;
+  --surface-charcoal: 30 5% 11%;
+  --surface-charcoal-foreground: 36 25% 95%;
   --card: 0 0% 8%;
   --card-foreground: 36 25% 95%;
   --muted: 0 0% 14%;
@@ -117,9 +123,12 @@
   --color-destructive-foreground: hsl(var(--destructive-foreground));
   --color-surface-deep: hsl(var(--surface-deep));
   --color-surface-deep-foreground: hsl(var(--surface-deep-foreground));
+  --color-surface-charcoal: hsl(var(--surface-charcoal));
+  --color-surface-charcoal-foreground: hsl(var(--surface-charcoal-foreground));
 
   --font-sans: var(--font-sans-stack);
   --font-display: var(--font-display-stack);
+  --font-brand: var(--font-brand-stack);
   --font-mono: var(--font-mono-stack);
 
   --radius-sm: var(--radius-sm);
@@ -170,6 +179,15 @@ body {
   font-weight: 600;
   letter-spacing: -0.02em;
   line-height: 1.02;
+}
+
+/* Brand-Caps — Cinzel, identisch zum Logo-Schriftzug.
+   Für Eyebrows, kleine Caps-Labels, „SCHREINEREI MANNHEIM" Bezeichnungen. */
+.font-brand {
+  font-family: var(--font-brand, var(--font-display, var(--font-sans)));
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
 }
 
 /* ─────────────────────────────────────────────────────────────

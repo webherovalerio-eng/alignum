@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Fraunces } from "next/font/google";
+import { Inter, Fraunces, Cinzel } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { SmoothScroll } from "@/components/providers/SmoothScroll";
@@ -24,6 +24,17 @@ const fraunces = Fraunces({
   variable: "--font-display-stack",
   display: "swap",
   axes: ["opsz", "SOFT"],
+});
+
+// Brand-Schrift identisch zum Logo-Schriftzug (ALIGNUM MÖBELBAU).
+// Cinzel ist die Free-Google-Fonts-Variante von Trajan Pro — römische
+// Capitalis, lapidare Anmutung. Wird für Eyebrows, kleine Caps-Labels
+// und Brand-Statements verwendet.
+const cinzel = Cinzel({
+  subsets: ["latin"],
+  variable: "--font-brand-stack",
+  display: "swap",
+  weight: ["400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -57,7 +68,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="de" suppressHydrationWarning className={`${inter.variable} ${fraunces.variable}`}>
+    <html lang="de" suppressHydrationWarning className={`${inter.variable} ${fraunces.variable} ${cinzel.variable}`}>
       <body className="min-h-dvh antialiased">
         <ThemeProvider>
           <ConsentProvider>
