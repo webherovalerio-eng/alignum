@@ -38,14 +38,14 @@ export function Hero() {
           className="pointer-events-none absolute inset-0 overflow-hidden"
         >
           <Image
-            src="/images/services/shoji/shoji-cover.jpg"
+            src="/images/hero/hero-shoji-ambient.jpg"
             alt=""
             fill
             priority
             sizes="(max-width: 1024px) 100vw, 60vw"
-            className="object-cover opacity-[0.18] mix-blend-luminosity"
+            className="object-cover opacity-[0.22]"
           />
-          <div className="absolute inset-0 bg-gradient-to-br from-surface-charcoal/85 via-surface-charcoal/70 to-surface-charcoal/90" />
+          <div className="absolute inset-0 bg-gradient-to-br from-surface-charcoal/82 via-surface-charcoal/68 to-surface-charcoal/88" />
         </div>
 
         {/* Giant decorative letter */}
