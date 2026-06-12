@@ -126,7 +126,7 @@ export function ShojiReveal() {
               fill
               priority
               sizes="100vw"
-              className="object-cover"
+              className="object-contain object-center"
             />
           </div>
         </motion.div>
@@ -146,20 +146,10 @@ export function ShojiReveal() {
               fill
               priority
               sizes="100vw"
-              className="object-cover"
+              className="object-contain object-center"
             />
           </div>
         </motion.div>
-
-        {/* Top/Bottom Schiebeschienen-Schatten */}
-        <div
-          aria-hidden
-          className="absolute top-0 inset-x-0 h-4 bg-gradient-to-b from-black/65 to-transparent z-30 pointer-events-none"
-        />
-        <div
-          aria-hidden
-          className="absolute bottom-0 inset-x-0 h-4 bg-gradient-to-t from-black/65 to-transparent z-30 pointer-events-none"
-        />
 
         {/* Scroll-Hint */}
         <motion.div
