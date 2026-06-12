@@ -5,17 +5,28 @@ import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion
 import { useRef } from "react";
 
 /**
- * Scroll-getriggerte Shoji-Türen-Animation — finale Version.
+ * Scroll-getriggerte Shoji-Türen-Animation.
+ *
+ * Konzept: nur die ZWEI MITTLEREN Türen (mit Ornament) bewegen sich.
+ * Außenwand und die zwei Außen-Türen bleiben statisch. Beim Öffnen
+ * gleiten die Mittel-Türen seitlich weg und ein ruhiger Raum dahinter
+ * wird sichtbar — entschleunigte japanische Wohnatmosphäre.
  *
  * Technik:
- * - Hintergrund: Showroom-Foto (was sichtbar wird wenn Türen aufgehen)
- * - Zwei vollformatige Layer mit demselben shoji-wide.jpg, jeweils
- *   per clip-path auf eine Bildhälfte beschränkt
- * - Beim Scrollen gleiten beide Layer komplett zur Seite (x: 0 → ±100 %)
- * - Dadurch bleibt das Bild bildscharf — keine Crops/Upscales pro Tür
+ * - Dasselbe shoji-wall.jpg wird in drei Layern gerendert:
+ *   1. Statisch: clip-path zeigt nur Außenwand + 2 Außen-Türen
+ *   2. Animiert links: clip-path zeigt nur die mittel-linke Tür
+ *   3. Animiert rechts: clip-path zeigt nur die mittel-rechte Tür
+ * - Da alle 3 Layer object-contain mit gleicher Geometrie haben, sind sie
+ *   pixelgenau übereinander positioniert
  *
- * shoji-wide.jpg (3200×1593) ist die original-Aufnahme + horizontal
- * gespiegelte Kopie → vier symmetrische Türen, Mitte = Wand.
+ * Tür-Positionen im Bild (geschätzt aus shoji-wall.jpg):
+ * - Außenwand links:     0% – 13%
+ * - Tür 1 (außen):      13% – 32%
+ * - Tür 2 (mitte links): 32% – 50%
+ * - Tür 3 (mitte rechts):50% – 68%
+ * - Tür 4 (außen):      68% – 87%
+ * - Außenwand rechts:   87% – 100%
  */
 export function ShojiReveal() {
   const ref = useRef<HTMLDivElement>(null);
@@ -25,33 +36,46 @@ export function ShojiReveal() {
     offset: ["start end", "end start"],
   });
 
-  // Türen-Slide: 0.32 → 0.7 (langsamer, edler)
+  // Mittel-Türen gleiten 0.32 → 0.68: linke um -19%, rechte um +19%
+  // (das bringt sie genau hinter die Außen-Türen)
   const leftX = useTransform(
     scrollYProgress,
-    [0.32, 0.7],
-    reduce ? ["0%", "0%"] : ["0%", "-100%"],
+    [0.32, 0.68],
+    reduce ? ["0%", "0%"] : ["0%", "-19%"],
   );
   const rightX = useTransform(
     scrollYProgress,
-    [0.32, 0.7],
-    reduce ? ["0%", "0%"] : ["0%", "100%"],
+    [0.32, 0.68],
+    reduce ? ["0%", "0%"] : ["0%", "19%"],
   );
 
-  // Hintergrund-Atmosphäre — leichter Parallax und Scale
+  // Hintergrund-Atmosphäre
   const bgScale = useTransform(
     scrollYProgress,
     [0.3, 0.75],
-    reduce ? [1, 1] : [1.1, 1.0],
+    reduce ? [1, 1] : [1.08, 1.0],
   );
-  const bgOpacity = useTransform(scrollYProgress, [0.25, 0.5], [0.5, 1]);
+  const bgOpacity = useTransform(scrollYProgress, [0.28, 0.55], [0.4, 1]);
 
-  // Gold-Glow durch den Spalt
-  const glowOpacity = useTransform(scrollYProgress, [0.32, 0.5, 0.78], [0, 1, 0.7]);
-  const glowWidth = useTransform(scrollYProgress, [0.32, 0.7], ["0%", "70%"]);
+  // Warmes Licht durch den Spalt
+  const glowOpacity = useTransform(scrollYProgress, [0.34, 0.55, 0.78], [0, 1, 0.6]);
 
-  // Caption fadet ein nach 55% Animation
-  const captionOpacity = useTransform(scrollYProgress, [0.55, 0.8], [0, 1]);
-  const captionY = useTransform(scrollYProgress, [0.55, 0.8], [40, 0]);
+  // Caption fadet ein nach 55 % Animation
+  const captionOpacity = useTransform(scrollYProgress, [0.55, 0.78], [0, 1]);
+  const captionY = useTransform(scrollYProgress, [0.55, 0.78], [40, 0]);
+
+  // Clip-paths
+  const FRAME_CLIP =
+    // Außen-Bereiche: 0-32% (Wand+Tür1) und 68-100% (Tür4+Wand)
+    "polygon(0% 0%, 32% 0%, 32% 100%, 0% 100%)";
+  const FRAME_CLIP_RIGHT =
+    "polygon(68% 0%, 100% 0%, 100% 100%, 68% 100%)";
+  const DOOR_LEFT_CLIP =
+    // Mittel-links: 32% bis 50%
+    "polygon(32% 0%, 50% 0%, 50% 100%, 32% 100%)";
+  const DOOR_RIGHT_CLIP =
+    // Mittel-rechts: 50% bis 68%
+    "polygon(50% 0%, 68% 0%, 68% 100%, 50% 100%)";
 
   return (
     <section
@@ -61,7 +85,7 @@ export function ShojiReveal() {
       aria-label="Shoji-Türen Animation"
     >
       <div className="sticky top-0 h-svh w-full overflow-hidden bg-surface-charcoal">
-        {/* HINTERGRUND — Showroom hinter den Türen */}
+        {/* HINTERGRUND — der Raum hinter den Türen (japanischer Showroom) */}
         <motion.div
           style={{ scale: bgScale, opacity: bgOpacity }}
           className="absolute inset-0"
@@ -74,81 +98,100 @@ export function ShojiReveal() {
             sizes="100vw"
             className="object-cover"
           />
-          {/* Atmosphärische Vignette */}
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_20%,rgba(0,0,0,0.65)_100%)]" />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/15 via-transparent to-black/45" />
+          {/* Atmosphärische Vignette für Tiefe */}
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_25%,rgba(0,0,0,0.65)_100%)]" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/15 via-transparent to-black/40" />
         </motion.div>
 
-        {/* CAPTION */}
+        {/* CAPTION — fadet ein wenn Türen aufgegangen sind */}
         <motion.div
           style={{ opacity: captionOpacity, y: captionY }}
           className="absolute inset-0 flex items-center justify-center px-6 z-10 pointer-events-none"
         >
           <div className="text-center max-w-2xl">
             <p className="font-brand text-xs sm:text-sm text-primary mb-5 tracking-[0.3em]">
-              Shoji · Schiebewand nach Maß
+              Shoji
             </p>
             <h2 className="font-display text-[clamp(2rem,5vw,4.5rem)] leading-[1.05] tracking-tight text-white text-shadow-hero">
-              Räume teilen.{" "}
+              Holen Sie sich{" "}
               <span className="italic text-primary inline-block">
-                Ohne sie zu trennen.
+                die Ruhe nach Hause.
               </span>
             </h2>
-            <p className="mt-6 text-base sm:text-lg text-white/85 leading-relaxed text-shadow-lg max-w-lg mx-auto">
-              Authentische japanische Schiebetüren aus heimischem Massivholz
-              und echtem Washi-Reispapier — geräuschlos gleitend, jahrzehnte­lang
-              haltbar.
+            <p className="mt-6 text-base sm:text-lg text-white/85 leading-relaxed text-shadow-lg max-w-md mx-auto">
+              Eine Schiebewand aus Massivholz und Washi-Reispapier. Minimalistisch.
+              Geräuschlos. Entschleunigend.
             </p>
           </div>
         </motion.div>
 
-        {/* GOLD-LICHT DURCH DEN SPALT */}
+        {/* WARMES LICHT zwischen den geöffneten Türen */}
         <motion.div
           aria-hidden
-          style={{ opacity: glowOpacity, width: glowWidth }}
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[120%] z-[15] pointer-events-none"
+          style={{ opacity: glowOpacity }}
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[40%] h-[110%] z-[15] pointer-events-none"
         >
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,210,150,0.6)_0%,rgba(212,132,8,0.28)_35%,transparent_75%)] blur-3xl" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,210,150,0.45)_0%,rgba(212,132,8,0.18)_40%,transparent_75%)] blur-3xl" />
         </motion.div>
 
-        {/* LINKE TÜR — Vollbild mit clip-path auf linke Hälfte */}
-        <motion.div
-          style={{
-            x: leftX,
-            clipPath: "polygon(0 0, 50% 0, 50% 100%, 0 100%)",
-          }}
-          className="absolute inset-0 z-20 will-change-transform"
+        {/* STATISCHER FRAME — linker Außen-Bereich (Wand + Tür 1) */}
+        <div
+          className="absolute inset-0 z-20 pointer-events-none"
+          style={{ clipPath: FRAME_CLIP }}
         >
-          <div className="relative h-full w-full">
-            <Image
-              src="/images/shoji-reveal/shoji-wall.jpg"
-              alt=""
-              fill
-              priority
-              sizes="100vw"
-              className="object-contain object-center"
-            />
-          </div>
+          <Image
+            src="/images/shoji-reveal/shoji-wall.jpg"
+            alt=""
+            fill
+            priority
+            sizes="100vw"
+            className="object-contain object-center"
+          />
+        </div>
+
+        {/* STATISCHER FRAME — rechter Außen-Bereich (Tür 4 + Wand) */}
+        <div
+          className="absolute inset-0 z-20 pointer-events-none"
+          style={{ clipPath: FRAME_CLIP_RIGHT }}
+        >
+          <Image
+            src="/images/shoji-reveal/shoji-wall.jpg"
+            alt=""
+            fill
+            priority
+            sizes="100vw"
+            className="object-contain object-center"
+          />
+        </div>
+
+        {/* ANIMIERT — linke Mittel-Tür (Tür 2 mit Ornament-Hälfte) */}
+        <motion.div
+          style={{ x: leftX, clipPath: DOOR_LEFT_CLIP }}
+          className="absolute inset-0 z-25 will-change-transform pointer-events-none"
+        >
+          <Image
+            src="/images/shoji-reveal/shoji-wall.jpg"
+            alt=""
+            fill
+            priority
+            sizes="100vw"
+            className="object-contain object-center"
+          />
         </motion.div>
 
-        {/* RECHTE TÜR — Vollbild mit clip-path auf rechte Hälfte */}
+        {/* ANIMIERT — rechte Mittel-Tür (Tür 3 mit Ornament-Hälfte) */}
         <motion.div
-          style={{
-            x: rightX,
-            clipPath: "polygon(50% 0, 100% 0, 100% 100%, 50% 100%)",
-          }}
-          className="absolute inset-0 z-20 will-change-transform"
+          style={{ x: rightX, clipPath: DOOR_RIGHT_CLIP }}
+          className="absolute inset-0 z-25 will-change-transform pointer-events-none"
         >
-          <div className="relative h-full w-full">
-            <Image
-              src="/images/shoji-reveal/shoji-wall.jpg"
-              alt=""
-              fill
-              priority
-              sizes="100vw"
-              className="object-contain object-center"
-            />
-          </div>
+          <Image
+            src="/images/shoji-reveal/shoji-wall.jpg"
+            alt=""
+            fill
+            priority
+            sizes="100vw"
+            className="object-contain object-center"
+          />
         </motion.div>
 
         {/* Scroll-Hint */}
