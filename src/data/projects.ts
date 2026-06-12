@@ -77,6 +77,44 @@ export const PROJECTS: Project[] = [
     cover:
       "/images/projects/fernsehschrank-mannheim-ahorn/fernsehschrank-mannheim-ahorn-01.jpg",
   },
+  {
+    slug: "shoji-schiebetuer-darmstadt-ahorn",
+    city: "schreinerei-darmstadt",
+    service: "shoji",
+    material: "ahorn",
+    title: "Shoji-Schiebetüren aus Ahorn — Projekt Darmstadt",
+    metaTitle: "Shoji Schiebetüren aus Ahorn | Projekt in Darmstadt",
+    metaDescription:
+      "Vierflügelige, raumhohe Shoji-Schiebewand aus Ahorn mit transluzenter Bespannung — von Alignum gefertigt für einen Kunden in Darmstadt. Montage inklusive.",
+    summary:
+      "Vierflügelige, raumhohe Shoji-Schiebewand aus hellem Ahorn mit transluzenter Bespannung — gefertigt für einen Flur in Darmstadt.",
+    body: [
+      "Für einen Kunden in Darmstadt haben wir eine komplette Wandseite im Flur in eine Shoji-Schiebewand verwandelt. Der Raum mit seinem Eichenparkett wirkte vorher eng und dunkel — der Wunsch war eine Front, die Stauraum verschließt, ohne wie eine massive Schrankwand zu wirken. Eine klassische Schiebetür aus Vollholz hätte das Licht geschluckt; die Shoji-Lösung macht das Gegenteil.",
+      "Entstanden sind vier raumhohe Schiebeelemente aus massivem Ahorn mit transluzenter Bespannung in Washi-Optik. Das feine Sprossenraster folgt der traditionellen japanischen Aufteilung: schmale, präzise gefräste Quersprossen, die das Licht in ruhige Felder gliedern. Die Elemente laufen auf zwei Spuren und lassen sich flächenbündig hintereinander schieben — die Front bleibt grifflos und vollkommen ruhig. Trifft Tageslicht oder die Flurleuchte auf die Bespannung, leuchtet die ganze Wand sanft auf.",
+      "Ahorn ist für Shoji die erste Wahl unter den heimischen Hölzern: europäischer Bergahorn ist cremig-hell, fast weiß, mit einer so feinen Maserung, dass die Rahmen optisch hinter die Bespannung zurücktreten. Genau diese Zurückhaltung braucht eine Shoji-Wand — das Holz gibt die Struktur vor, ohne sich in den Vordergrund zu spielen. Gegen das warme Eichenparkett setzt der helle Ahorn einen feinen, bewusst leisen Kontrast.",
+      "Nach dem Aufmaßtermin in Darmstadt haben wir die Elemente in unserer Werkstatt in Edingen-Neckarhausen gefertigt und bespannt. Von Aufmaß bis Montage vergehen bei einer Schiebewand dieser Größe rund sechs Wochen — montiert war die fertige Anlage an einem Vormittag, inklusive Justierung der Laufschienen.",
+    ],
+    features: [
+      "Vier raumhohe Shoji-Schiebeelemente aus massivem Ahorn",
+      "Transluzente Bespannung in Washi-Optik — lichtdurchlässig, aber blickdicht",
+      "Feines Sprossenraster nach traditioneller japanischer Aufteilung",
+      "Zweispurige Laufschienen — Elemente flächenbündig hintereinander verschiebbar",
+      "Grifflose Front ohne sichtbare Beschläge",
+      "Aufmaß, Lieferung und Montage in Darmstadt",
+    ],
+    images: [
+      "/images/projects/shoji-schiebetuer-darmstadt-ahorn/shoji-schiebetuer-darmstadt-ahorn-01.jpg",
+      "/images/projects/shoji-schiebetuer-darmstadt-ahorn/shoji-schiebetuer-darmstadt-ahorn-02.jpg",
+      "/images/projects/shoji-schiebetuer-darmstadt-ahorn/shoji-schiebetuer-darmstadt-ahorn-03.jpg",
+      "/images/projects/shoji-schiebetuer-darmstadt-ahorn/shoji-schiebetuer-darmstadt-ahorn-04.jpg",
+      "/images/projects/shoji-schiebetuer-darmstadt-ahorn/shoji-schiebetuer-darmstadt-ahorn-05.jpg",
+      "/images/projects/shoji-schiebetuer-darmstadt-ahorn/shoji-schiebetuer-darmstadt-ahorn-06.jpg",
+      "/images/projects/shoji-schiebetuer-darmstadt-ahorn/shoji-schiebetuer-darmstadt-ahorn-07.jpg",
+      "/images/projects/shoji-schiebetuer-darmstadt-ahorn/shoji-schiebetuer-darmstadt-ahorn-08.jpg",
+    ],
+    cover:
+      "/images/projects/shoji-schiebetuer-darmstadt-ahorn/shoji-schiebetuer-darmstadt-ahorn-01.jpg",
+  },
 ];
 
 /* ─────────────── Helpers ─────────────── */
