@@ -128,25 +128,6 @@ export function ShojiReveal() {
               sizes="100vw"
               className="object-cover"
             />
-            {/* Innenkanten-Tiefenschatten — vom rechten Rand des Layers
-                (= Mitte der Animation) nach links auslaufend */}
-            <div
-              className="absolute inset-y-0 left-[calc(50%-3rem)] w-12 pointer-events-none"
-              style={{
-                background:
-                  "linear-gradient(to left, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.3) 50%, transparent 100%)",
-              }}
-            />
-            {/* Subtle warm gradient overlay für Material-Stimmung */}
-            <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/30 mix-blend-multiply" />
-            {/* Gold-Light-Edge an der Innenkante */}
-            <motion.div
-              aria-hidden
-              style={{ opacity: glowOpacity }}
-              className="absolute inset-y-0 left-[calc(50%-1px)] w-px bg-gradient-to-b from-transparent via-primary/70 to-transparent pointer-events-none"
-            />
-            {/* Grain für Material-Tiefe */}
-            <div className="absolute inset-0 grain-overlay opacity-30" />
           </div>
         </motion.div>
 
@@ -167,20 +148,6 @@ export function ShojiReveal() {
               sizes="100vw"
               className="object-cover"
             />
-            <div
-              className="absolute inset-y-0 right-[calc(50%-3rem)] w-12 pointer-events-none"
-              style={{
-                background:
-                  "linear-gradient(to right, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.3) 50%, transparent 100%)",
-              }}
-            />
-            <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/30 mix-blend-multiply" />
-            <motion.div
-              aria-hidden
-              style={{ opacity: glowOpacity }}
-              className="absolute inset-y-0 right-[calc(50%-1px)] w-px bg-gradient-to-b from-transparent via-primary/70 to-transparent pointer-events-none"
-            />
-            <div className="absolute inset-0 grain-overlay opacity-30" />
           </div>
         </motion.div>
 
