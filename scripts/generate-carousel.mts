@@ -4,10 +4,14 @@
  * Erzeugt aus einem Projekt-Eintrag (src/data/projects.ts) sechs
  * Instagram/LinkedIn-Carousel-Slides (1080×1350, 4:5) als PNG.
  *
- *   npx tsx scripts/generate-carousel.mts {slug}
+ *   npx tsx scripts/generate-carousel.mts {slug} [--classic]
  *   z.B. npx tsx scripts/generate-carousel.mts fernsehschrank-mannheim-ahorn
  *
+ * --classic: Typo-Variante Cinzel (H1/H2) + Montserrat (Labels/Buttons) + Inter (Fließtext),
+ *            Slide 2 bildlastig mit kurzem Statement statt langem Zitat.
+ *
  * Output: ../_extracted/social/{slug}/slide-01.png … slide-06.png
+ *         (--classic: ../_extracted/social/{slug}-classic/)
  */
 
 import fs from "node:fs/promises";
@@ -26,8 +30,9 @@ const REPO_ROOT = path.resolve(WEB_ROOT, "..");
 const OUTPUT_BASE = path.join(REPO_ROOT, "_extracted", "social");
 
 const slug = process.argv[2];
+const classic = process.argv.includes("--classic");
 if (!slug) {
-  console.error("Usage: npx tsx scripts/generate-carousel.mts <project-slug>");
+  console.error("Usage: npx tsx scripts/generate-carousel.mts <project-slug> [--classic]");
   console.error("Available slugs:", PROJECTS.map((p) => p.slug).join(", "));
   process.exit(1);
 }
@@ -42,7 +47,7 @@ const city = CITIES.find((c) => c.slug === project.city);
 const service = SERVICES.find((s) => s.slug === project.service);
 const material = MATERIALS.find((m) => m.slug === project.material);
 
-const outDir = path.join(OUTPUT_BASE, slug);
+const outDir = path.join(OUTPUT_BASE, classic ? `${slug}-classic` : slug);
 await fs.mkdir(outDir, { recursive: true });
 
 function imgUrl(relPath: string): string {
@@ -79,8 +84,23 @@ const slides = [
   </div>
   `,
 
-  // 2. DIE IDEE — Statement
+  // 2. DIE IDEE — Statement (classic: Bild im Vordergrund, nur ein Satz)
+  classic
+    ? `
+  <div class="slide" id="slide-2">
+    <img class="bg" src="${imgUrl(project.images[2] ?? project.cover)}" />
+    <div class="scrim-bottom"></div>
+    <div class="brand-top brand-top--light">
+      <img src="${logoLightUri}" class="brand-logo" alt="Alignum" />
+    </div>
+    <div class="statement-bottom">
+      <div class="eyebrow eyebrow--gold">Die Idee</div>
+      <p class="image-quote">${project.body[0].split(/(?<=\.)\s+/)[0]}</p>
+    </div>
+    <div class="page-pill page-pill--light">2 / 6</div>
+  </div>
   `
+    : `
   <div class="slide" id="slide-2">
     <div class="surface-deep"></div>
     <div class="watermark">${city?.name ?? "Projekt"}</div>
@@ -175,7 +195,7 @@ const slides = [
 // ─────────────── STYLES ───────────────
 
 const css = `
-  @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Fraunces:opsz,wght,SOFT@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Fraunces:opsz,wght,SOFT@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=Montserrat:wght@500;600&display=swap');
 
   :root {
     --gold: #d48408;
@@ -478,12 +498,88 @@ const css = `
   }
 `;
 
+/*
+ * Classic-Typo-Variante:
+ *   H1 = Cinzel 600 (groß, edel, positives Letterspacing — Cinzel setzt alles in Kapitälchen,
+ *        daher kleinere Größen als bei Fraunces)
+ *   H2 = Cinzel 400
+ *   H3/Labels (Eyebrows) = Montserrat 500
+ *   Fließtext = Inter 400
+ *   Buttons/Pills = Montserrat 500-600 mit Letterspacing
+ */
+const classicCss = `
+  .eyebrow {
+    font-family: 'Montserrat', system-ui, sans-serif;
+    font-weight: 500;
+    font-size: 15px;
+    letter-spacing: 0.3em;
+  }
+  .watermark { font-family: 'Cinzel', Georgia, serif; font-weight: 400; letter-spacing: 0; }
+  .hero-title {
+    font-family: 'Cinzel', Georgia, serif;
+    font-weight: 600;
+    font-size: 58px;
+    line-height: 1.16;
+    letter-spacing: 0.045em;
+    max-width: none;
+  }
+  .hero-sub, .body-text, .material-body, .cta-body, .features-list li {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-weight: 400;
+  }
+  .statement-bottom {
+    position: absolute;
+    left: 64px; right: 64px; bottom: 120px;
+    z-index: 2;
+  }
+  .image-quote {
+    font-family: 'Cinzel', Georgia, serif;
+    font-weight: 400;
+    font-size: 42px;
+    line-height: 1.32;
+    letter-spacing: 0.03em;
+    color: #fff;
+  }
+  .material-title {
+    font-family: 'Cinzel', Georgia, serif;
+    font-weight: 600;
+    font-size: 82px;
+    line-height: 1.05;
+    letter-spacing: 0.04em;
+  }
+  .features-title {
+    font-family: 'Cinzel', Georgia, serif;
+    font-weight: 400;
+    font-size: 52px;
+    line-height: 1.15;
+    letter-spacing: 0.05em;
+  }
+  .cta-title {
+    font-family: 'Cinzel', Georgia, serif;
+    font-weight: 600;
+    font-size: 54px;
+    line-height: 1.18;
+    letter-spacing: 0.035em;
+  }
+  .cta-title .italic { font-style: normal; } /* Cinzel hat keine Kursive — Gold trägt den Akzent */
+  .cta-button {
+    font-family: 'Montserrat', system-ui, sans-serif;
+    font-weight: 600;
+    font-size: 22px;
+    letter-spacing: 0.06em;
+  }
+  .page-pill {
+    font-family: 'Montserrat', system-ui, sans-serif;
+    letter-spacing: 0.1em;
+  }
+`;
+
 const html = `<!doctype html>
 <html lang="de">
 <head>
 <meta charset="utf-8" />
 <title>Carousel — ${project.title}</title>
-<style>${css}</style>
+<style>${css}${classic ? classicCss : ""}</style>
 </head>
 <body>
 ${slides.join("\n")}
