@@ -121,7 +121,7 @@ export function ShojiReveal() {
         >
           <div className="relative h-full w-full">
             <Image
-              src="/images/shoji-reveal/shoji-wide.jpg"
+              src="/images/shoji-reveal/shoji-wall.jpg"
               alt=""
               fill
               priority
@@ -160,7 +160,7 @@ export function ShojiReveal() {
         >
           <div className="relative h-full w-full">
             <Image
-              src="/images/shoji-reveal/shoji-wide.jpg"
+              src="/images/shoji-reveal/shoji-wall.jpg"
               alt=""
               fill
               priority
