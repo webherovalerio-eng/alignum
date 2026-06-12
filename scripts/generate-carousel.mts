@@ -61,6 +61,27 @@ const logoDark = await fs.readFile(path.join(WEB_ROOT, "public", "logo-dark.png"
 const logoLightUri = `data:image/png;base64,${logoLight.toString("base64")}`;
 const logoDarkUri = `data:image/png;base64,${logoDark.toString("base64")}`;
 
+// Fonts lokal als base64 einbetten — der Google-Fonts-@import lädt im
+// Headless-Chromium nicht (document.fonts bleibt leer, alles fällt auf
+// Georgia/Segoe zurück). Variable-Font-TTFs liegen in scripts/fonts/.
+async function fontFace(file: string, family: string, weights: string): Promise<string> {
+  const buf = await fs.readFile(path.join(__dirname, "fonts", file));
+  return `@font-face {
+    font-family: '${family}';
+    src: url(data:font/ttf;base64,${buf.toString("base64")}) format('truetype');
+    font-weight: ${weights};
+    font-style: normal;
+  }`;
+}
+const fontCss = (
+  await Promise.all([
+    fontFace("cinzel.ttf", "Cinzel", "400 900"),
+    fontFace("montserrat.ttf", "Montserrat", "100 900"),
+    fontFace("inter.ttf", "Inter", "100 900"),
+    fontFace("fraunces.ttf", "Fraunces", "100 900"),
+  ])
+).join("\n");
+
 // ─────────────── SLIDES ───────────────
 
 const SLIDE_W = 1080;
@@ -195,7 +216,7 @@ const slides = [
 // ─────────────── STYLES ───────────────
 
 const css = `
-  @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Fraunces:opsz,wght,SOFT@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=Montserrat:wght@500;600&display=swap');
+  ${fontCss}
 
   :root {
     --gold: #d48408;
