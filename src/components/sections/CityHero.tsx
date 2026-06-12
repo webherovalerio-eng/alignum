@@ -53,7 +53,7 @@ export function CityHero({ city, photo }: { city: City; photo?: string }) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.5, ease: [0.19, 1, 0.22, 1] }}
-          className="font-display text-[clamp(2.75rem,8vw,7rem)] leading-[0.95] tracking-tight text-shadow-hero"
+          className="font-display text-[clamp(2.25rem,6vw,5.5rem)] leading-[0.95] tracking-tight text-shadow-hero"
         >
           {prefix}{" "}
           <span className="text-primary italic">{city.name}</span>

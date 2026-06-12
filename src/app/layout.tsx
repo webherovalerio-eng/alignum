@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Fraunces, Cinzel } from "next/font/google";
+import { Source_Sans_3, Montserrat, Cinzel } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { SmoothScroll } from "@/components/providers/SmoothScroll";
@@ -13,28 +13,32 @@ import { ConsentSettings } from "@/components/consent/ConsentSettings";
 import { SITE } from "@/data/site";
 import { localBusinessJsonLd } from "@/lib/seo";
 
-const inter = Inter({
+// Alle Fonts via next/font: werden beim Build heruntergeladen und vom
+// eigenen Server ausgeliefert — kein Request an Google im Browser (DSGVO).
+
+// Fließtext — angenehmer lesbar als Montserrat bei längeren Texten.
+const sourceSans = Source_Sans_3({
   subsets: ["latin"],
   variable: "--font-sans-stack",
   display: "swap",
+  style: ["normal", "italic"],
 });
 
-const fraunces = Fraunces({
+// H3 + Labels — klarer, moderner Kontrast zur Serifenschrift.
+const montserrat = Montserrat({
   subsets: ["latin"],
-  variable: "--font-display-stack",
+  variable: "--font-label-stack",
   display: "swap",
-  axes: ["opsz", "SOFT"],
 });
 
-// Brand-Schrift identisch zum Logo-Schriftzug (ALIGNUM MÖBELBAU).
-// Cinzel ist die Free-Google-Fonts-Variante von Trajan Pro — römische
-// Capitalis, lapidare Anmutung. Wird für Eyebrows, kleine Caps-Labels
-// und Brand-Statements verwendet.
+// Überschriften (H1/H2) + Brand-Schrift, identisch zum Logo-Schriftzug
+// (ALIGNUM MÖBELBAU). Cinzel ist die Free-Google-Fonts-Variante von
+// Trajan Pro — römische Capitalis, setzt alles in Versalformen.
 const cinzel = Cinzel({
   subsets: ["latin"],
   variable: "--font-brand-stack",
   display: "swap",
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "500", "600"],
 });
 
 export const metadata: Metadata = {
@@ -68,7 +72,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="de" suppressHydrationWarning className={`${inter.variable} ${fraunces.variable} ${cinzel.variable}`}>
+    <html lang="de" suppressHydrationWarning className={`${sourceSans.variable} ${montserrat.variable} ${cinzel.variable}`}>
       <body className="min-h-dvh antialiased">
         <ThemeProvider>
           <ConsentProvider>

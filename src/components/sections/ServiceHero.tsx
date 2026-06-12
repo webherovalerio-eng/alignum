@@ -37,7 +37,7 @@ export function ServiceHero({ service, photo }: { service: Service; photo?: stri
           {service.short}
         </Badge>
 
-        <h1 className="font-display text-[clamp(2.75rem,8vw,7rem)] leading-[0.95] tracking-tight max-w-[14ch] text-shadow-hero">
+        <h1 className="font-display text-[clamp(2.25rem,6vw,5.5rem)] leading-[0.95] tracking-tight max-w-[14ch] text-shadow-hero">
           <MaskWords text={service.name} />
         </h1>
 

@@ -35,7 +35,7 @@ export default function GarantiePage() {
             Unsere Garantie
           </Badge>
 
-          <h1 className="font-display text-[clamp(3rem,9vw,8rem)] leading-[0.92] tracking-tight">
+          <h1 className="font-display text-[clamp(2.5rem,7vw,6.5rem)] leading-[0.92] tracking-tight">
             <MaskWords text="Unser" />{" "}
             <span className="italic text-primary inline-block">Versprechen.</span>
           </h1>

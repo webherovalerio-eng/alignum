@@ -74,7 +74,7 @@ export function Hero() {
             Schreinerei seit 1992 · Edingen-Neckarhausen
           </Badge>
 
-          <h1 className="font-display text-[clamp(3rem,7vw,7.5rem)] leading-[0.92] tracking-tight">
+          <h1 className="font-display text-[clamp(2.5rem,5.6vw,6rem)] leading-[0.92] tracking-tight">
             <MaskWords text="Schreiner aus" />
             <br />
             <motion.span
