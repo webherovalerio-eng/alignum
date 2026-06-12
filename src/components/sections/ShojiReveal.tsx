@@ -120,7 +120,15 @@ export function ShojiReveal() {
             <div className="absolute inset-0 bg-gradient-to-b from-black/25 via-black/10 to-black/35" />
           </motion.div>
 
-          {/* CAPTION — im Raum, minimalistisch */}
+          {/* KONTRAST-LAYER — dunkelt den hellen Raum hinter dem Text ab,
+              blendet synchron mit der Caption ein */}
+          <motion.div
+            aria-hidden
+            style={{ opacity: captionOpacity }}
+            className="absolute inset-0 z-[9] pointer-events-none bg-[radial-gradient(ellipse_70%_60%_at_center,rgba(0,0,0,0.60)_0%,rgba(0,0,0,0.30)_55%,rgba(0,0,0,0.10)_100%)]"
+          />
+
+          {/* CAPTION — im Raum, minimalistisch, komplett weiß */}
           <motion.div
             style={{ opacity: captionOpacity, y: captionY }}
             className="absolute inset-0 flex items-center justify-center px-8 z-10 pointer-events-none"
@@ -128,11 +136,9 @@ export function ShojiReveal() {
             <div className="text-center max-w-xl">
               <h2 className="font-display text-[clamp(1.5rem,3.5vw,3.25rem)] leading-[1.08] tracking-tight text-white text-shadow-hero">
                 Holen Sie sich{" "}
-                <span className="italic text-primary inline-block">
-                  die Ruhe nach Hause.
-                </span>
+                <span className="italic inline-block">die Ruhe nach Hause.</span>
               </h2>
-              <p className="mt-4 text-sm sm:text-base text-white/85 leading-relaxed text-shadow-lg max-w-sm mx-auto">
+              <p className="mt-4 text-sm sm:text-base text-white/95 leading-relaxed text-shadow-lg max-w-sm mx-auto">
                 Minimalistisch. Geräuschlos. Entschleunigend.
               </p>
             </div>
