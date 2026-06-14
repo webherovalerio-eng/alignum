@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { SITE } from "@/data/site";
 import { SERVICES, SERVICE_HUB } from "@/data/services";
 import { CITIES } from "@/data/cities";
-import { PROJECTS } from "@/data/projects";
+import { PROJECTS, projectPath } from "@/data/projects";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
@@ -39,7 +39,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   }));
 
   const projectPages = PROJECTS.map((p) => ({
-    url: `${SITE.url}/projekte/${p.slug}/`,
+    url: `${SITE.url}${projectPath(p)}`,
     lastModified: now,
     changeFrequency: "yearly" as const,
     priority: 0.75,

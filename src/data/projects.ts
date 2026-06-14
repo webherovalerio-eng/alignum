@@ -2,7 +2,8 @@
  * Referenz-Projekte für Alignum — Local-SEO-Premium-Content.
  *
  * Jeder Eintrag wird automatisch:
- *  - Auf der eigenen Detail-Seite `/projekte/{slug}/` gerendert
+ *  - Auf der eigenen Detail-Seite `/{citySlug}/{slug}/` gerendert
+ *    (Supporting-Content unter der City-Page; /projekte/{slug}/ → 308-Redirect)
  *  - Auf der City-Page der jeweiligen Stadt als „Projekte in {Stadt}" gelistet
  *  - Auf der Service-Page der jeweiligen Disziplin als „Beispielprojekte" gelistet
  *  - In den Sitemap aufgenommen
@@ -121,6 +122,15 @@ export const PROJECTS: Project[] = [
 
 export function getProject(slug: string): Project | undefined {
   return PROJECTS.find((p) => p.slug === slug);
+}
+
+/**
+ * Kanonische URL eines Projekts: liegt als Supporting-Content UNTER der
+ * jeweiligen City-Page, z.B. /schreinerei-mannheim/fernsehschrank-mannheim-ahorn/.
+ * Die alte /projekte/{slug}/-URL leitet per 308 hierher um.
+ */
+export function projectPath(p: Project): string {
+  return `/${p.city}/${p.slug}/`;
 }
 
 export function getProjectsByCity(citySlug: string): Project[] {

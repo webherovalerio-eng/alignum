@@ -12,7 +12,7 @@ export function Materials() {
   const m = MATERIALS[active];
 
   return (
-    <section className="relative py-24 sm:py-32 overflow-hidden">
+    <section id="hoelzer" className="relative py-24 sm:py-32 overflow-hidden scroll-mt-28">
       <div className="container-prose">
         <Reveal className="max-w-3xl mb-16">
           <p className="text-sm tracking-widest uppercase text-primary font-medium mb-4">
