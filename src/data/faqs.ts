@@ -23,21 +23,21 @@ export const GENERAL_FAQS = [
 
 export const SERVICE_FAQS: Record<string, { q: string; a: string }[]> = {
   "kuechenbau-in-der-naehe": [
-    { q: "Was kostet eine Schreinerküche?", a: "Eine vollständige Massivholzküche bei Alignum beginnt etwa bei 18.000 € und reicht je nach Größe, Materialwahl und Ausstattung bis 60.000 €. Sie erhalten einen verbindlichen Festpreis nach dem Aufmaßtermin." },
+    { q: "Was kostet eine Schreinerküche?", a: "Das hängt ganz von Größe, Materialwahl und Ausstattung ab – eine kompakte Küchenzeile liegt in einer völlig anderen Größenordnung als eine große Wohnküche mit Insel. Sie erhalten einen verbindlichen Festpreis nach dem Aufmaßtermin, transparent und ohne versteckte Kosten." },
     { q: "Welche Hersteller verbaut Alignum bei Geräten?", a: "Wir bauen vorzugsweise Geräte von Miele, Gaggenau, Bora und V-ZUG ein. Auf Wunsch auch andere Marken – die Korpusse fertigen wir so, dass jedes Gerät passgenau eingelassen wird." },
     { q: "Können Sie eine bestehende Küche um­bauen?", a: "Ja. Häufig wird ein Schreinerei-Frontentausch oder eine erweiterte Inselbau-Lösung gewünscht. Das spart Kosten und kombiniert vorhandene Geräte mit neuer Optik." },
-    { q: "Wie lange dauert eine Küchenmontage?", a: "Die reine Montage Ihrer Schreinerküche bei Ihnen vor Ort dauert je nach Größe 2–5 Tage. Die Vorlaufzeit ab Auftrag liegt bei 8–10 Wochen." },
+    { q: "Wie lange dauert eine Küchenmontage?", a: "Die reine Montage vor Ort dauert je nach Größe einige Tage. Die Vorlaufzeit ab Auftrag hängt vom Umfang und der aktuellen Auslastung ab – den verbindlichen Liefertermin nennen wir Ihnen nach dem Aufmaß." },
   ],
   "treppenbau-in-der-nahe": [
     { q: "Welche Treppenformen baut Alignum?", a: "Freitragende Treppen, gewendelte Treppen, Faltwerk- und Mittelholmtreppen, Spindeltreppen, Wangentreppen – sowohl in Massivholz als auch als Holz-Stahl-Kombination." },
     { q: "Können Sie eine bestehende Treppe sanieren?", a: "Ja. Wir bauen Stufenauflagen aus Massivholz auf bestehende Beton- oder alte Holztreppen, ersetzen Geländer und schleifen / ölen alte Stufen neu auf." },
     { q: "Wie laut ist eine Holztreppe?", a: "Eine fachgerecht eingebaute Treppe von Alignum ist deutlich leiser als handelsübliche Bautreppen. Wir verwenden Schallentkopplungen, gedämpfte Stufenauflagen und kontaktfreie Befestigungen." },
-    { q: "Was kostet eine maßgefertigte Treppe?", a: "Massivholz-Treppen mit individueller Planung beginnen bei ca. 6.500 € und reichen bei freitragenden Konstruktionen bis 25.000 €. Die Statikplanung ist immer enthalten." },
+    { q: "Was kostet eine maßgefertigte Treppe?", a: "Das richtet sich nach Bauart, Material und Statik – eine gerade Wangentreppe ist etwas anderes als eine freitragende Konstruktion. Nach Aufmaß und Statikplanung erhalten Sie einen verbindlichen Festpreis; die Statikplanung ist immer enthalten." },
   ],
   badmoebel: [
     { q: "Verträgt Holz Feuchtigkeit im Bad?", a: "Wenn es richtig verarbeitet wird, ja. Wir verwenden spezielle Hartwachsöle und wasserabweisende Kanten­versiegelungen, dazu hochwertige Hölzer wie Eiche, Nuss oder Teak. Bei normaler Bad-Lüftung halten unsere Möbel Jahrzehnte." },
     { q: "Können Sie freistehende Waschtische bauen?", a: "Ja. Sehr gerne sogar. Aus einem Stück Massivholz mit eingelassenem Aufsatzbecken oder integrierter Mineralguss­wanne." },
-    { q: "Was kostet ein komplettes Schreinerbad?", a: "Komplette Bad­möblierungen mit Waschtisch, Hochschrank, Spiegelschrank und Sauna­einsatz beginnen ab ca. 8.500 € und reichen bei Wellness­konzepten bis 35.000 €." },
+    { q: "Was kostet ein komplettes Schreinerbad?", a: "Das hängt vom Umfang ab – ein einzelner Waschtisch ist etwas anderes als eine komplette Badmöblierung mit Hochschrank, Spiegelschrank und Wellnesseinbau. Sie erhalten nach dem Aufmaß einen festen Preis, ohne versteckte Kosten." },
   ],
   shoji: [
     { q: "Was ist Shoji?", a: "Shoji ist eine traditionelle japanische Schiebewand mit Holzgittern und durchscheinendem Reispapier. Sie teilt Räume, ohne sie hart zu trennen – Licht und Stille gleichzeitig." },

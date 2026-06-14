@@ -13,6 +13,7 @@ import { FAQ } from "@/components/sections/FAQ";
 import { CTA } from "@/components/sections/CTA";
 import { Reveal } from "@/components/ui/Reveal";
 import { JsonLd } from "@/components/seo/JsonLd";
+import { SERVICE_HUB } from "@/data/services";
 import { CITIES, type City } from "@/data/cities";
 import { HERO_PHOTOS } from "@/data/photos";
 import { GENERAL_FAQS } from "@/data/faqs";
@@ -26,13 +27,30 @@ export function generateStaticParams() {
   return CITIES.map((c) => ({ citySlug: c.slug }));
 }
 
+/**
+ * Kuratierte Service→Stadt-Verlinkung für den SEO-Block am Seitenende.
+ * Reihenfolge & Labels nach Search-Console-Nachfrage (Longtails wie
+ * „schreinerküche {stadt}", „büromöbel {stadt}", „badmöbel {stadt}",
+ * „treppen {stadt}" — viel Impressionen, bisher schwach geranked).
+ */
+const CITY_SERVICE_LINKS: { label: string; slug: string }[] = [
+  { label: "Schreinerküche", slug: "kuechenbau-in-der-naehe" },
+  { label: "Einbauschränke", slug: "moebelbauer" },
+  { label: "Büromöbel", slug: "bueromoebel" },
+  { label: "Badmöbel", slug: "badmoebel" },
+  { label: "Treppen", slug: "treppenbau-in-der-nahe" },
+  { label: "Innentüren", slug: "tuerenbauer-in-der-naehe" },
+  { label: "Massivholzbetten", slug: "massivholzbetten" },
+  { label: "Massivholztische", slug: "tische-und-stuehle" },
+];
+
 export async function generateMetadata({ params }: { params: Promise<{ citySlug: string }> }) {
   const { citySlug } = await params;
   const city = CITIES.find((c) => c.slug === citySlug);
   if (!city) return {};
   return buildMetadata({
-    title: `Schreinerei ${city.name} – Maßmöbel aus unserer Werkstatt | Alignum`,
-    description: `Schreiner für ${city.name}: Aus unserer Werkstatt in ${SITE.address.city} liefern und montieren wir Maßmöbel, Küchen, Treppen und Türen bei Ihnen vor Ort. Anfahrt inklusive.`,
+    title: `Schreinerei ${city.name} & Tischler – Möbel nach Maß | Alignum`,
+    description: `Schreinerei & Tischler für ${city.name}: Aus unserer Werkstatt in ${SITE.address.city} fertigen, liefern und montieren wir Möbel nach Maß – Küchen, Einbauschränke, Büromöbel, Badmöbel, Treppen, Türen und Betten. Aufmaß und Montage in ${city.name} inklusive.`,
     path: `/${city.slug}/`,
   });
 }
@@ -110,6 +128,24 @@ export default async function CityPage({ params }: { params: Promise<{ citySlug:
                   {p}
                 </p>
               ))}
+            </div>
+
+            {/* Keyword-reiche Service→Stadt-Verlinkung (Longtails aus GSC) */}
+            <div className="mt-8 pt-6 border-t border-border">
+              <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground mb-4">
+                Unsere Leistungen für {city.name}
+              </p>
+              <div className="flex flex-wrap gap-2.5">
+                {CITY_SERVICE_LINKS.map((s) => (
+                  <a
+                    key={s.slug}
+                    href={`/${SERVICE_HUB}/${s.slug}/`}
+                    className="inline-flex items-center rounded-full border border-border bg-card px-4 py-2 text-sm text-foreground/85 hover:border-primary/50 hover:text-foreground transition-colors"
+                  >
+                    {s.label} für {city.name}
+                  </a>
+                ))}
+              </div>
             </div>
           </Reveal>
         </div>
