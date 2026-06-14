@@ -29,10 +29,10 @@ export function CitySecretSauce({ city }: { city: City }) {
 
       <div className="container-prose relative">
         <Reveal>
-          <p className="text-xs uppercase tracking-[0.25em] text-primary font-medium mb-6">
-            So arbeiten wir mit {city.name}
-          </p>
-          <p className="font-display text-[clamp(1.75rem,4vw,3.5rem)] leading-[1.1] tracking-tight max-w-4xl">
+          <h2 className="font-display text-[clamp(1.75rem,3.5vw,2.75rem)] leading-[1.1] tracking-tight mb-5">
+            Schreinerei {city.name}
+          </h2>
+          <p className="font-display text-[clamp(1.25rem,2.2vw,1.875rem)] leading-[1.25] tracking-tight max-w-4xl text-white/90">
             Alignum baut in{" "}
             <span className="text-primary">{SITE.address.city}</span>{" "}
             – und kommt für Aufmaß, Lieferung und Montage zu Ihnen nach{" "}

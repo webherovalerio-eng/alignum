@@ -45,10 +45,20 @@ export function MeetJan({ city }: { city?: City }) {
         {/* Text right */}
         <Reveal className="lg:col-span-7 space-y-6">
           <p className="text-xs uppercase tracking-[0.25em] text-primary font-medium">
-            Der Schreiner hinter Alignum
+            Hi, ich bin {SITE.owner.name}
           </p>
           <h2 className="font-display text-[clamp(2rem,4.5vw,3.75rem)] leading-[1.05] tracking-tight">
-            Hi, ich bin <span className="text-primary italic">{SITE.owner.name}.</span>
+            {city ? (
+              <>
+                Schreinermeister für{" "}
+                <span className="text-primary italic">{city.name}.</span>
+              </>
+            ) : (
+              <>
+                Schreinermeister aus{" "}
+                <span className="text-primary italic">{SITE.address.city}.</span>
+              </>
+            )}
           </h2>
           <p className="text-lg sm:text-xl text-foreground/90 leading-relaxed max-w-2xl">
             Tischlermeister, Inhaber von Alignum

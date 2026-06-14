@@ -74,6 +74,24 @@ export function buildCityArea(city: City) {
   );
 }
 
+/**
+ * „Secret Sauce" — keyword-dichter Lauftext am Seitenende (Local-SEO).
+ * Eigene Spintax, unabhängig von CityIntent: hebt die Keyword-Density für
+ * „Schreinerei {Stadt}" / „Schreiner für {Stadt}" am Ende der Seite, ohne den
+ * Lesefluss oben zu stören. Gibt zwei Absätze zurück.
+ */
+export function buildCitySecretSauce(city: City): string[] {
+  const p1 = spin(
+    `{Als Schreinerei für|Als Möbelbauer für|Als Tischlermeister-Betrieb für} ${city.name} {planen, fertigen und montieren wir|entwerfen und bauen wir|realisieren wir} {Möbel nach Maß|Massivholzmöbel|individuelle Einbauten} – {von der Küche über die Treppe bis zur Innentür|vom Esstisch bis zur kompletten Raumeinrichtung|vom Einzelstück bis zum kompletten Ausbau}. {Unsere Werkstatt|Der Betrieb|Alignum} {sitzt in|liegt in|arbeitet aus} Edingen-Neckarhausen und {ist von|liegt günstig zu|kommt regelmäßig nach} ${city.name} {schnell zu erreichen|gut angebunden|ins Liefergebiet}.`,
+    `sauce1-${city.slug}`,
+  );
+  const p2 = spin(
+    `{Wer in|Wer rund um|Wer im Raum} ${city.name} {einen Schreiner sucht|eine Schreinerei sucht|Möbel nach Maß sucht}, {bekommt bei Alignum|findet bei uns|erhält bei uns} {echtes Handwerk statt Massenware|Massivholz statt Spanplatte|persönliche Beratung statt Möbelhaus}. {Ob|Gleich ob|Egal ob} {Küche, Schrank oder Treppe|Tisch, Tür oder Bett|Bad, Regal oder Schiebewand} – {Schreinerarbeiten für|Maßmöbel für|Tischlerarbeiten für} ${city.name} {sind für uns Alltag|gehören zu unserem täglichen Geschäft|fertigen wir das ganze Jahr}. {Vereinbaren Sie ein unverbindliches Aufmaß|Fragen Sie Ihr Projekt an|Sprechen Sie direkt mit dem Meister} – {wir kommen zu Ihnen nach|wir beraten Sie vor Ort in|wir sind für Sie da in} ${city.name}.`,
+    `sauce2-${city.slug}`,
+  );
+  return [p1, p2];
+}
+
 export function buildCityClosing(city: City) {
   const seed = `close-${city.slug}`;
   return spin(

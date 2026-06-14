@@ -1,11 +1,11 @@
 export const GENERAL_FAQS = [
   {
     q: "Wie lange dauert ein Schreinerei-Projekt typischerweise?",
-    a: "Vom ersten Gespräch bis zur Montage rechnen Sie bei uns mit etwa 6–12 Wochen, je nach Umfang. Eine maßgefertigte Küche braucht 8–10 Wochen, ein Massivholztisch 4–6 Wochen, ein eingebautes Schranksystem 6–8 Wochen. Wir geben Ihnen nach dem Aufmaßtermin einen verbindlichen Liefertermin.",
+    a: "Das hängt ganz vom Projekt ab. Ein einzelnes Möbelstück ist deutlich schneller fertig als eine komplette Küche oder ein raumhohes Einbausystem – auch Materialwahl und aktuelle Auslastung spielen eine Rolle. Verlässlich wird es nach dem Aufmaß: Dann nennen wir Ihnen einen verbindlichen Liefertermin, an den wir uns halten.",
   },
   {
     q: "Was kostet ein Möbelstück nach Maß?",
-    a: "Maßmöbel beginnen bei uns ab etwa 1.800 € (z. B. ein massiver Esstisch in Eiche). Eine vollständige Schreinerküche bewegt sich zwischen 18.000 € und 60.000 €, ein Einbauschrank zwischen 3.500 € und 15.000 €. Sie erhalten einen festen Pauschalpreis nach dem Aufmaß – keine versteckten Kosten.",
+    a: "Pauschal lässt sich das nicht sagen, weil jedes Projekt anders ist – ein einzelner Stuhl oder eine schlichte Bank liegt in einer völlig anderen Größenordnung als eine komplette Schreinerküche oder ein eingebautes Schranksystem. Entscheidend sind Größe, Holzart und Aufwand. Sie erhalten nach dem Aufmaß einen festen Pauschalpreis – transparent und ohne versteckte Kosten.",
   },
   {
     q: "Welche Hölzer verwendet Alignum?",
