@@ -14,6 +14,7 @@ import { CTA } from "@/components/sections/CTA";
 import { Reveal } from "@/components/ui/Reveal";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { SERVICE_HUB } from "@/data/services";
+import { CITY_SERVICES, isTopCity, cityServicePath } from "@/data/cityServices";
 import { CITIES, type City } from "@/data/cities";
 import { HERO_PHOTOS } from "@/data/photos";
 import { GENERAL_FAQS } from "@/data/faqs";
@@ -136,15 +137,27 @@ export default async function CityPage({ params }: { params: Promise<{ citySlug:
                 Unsere Leistungen für {city.name}
               </p>
               <div className="flex flex-wrap gap-2.5">
-                {CITY_SERVICE_LINKS.map((s) => (
-                  <a
-                    key={s.slug}
-                    href={`/${SERVICE_HUB}/${s.slug}/`}
-                    className="inline-flex items-center rounded-full border border-border bg-card px-4 py-2 text-sm text-foreground/85 hover:border-primary/50 hover:text-foreground transition-colors"
-                  >
-                    {s.label} für {city.name}
-                  </a>
-                ))}
+                {isTopCity(city.slug)
+                  ? /* Top-Stadt: auf die eigenen Service×Stadt-Landingpages verlinken */
+                    CITY_SERVICES.map((s) => (
+                      <a
+                        key={s.slug}
+                        href={cityServicePath(city.slug, s.slug)}
+                        className="inline-flex items-center rounded-full border border-border bg-card px-4 py-2 text-sm text-foreground/85 hover:border-primary/50 hover:text-foreground transition-colors"
+                      >
+                        {s.h1} {city.name}
+                      </a>
+                    ))
+                  : /* übrige Städte: auf die generischen Service-Seiten */
+                    CITY_SERVICE_LINKS.map((s) => (
+                      <a
+                        key={s.slug}
+                        href={`/${SERVICE_HUB}/${s.slug}/`}
+                        className="inline-flex items-center rounded-full border border-border bg-card px-4 py-2 text-sm text-foreground/85 hover:border-primary/50 hover:text-foreground transition-colors"
+                      >
+                        {s.label} für {city.name}
+                      </a>
+                    ))}
               </div>
             </div>
           </Reveal>
