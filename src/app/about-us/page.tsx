@@ -18,11 +18,8 @@ export default function AboutPage() {
   return (
     <>
       <section className="relative pt-40 pb-20 grain-overlay">
-        {/* Headline volle Breite, Intro DARUNTER (rechtsbündig auf Desktop) —
-            verhindert die Überlappung der breiten „Leidenschaft."-Zeile mit
-            dem Intro-Absatz. */}
-        <div className="container-prose">
-          <Reveal>
+        <div className="container-prose grid lg:grid-cols-12 gap-10 items-end">
+          <Reveal className="lg:col-span-7">
             <Badge variant="outline" className="mb-6">
               <span className="size-1.5 rounded-full bg-primary" />
               Über Alignum
@@ -33,8 +30,8 @@ export default function AboutPage() {
               <span className="italic text-primary inline-block">Aus Leidenschaft.</span>
             </h1>
           </Reveal>
-          <Reveal className="mt-10 lg:ml-auto lg:max-w-md">
-            <p className="text-lg sm:text-xl leading-relaxed text-muted-foreground">
+          <Reveal className="lg:col-span-5">
+            <p className="text-lg sm:text-xl leading-relaxed text-muted-foreground max-w-md">
               Seit {new Date().getFullYear() - SITE.founded}+ Jahren bauen wir
               Möbel, die Generationen halten sollen. Tradition trifft moderne
               Technik – immer mit der Hand am Holz.

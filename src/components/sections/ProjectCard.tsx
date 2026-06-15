@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
-import { type Project, projectPath } from "@/data/projects";
+import { type Project } from "@/data/projects";
 import { CITIES } from "@/data/cities";
 import { SERVICES } from "@/data/services";
 
@@ -36,7 +36,7 @@ export function ProjectCard({
       transition={{ duration: 0.8, delay: (index % 6) * 0.05, ease: [0.19, 1, 0.22, 1] }}
     >
       <Link
-        href={projectPath(project)}
+        href={`/projekte/${project.slug}/`}
         className="group block overflow-hidden rounded-xl border border-border bg-card hover:shadow-[var(--shadow-elev)] transition-shadow duration-500"
       >
         <div className="relative aspect-[4/3] w-full overflow-hidden">

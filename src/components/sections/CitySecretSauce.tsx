@@ -29,12 +29,10 @@ export function CitySecretSauce({ city }: { city: City }) {
 
       <div className="container-prose relative">
         <Reveal>
-          {/* SEO-Keyword: kleines, unauffälliges H2 (kein Display-Font) */}
-          <h2 className="text-xs sm:text-sm uppercase tracking-[0.25em] text-primary font-medium mb-5">
-            Schreinerei {city.name}
-          </h2>
-          {/* Visueller Blickfang: große Display-Statement-Zeile */}
-          <p className="font-display text-[clamp(1.75rem,3.6vw,3rem)] leading-[1.12] tracking-tight max-w-4xl">
+          <p className="text-xs uppercase tracking-[0.25em] text-primary font-medium mb-6">
+            So arbeiten wir mit {city.name}
+          </p>
+          <p className="font-display text-[clamp(1.75rem,4vw,3.5rem)] leading-[1.1] tracking-tight max-w-4xl">
             Alignum baut in{" "}
             <span className="text-primary">{SITE.address.city}</span>{" "}
             – und kommt für Aufmaß, Lieferung und Montage zu Ihnen nach{" "}

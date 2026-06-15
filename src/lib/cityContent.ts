@@ -74,24 +74,6 @@ export function buildCityArea(city: City) {
   );
 }
 
-/**
- * „Secret Sauce" — keyword-dichter Lauftext am Seitenende (Local-SEO).
- * Eigene Spintax, unabhängig von CityIntent: hebt die Keyword-Density für
- * „Schreinerei {Stadt}" / „Schreiner für {Stadt}" am Ende der Seite, ohne den
- * Lesefluss oben zu stören. Gibt zwei Absätze zurück.
- */
-export function buildCitySecretSauce(city: City): string[] {
-  const p1 = spin(
-    `{Als Schreinerei und Tischlerei für|Als Schreiner und Tischler für|Als Möbelschreinerei für} ${city.name} {planen, fertigen und montieren wir|entwerfen und bauen wir|realisieren wir} {Möbel nach Maß|Massivholzmöbel|individuelle Einbauten}: {Schreinerküchen, Einbauschränke und Badmöbel|Küchen, Büromöbel und Badausstattung|Massivholzküchen, Schränke und Innentüren} {ebenso wie|genauso wie|sowie} {Treppen, Massivholzbetten und Esstische|Treppen, Betten und Tische|Türen, Treppen und Schiebewände}. {Unsere Werkstatt|Der Betrieb|Alignum} {sitzt in|liegt in|arbeitet aus} Edingen-Neckarhausen und {ist von|liegt günstig zu|kommt regelmäßig nach} ${city.name} {schnell zu erreichen|gut angebunden|ins Liefergebiet}.`,
-    `sauce1-${city.slug}`,
-  );
-  const p2 = spin(
-    `{Wer in|Wer rund um|Wer im Raum} ${city.name} {einen Schreiner oder Tischler sucht|eine Schreinerei oder Tischlerei sucht|Möbel nach Maß sucht}, {bekommt bei Alignum|findet bei uns|erhält bei uns} {echtes Handwerk statt Massenware|Massivholz statt Spanplatte|persönliche Beratung statt Möbelhaus}. {Ob|Gleich ob|Egal ob} {Schreinerküche, Einbauschrank oder Treppe|Büromöbel, Badmöbel oder Esstisch|Innentür, Bett oder Schiebewand} – {Schreinerarbeiten und Tischlerarbeiten für|Maßmöbel für|Möbel nach Maß für} ${city.name} {sind für uns Alltag|gehören zu unserem täglichen Geschäft|fertigen wir das ganze Jahr}. {Vereinbaren Sie ein unverbindliches Aufmaß|Fragen Sie Ihr Projekt an|Sprechen Sie direkt mit dem Meister} – {wir kommen zu Ihnen nach|wir beraten Sie vor Ort in|wir sind für Sie da in} ${city.name}.`,
-    `sauce2-${city.slug}`,
-  );
-  return [p1, p2];
-}
-
 export function buildCityClosing(city: City) {
   const seed = `close-${city.slug}`;
   return spin(

@@ -78,7 +78,7 @@ export function Philosophy() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-15%" }}
               transition={{ duration: 0.9, delay: i * 0.12, ease: [0.19, 1, 0.22, 1] }}
-              className="group @container relative rounded-2xl border border-border bg-background overflow-hidden hover:border-primary/40 transition-colors duration-500"
+              className="group relative rounded-2xl border border-border bg-background overflow-hidden hover:border-primary/40 transition-colors duration-500"
             >
               {/* Number watermark */}
               <span
@@ -104,15 +104,7 @@ export function Philosophy() {
                 <p className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground mb-2">
                   {p.eyebrow}
                 </p>
-                {/* Auto-fit: Schrift skaliert mit Kartenbreite (cqi), nie
-                    Umbruch — alle drei Überschriften dadurch einzeilig und
-                    automatisch gleich groß. Inline-Letterspacing übersteuert
-                    die globale .font-display-Regel (0.03em), damit das längste
-                    Wort „Kundenorientiert" sicher reinpasst. */}
-                <h3
-                  className="font-display whitespace-nowrap text-[clamp(1.25rem,7cqi,1.85rem)] mb-5"
-                  style={{ letterSpacing: "0.01em" }}
-                >
+                <h3 className="font-display text-3xl sm:text-4xl tracking-tight mb-5">
                   {p.title}
                 </h3>
 

@@ -44,14 +44,12 @@ export function MeetJan({ city }: { city?: City }) {
 
         {/* Text right */}
         <Reveal className="lg:col-span-7 space-y-6">
-          {/* SEO-Keyword: kleines, unauffälliges H2 (kein Display-Font) */}
-          <h2 className="text-xs uppercase tracking-[0.25em] text-primary font-medium">
-            {city ? `Schreinermeister für ${city.name}` : `Schreinermeister aus ${SITE.address.city}`}
-          </h2>
-          {/* Visueller Blickfang: „Hi, ich bin Jan." groß als fake-H1 (<p>) */}
-          <p className="font-display text-[clamp(2rem,4.5vw,3.75rem)] leading-[1.05] tracking-tight">
-            Hi, ich bin <span className="text-primary italic">{SITE.owner.name}.</span>
+          <p className="text-xs uppercase tracking-[0.25em] text-primary font-medium">
+            Der Schreiner hinter Alignum
           </p>
+          <h2 className="font-display text-[clamp(2rem,4.5vw,3.75rem)] leading-[1.05] tracking-tight">
+            Hi, ich bin <span className="text-primary italic">{SITE.owner.name}.</span>
+          </h2>
           <p className="text-lg sm:text-xl text-foreground/90 leading-relaxed max-w-2xl">
             Tischlermeister, Inhaber von Alignum
             {city ? (
