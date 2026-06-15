@@ -622,6 +622,7 @@ export const PROJECTS: Project[] = [
     images: [
       "/images/projects/hoftor-hockenheim-kiefer/hoftor-hockenheim-kiefer-10.jpg",
       "/images/projects/hoftor-hockenheim-kiefer/hoftor-hockenheim-kiefer-08.jpg",
+      "/images/projects/hoftor-hockenheim-kiefer/hoftor-hockenheim-kiefer-09.jpg",
       "/images/projects/hoftor-hockenheim-kiefer/hoftor-hockenheim-kiefer-01.jpg",
       "/images/projects/hoftor-hockenheim-kiefer/hoftor-hockenheim-kiefer-02.jpg",
       "/images/projects/hoftor-hockenheim-kiefer/hoftor-hockenheim-kiefer-03.jpg",
