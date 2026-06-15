@@ -193,6 +193,162 @@ export const PROJECTS: Project[] = [
     cover:
       "/images/projects/treppenverkleidung-gauangelloch-kiefer/treppenverkleidung-gauangelloch-kiefer-01.jpg",
   },
+  {
+    slug: "beistelltisch-ladenburg-nussbaum",
+    city: "schreinerei-ladenburg",
+    service: "tische-und-stuehle",
+    material: "nussbaum",
+    title: "Beistelltisch aus Nussbaum — Projekt Ladenburg",
+    metaTitle: "Beistelltisch aus Nussbaum | Projekt in Ladenburg",
+    metaDescription:
+      "Skulpturaler Beistelltisch aus massivem Nussbaum mit zwei ovalen Ablagen und geschwungener Mittelsäule — gefertigt von Alignum für einen Kunden in Ladenburg.",
+    summary:
+      "Skulpturaler Beistelltisch aus massivem Nussbaum: zwei ovale Ablagen, verbunden durch eine geschwungene Mittelsäule — ein Einzelstück für einen Kunden in Ladenburg.",
+    body: [
+      "Für einen Kunden in Ladenburg haben wir einen Beistelltisch entworfen, der mehr Skulptur als Möbel ist. Gewünscht war kein Standard-Tischchen, sondern ein kleines Statement neben dem Sofa – etwas, das man auch dann gerne ansieht, wenn nichts darauf steht.",
+      "Entstanden ist ein Beistelltisch aus massivem Nussbaum mit zwei ovalen Ablageflächen, die eine geschwungene Mittelsäule auf zwei Ebenen versetzt zueinander hält. Die organische Form folgt der Maserung des Holzes, alle Kanten sind weich gerundet und von Hand geschliffen. So wirkt das Stück aus jedem Blickwinkel anders.",
+      "Nussbaum ist für ein solches Liebhaberstück die erste Wahl: Das heimische Hartholz hat tiefe, warme Schokoladentöne und eine lebendige Maserung, die jeder Rundung Tiefe gibt. Geölt entwickelt es mit den Jahren eine seidige Patina.",
+      "Vom ersten Entwurf bis zur Übergabe in Ladenburg war es ein kurzer, persönlicher Prozess – ein Einzelstück, das direkt aus der Werkstatt in Edingen-Neckarhausen zum Kunden ging.",
+    ],
+    features: [
+      "Beistelltisch aus massivem Nussbaum",
+      "Zwei ovale Ablagen auf versetzten Ebenen",
+      "Geschwungene Mittelsäule als tragendes Element",
+      "Alle Kanten von Hand gerundet und geschliffen",
+      "Geölte Oberfläche mit seidiger Haptik",
+      "Einzelstück, gefertigt für einen Kunden in Ladenburg",
+    ],
+    year: 2025,
+    images: [
+      "/images/projects/beistelltisch-ladenburg-nussbaum/beistelltisch-ladenburg-nussbaum-01.jpg",
+      "/images/projects/beistelltisch-ladenburg-nussbaum/beistelltisch-ladenburg-nussbaum-02.jpg",
+      "/images/projects/beistelltisch-ladenburg-nussbaum/beistelltisch-ladenburg-nussbaum-03.jpg",
+      "/images/projects/beistelltisch-ladenburg-nussbaum/beistelltisch-ladenburg-nussbaum-04.jpg",
+      "/images/projects/beistelltisch-ladenburg-nussbaum/beistelltisch-ladenburg-nussbaum-05.jpg",
+      "/images/projects/beistelltisch-ladenburg-nussbaum/beistelltisch-ladenburg-nussbaum-06.jpg",
+      "/images/projects/beistelltisch-ladenburg-nussbaum/beistelltisch-ladenburg-nussbaum-07.jpg",
+    ],
+    cover:
+      "/images/projects/beistelltisch-ladenburg-nussbaum/beistelltisch-ladenburg-nussbaum-01.jpg",
+  },
+  {
+    slug: "tisch-schwetzingen-nussbaum",
+    city: "schreinerei-schwetzingen",
+    service: "tische-und-stuehle",
+    material: "nussbaum",
+    title: "Esstisch aus Nussbaum — Projekt Schwetzingen",
+    metaTitle: "Esstisch aus Nussbaum nach Maß | Projekt Schwetzingen",
+    metaDescription:
+      "Großer Esstisch aus massivem Nussbaum mit schräg gestellten Beinen und durchgehender Maserung — gefertigt von Alignum für einen Kunden in Schwetzingen.",
+    summary:
+      "Großer Esstisch aus massivem Nussbaum mit schräg gestellten Beinen und ruhiger, durchgehender Tischplatte — gefertigt für einen Kunden in Schwetzingen.",
+    body: [
+      "Für einen Kunden in Schwetzingen haben wir einen großzügigen Esstisch aus massivem Nussbaum gefertigt – ein Tisch, an dem eine ganze Familie samt Gästen Platz findet und der über Generationen halten soll.",
+      "Die Tischplatte ist aus sorgfältig zusammengesetzten Nussbaum-Bohlen gearbeitet, sodass die Maserung über die gesamte Länge ruhig durchläuft. Getragen wird sie von schräg nach außen gestellten Beinen, die dem schweren Tisch optische Leichtigkeit geben und gleichzeitig viel Beinfreiheit lassen.",
+      "Nussbaum ist das klassische Holz für den großen Esstisch: dunkel, warm, mit einer Maserung, die Charakter hat, ohne unruhig zu wirken. Eine offenporige Ölung lässt das Holz atmen und macht kleine Gebrauchsspuren später leicht ausbesserbar.",
+      "Vom Aufmaß in Schwetzingen bis zur Lieferung haben wir den Tisch in unserer Werkstatt in Edingen-Neckarhausen gebaut und vor Ort aufgestellt – passgenau auf den Raum und die gewünschte Sitzplatzzahl.",
+    ],
+    features: [
+      "Großer Esstisch aus massivem Nussbaum",
+      "Tischplatte mit durchgehender Maserung",
+      "Schräg gestellte Beine für Leichtigkeit und Beinfreiheit",
+      "Offenporige Ölung, später leicht aufzufrischen",
+      "Maßanfertigung auf Raum und Sitzplatzzahl",
+      "Aufmaß, Fertigung und Lieferung nach Schwetzingen",
+    ],
+    year: 2025,
+    images: [
+      "/images/projects/tisch-schwetzingen-nussbaum/tisch-schwetzingen-nussbaum-01.jpg",
+      "/images/projects/tisch-schwetzingen-nussbaum/tisch-schwetzingen-nussbaum-02.jpg",
+      "/images/projects/tisch-schwetzingen-nussbaum/tisch-schwetzingen-nussbaum-03.jpg",
+      "/images/projects/tisch-schwetzingen-nussbaum/tisch-schwetzingen-nussbaum-04.jpg",
+      "/images/projects/tisch-schwetzingen-nussbaum/tisch-schwetzingen-nussbaum-05.jpg",
+      "/images/projects/tisch-schwetzingen-nussbaum/tisch-schwetzingen-nussbaum-06.jpg",
+      "/images/projects/tisch-schwetzingen-nussbaum/tisch-schwetzingen-nussbaum-07.jpg",
+    ],
+    cover:
+      "/images/projects/tisch-schwetzingen-nussbaum/tisch-schwetzingen-nussbaum-01.jpg",
+  },
+  {
+    slug: "kommode-edingen-ulme",
+    city: "schreinerei-edingen-neckarhausen",
+    service: "kommoden",
+    title: "Kommode mit Ulme-Rahmen — Projekt Edingen-Neckarhausen",
+    metaTitle: "Kommode aus Ulme nach Maß | Projekt Edingen-Neckarhausen",
+    metaDescription:
+      "Kommode mit warmem Ulme-Rahmen und matten weißen Schubladenfronten mit grifflosen Metall-Griffleisten — gefertigt von Alignum in Edingen-Neckarhausen.",
+    summary:
+      "Kommode mit warmem Massivholz-Rahmen aus Ulme und matten weißen Schubladenfronten – die Kombination aus Holz und Weiß macht sie zum ruhigen Solitär.",
+    body: [
+      "Für ein Schlafzimmer haben wir eine Kommode entworfen, die zwei Welten verbindet: die Wärme von Massivholz und die Ruhe einer reduzierten, weißen Front. So fügt sich das Stück in ein modernes Interieur ein, ohne kühl zu wirken.",
+      "Der umlaufende Rahmen und die Korpuskanten bestehen aus massiver Ulme mit ihrer charakteristisch lebendigen Maserung. Davor sitzen mattweiße Schubladenfronten mit schmalen, eingelassenen Metall-Griffleisten – eine klare, grifflose Linie, die den Holzton umso mehr zur Geltung bringt. Die Schubladen laufen auf Vollauszügen mit Soft-Close.",
+      "Ulme ist ein unterschätztes heimisches Holz: zäh, formstabil und mit einer warmen, fast flammenartigen Zeichnung, die sich gut gegen das schlichte Weiß behauptet. Genau dieser Kontrast war hier gewünscht.",
+      "Entworfen, gefertigt und montiert haben wir die Kommode in und aus unserer Werkstatt in Edingen-Neckarhausen – ein Maßstück, abgestimmt auf den vorhandenen Raum.",
+    ],
+    features: [
+      "Kommode mit massivem Ulme-Rahmen",
+      "Mattweiße Schubladenfronten, grifflos",
+      "Schmale eingelassene Metall-Griffleisten",
+      "Vollauszüge mit Soft-Close",
+      "Warmer Holz-Weiß-Kontrast für moderne Räume",
+      "Maßanfertigung aus der Werkstatt Edingen-Neckarhausen",
+    ],
+    year: 2025,
+    images: [
+      "/images/projects/kommode-edingen-ulme/kommode-edingen-ulme-01.jpg",
+      "/images/projects/kommode-edingen-ulme/kommode-edingen-ulme-02.jpg",
+      "/images/projects/kommode-edingen-ulme/kommode-edingen-ulme-03.jpg",
+      "/images/projects/kommode-edingen-ulme/kommode-edingen-ulme-04.jpg",
+      "/images/projects/kommode-edingen-ulme/kommode-edingen-ulme-05.jpg",
+      "/images/projects/kommode-edingen-ulme/kommode-edingen-ulme-06.jpg",
+      "/images/projects/kommode-edingen-ulme/kommode-edingen-ulme-07.jpg",
+      "/images/projects/kommode-edingen-ulme/kommode-edingen-ulme-08.jpg",
+      "/images/projects/kommode-edingen-ulme/kommode-edingen-ulme-09.jpg",
+      "/images/projects/kommode-edingen-ulme/kommode-edingen-ulme-10.jpg",
+    ],
+    cover:
+      "/images/projects/kommode-edingen-ulme/kommode-edingen-ulme-01.jpg",
+  },
+  {
+    slug: "tisch-bank-edingen-ulme",
+    city: "schreinerei-edingen-neckarhausen",
+    service: "tische-und-stuehle",
+    title: "Esstisch mit Bank aus Ulme — Projekt Edingen-Neckarhausen",
+    metaTitle: "Esstisch mit Bank aus Ulme | Projekt Edingen",
+    metaDescription:
+      "Heller Esstisch mit passender Sitzbank aus massiver Ulme, weich gerundete Kanten, skandinavisch-warme Anmutung — gefertigt von Alignum in Edingen-Neckarhausen.",
+    summary:
+      "Heller Esstisch mit passender Sitzbank aus massiver Ulme – weich gerundete Beine, warme Maserung, eine ruhige Tafel für den Alltag.",
+    body: [
+      "Für einen Essbereich haben wir ein aufeinander abgestimmtes Set aus Tisch und Bank gefertigt – ein Ensemble, das den Raum füllt, ohne ihn zu verstellen, und das den Alltag aushält.",
+      "Tisch und Bank sind aus massiver Ulme gearbeitet, mit weich gerundeten Beinen und sanft gebrochenen Kanten. Die helle, warme Tönung des Holzes und die ruhige Formensprache geben dem Set eine skandinavisch-zurückhaltende Anmutung – die Bank schiebt sich platzsparend unter den Tisch, wenn sie nicht gebraucht wird.",
+      "Ulme bringt hier genau die richtige Mischung mit: hell und freundlich im Ton, dabei zäh und alltagstauglich. Die natürliche Maserung bleibt unter einer matten Oberfläche gut sichtbar, ohne aufdringlich zu sein.",
+      "Gefertigt haben wir Tisch und Bank in unserer Werkstatt in Edingen-Neckarhausen – als Maßanfertigung, abgestimmt auf Raum, Höhe und gewünschte Länge.",
+    ],
+    features: [
+      "Esstisch mit passender Sitzbank aus massiver Ulme",
+      "Weich gerundete Beine und gebrochene Kanten",
+      "Helle, skandinavisch-warme Anmutung",
+      "Bank platzsparend unter den Tisch schiebbar",
+      "Matte Oberfläche, natürliche Maserung sichtbar",
+      "Maßanfertigung aus der Werkstatt Edingen-Neckarhausen",
+    ],
+    year: 2025,
+    images: [
+      "/images/projects/tisch-bank-edingen-ulme/tisch-bank-edingen-ulme-01.jpg",
+      "/images/projects/tisch-bank-edingen-ulme/tisch-bank-edingen-ulme-02.jpg",
+      "/images/projects/tisch-bank-edingen-ulme/tisch-bank-edingen-ulme-03.jpg",
+      "/images/projects/tisch-bank-edingen-ulme/tisch-bank-edingen-ulme-04.jpg",
+      "/images/projects/tisch-bank-edingen-ulme/tisch-bank-edingen-ulme-05.jpg",
+      "/images/projects/tisch-bank-edingen-ulme/tisch-bank-edingen-ulme-06.jpg",
+      "/images/projects/tisch-bank-edingen-ulme/tisch-bank-edingen-ulme-07.jpg",
+      "/images/projects/tisch-bank-edingen-ulme/tisch-bank-edingen-ulme-08.jpg",
+      "/images/projects/tisch-bank-edingen-ulme/tisch-bank-edingen-ulme-09.jpg",
+      "/images/projects/tisch-bank-edingen-ulme/tisch-bank-edingen-ulme-10.jpg",
+    ],
+    cover:
+      "/images/projects/tisch-bank-edingen-ulme/tisch-bank-edingen-ulme-01.jpg",
+  },
 ];
 
 /* ─────────────── Helpers ─────────────── */

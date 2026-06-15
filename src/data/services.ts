@@ -72,6 +72,7 @@ export const SERVICES: Service[] = [
     imageCategory: "tische",
     hubPath: SERVICE_HUB,
     keywords: ["Esstisch Mannheim", "Massivholztisch", "Tischlerei Tisch"],
+    cover: "/images/projects/tisch-bank-edingen-ulme/tisch-bank-edingen-ulme-01.jpg",
   },
   {
     slug: "moebelbauer",
@@ -219,6 +220,7 @@ export const SERVICES: Service[] = [
     imageCategory: "schraenke",
     hubPath: SERVICE_HUB,
     keywords: ["Kommode nach Maß", "Sideboard Holz", "Schreinerei Kommode"],
+    cover: "/images/projects/kommode-edingen-ulme/kommode-edingen-ulme-01.jpg",
   },
   {
     slug: "alignum-art",
