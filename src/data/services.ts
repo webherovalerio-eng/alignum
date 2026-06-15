@@ -126,6 +126,8 @@ export const SERVICES: Service[] = [
     imageCategory: "treppen",
     hubPath: SERVICE_HUB,
     keywords: ["Treppenbau Mannheim", "Holztreppe", "Schreiner Treppe"],
+    // Echtes Referenzprojekt (Treppenverkleidung Kiefer, Gauangelloch) als Cover.
+    cover: "/images/projects/treppenverkleidung-gauangelloch-kiefer/treppenverkleidung-gauangelloch-kiefer-01.jpg",
   },
   {
     slug: "tuerenbauer-in-der-naehe",

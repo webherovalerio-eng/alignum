@@ -155,6 +155,44 @@ export const PROJECTS: Project[] = [
     cover:
       "/images/projects/badunterschrank-mannheim-ulme/badunterschrank-mannheim-ulme-01.jpg",
   },
+  {
+    slug: "treppenverkleidung-gauangelloch-kiefer",
+    city: "schreinerei-leimen",
+    service: "treppenbau-in-der-nahe",
+    title: "Treppenverkleidung aus Kiefer — Projekt Gauangelloch",
+    metaTitle: "Treppenverkleidung Kiefer | Projekt Gauangelloch",
+    metaDescription:
+      "Bestehende Treppe neu verkleidet mit hellen Kiefer-Stufen und vertikalem Lamellen-Geländer — von Alignum für einen Kunden in Gauangelloch bei Leimen.",
+    summary:
+      "Eine in die Jahre gekommene Treppe komplett neu verkleidet: helle Kiefer-Stufen und ein vertikales Lamellen-Geländer — gefertigt für einen Kunden in Gauangelloch bei Leimen.",
+    body: [
+      "Für einen Kunden in Gauangelloch bei Leimen haben wir eine bestehende, in die Jahre gekommene Treppe komplett neu eingekleidet. Die alte Konstruktion war solide, aber dunkel und wirkte schwer – ein kompletter Neubau wäre teurer gewesen und hätte einen tiefen Eingriff in den Treppenraum bedeutet. Stattdessen haben wir die vorhandene Tragstruktur erhalten und sie mit neuen Massivholz-Elementen verkleidet.",
+      "Auf die Stufen kamen passgenau aufgemessene Kiefer-Trittstufen, die dem Treppenhaus sofort eine helle, freundliche Anmutung geben. Das Herzstück ist das vertikale Lamellen-Geländer: schmale, exakt gefräste Holzstäbe, die als ruhiges Raster nach oben laufen, den Treppenlauf transparent halten und das Licht weich hindurchlassen. So trennt die Treppe die Etagen, ohne den Raum optisch zu zerschneiden.",
+      "Kiefer ist für eine Treppenverkleidung eine bewusste Wahl: Das heimische Nadelholz ist hell, warm im Ton und leicht genug, um filigrane Lamellen ohne wuchtige Wirkung zu fertigen – zugleich tritt- und formstabil. Mit einer klaren, matten Oberfläche behält es seinen natürlichen Charakter und vergilbt kaum.",
+      "Nach dem Aufmaß in Gauangelloch haben wir die Stufen und das Lamellen-Geländer in unserer Werkstatt in Edingen-Neckarhausen vorgefertigt und vor Ort montiert. Eine Verkleidung dieser Art ist innerhalb weniger Tage eingebaut – ohne Abriss, ohne wochenlange Baustelle im Haus.",
+    ],
+    features: [
+      "Bestehende Treppe erhalten und neu verkleidet (kein Komplett-Neubau)",
+      "Helle Kiefer-Trittstufen, passgenau aufgemessen",
+      "Vertikales Lamellen-Geländer aus exakt gefrästen Holzstäben",
+      "Transparenter Treppenlauf – trennt, ohne den Raum zu zerschneiden",
+      "Klare matte Oberfläche, natürlicher Holzcharakter",
+      "Aufmaß, Vorfertigung und Montage für Gauangelloch bei Leimen",
+    ],
+    year: 2025,
+    images: [
+      "/images/projects/treppenverkleidung-gauangelloch-kiefer/treppenverkleidung-gauangelloch-kiefer-01.jpg",
+      "/images/projects/treppenverkleidung-gauangelloch-kiefer/treppenverkleidung-gauangelloch-kiefer-02.jpg",
+      "/images/projects/treppenverkleidung-gauangelloch-kiefer/treppenverkleidung-gauangelloch-kiefer-03.jpg",
+      "/images/projects/treppenverkleidung-gauangelloch-kiefer/treppenverkleidung-gauangelloch-kiefer-04.jpg",
+      "/images/projects/treppenverkleidung-gauangelloch-kiefer/treppenverkleidung-gauangelloch-kiefer-05.jpg",
+      "/images/projects/treppenverkleidung-gauangelloch-kiefer/treppenverkleidung-gauangelloch-kiefer-06.jpg",
+      "/images/projects/treppenverkleidung-gauangelloch-kiefer/treppenverkleidung-gauangelloch-kiefer-07.jpg",
+      "/images/projects/treppenverkleidung-gauangelloch-kiefer/treppenverkleidung-gauangelloch-kiefer-08.jpg",
+    ],
+    cover:
+      "/images/projects/treppenverkleidung-gauangelloch-kiefer/treppenverkleidung-gauangelloch-kiefer-01.jpg",
+  },
 ];
 
 /* ─────────────── Helpers ─────────────── */

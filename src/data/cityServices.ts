@@ -81,6 +81,7 @@ export const CITY_SERVICES: CityService[] = [
     imageCategory: "treppen",
     metaTagline: "Holztreppen nach Maß vom Schreiner",
     lead: "Freitragende Treppen, Wangentreppen und Treppensanierung aus Massivholz – statisch geplant, montiert in {city}.",
+    cover: "/images/projects/treppenverkleidung-gauangelloch-kiefer/treppenverkleidung-gauangelloch-kiefer-01.jpg",
   },
   {
     slug: "tueren",
