@@ -349,6 +349,202 @@ export const PROJECTS: Project[] = [
     cover:
       "/images/projects/tisch-bank-edingen-ulme/tisch-bank-edingen-ulme-01.jpg",
   },
+  {
+    slug: "einbauschrank-mannheim-eiche",
+    city: "schreinerei-mannheim",
+    service: "moebelbauer",
+    material: "stiel-eiche",
+    title: "Einbauschrank in Weiß und Eiche — Projekt Mannheim",
+    metaTitle: "Einbauschrank nach Maß in Eiche | Projekt Mannheim",
+    metaDescription:
+      "Raumhohe Einbauschrankwand mit weißen Fronten, Eiche-Innenleben, grifflosen Eiche-Griffmulden und LED-beleuchteten Fächern — von Alignum für einen Kunden in Mannheim.",
+    summary:
+      "Raumhohe Einbauschrankwand mit weißen Fronten und warmem Eiche-Innenleben – grifflose Eiche-Griffmulden, LED-beleuchtete Fächer, Schubladen aus Eiche. Gefertigt für ein Schlafzimmer in Mannheim.",
+    body: [
+      "Für ein Schlafzimmer in Mannheim haben wir eine raumhohe Einbauschrankwand geplant, die eine komplette Wand vom Boden bis zur Decke nutzt. Aus einem leeren Raum mit Eichenparkett wurde so eine ruhige, vollflächige Stauraumlösung, die jede Nische und jeden Zentimeter Höhe einbezieht.",
+      "Die Fronten sind in mattem Weiß gehalten und vollkommen grifflos – geöffnet wird über schmale, in massiver Eiche eingelassene Griffmulden, die sich warm vom Weiß absetzen. Hinter den Türen verbergen sich Eiche-Schubladen mit Vollauszug, offene LED-beleuchtete Fächer und Kleiderstangen. So bleibt die Front außen vollkommen ruhig, während innen alles seinen Platz hat.",
+      "Massive Eiche bildet den warmen Gegenpol zum reduzierten Weiß: als Griffmulde, als Schubladenkorpus und als feiner Rahmen. Eiche ist hart, langlebig und altert würdevoll – genau das richtige Holz für ein Möbel, das jeden Tag benutzt wird.",
+      "Vom Aufmaß in Mannheim bis zur Montage haben wir die Schrankwand in unserer Werkstatt in Edingen-Neckarhausen vorgefertigt und vor Ort millimetergenau eingepasst – inklusive Anschluss der Innenbeleuchtung.",
+    ],
+    features: [
+      "Raumhohe Einbauschrankwand, Boden bis Decke",
+      "Matte weiße Fronten, vollständig grifflos",
+      "Griffmulden aus massiver Eiche",
+      "Eiche-Schubladen mit Vollauszug",
+      "LED-beleuchtete offene Fächer",
+      "Aufmaß, Vorfertigung und Montage in Mannheim",
+    ],
+    year: 2025,
+    images: [
+      "/images/projects/einbauschrank-mannheim-eiche/einbauschrank-mannheim-eiche-10.jpg",
+      "/images/projects/einbauschrank-mannheim-eiche/einbauschrank-mannheim-eiche-08.jpg",
+      "/images/projects/einbauschrank-mannheim-eiche/einbauschrank-mannheim-eiche-02.jpg",
+      "/images/projects/einbauschrank-mannheim-eiche/einbauschrank-mannheim-eiche-03.jpg",
+      "/images/projects/einbauschrank-mannheim-eiche/einbauschrank-mannheim-eiche-04.jpg",
+      "/images/projects/einbauschrank-mannheim-eiche/einbauschrank-mannheim-eiche-05.jpg",
+      "/images/projects/einbauschrank-mannheim-eiche/einbauschrank-mannheim-eiche-06.jpg",
+      "/images/projects/einbauschrank-mannheim-eiche/einbauschrank-mannheim-eiche-07.jpg",
+      "/images/projects/einbauschrank-mannheim-eiche/einbauschrank-mannheim-eiche-09.jpg",
+    ],
+    cover:
+      "/images/projects/einbauschrank-mannheim-eiche/einbauschrank-mannheim-eiche-10.jpg",
+  },
+  {
+    slug: "einbauschrank-schwetzingen-eiche",
+    city: "schreinerei-schwetzingen",
+    service: "moebelbauer",
+    material: "stiel-eiche",
+    title: "Einbauschrank aus Eiche — Projekt Schwetzingen",
+    metaTitle: "Einbauschrank aus Eiche nach Maß | Projekt Schwetzingen",
+    metaDescription:
+      "Raumhoher, griffloser Einbauschrank aus warmer Eiche, passgenau in die Nische gebaut — von Alignum für einen Kunden in Schwetzingen.",
+    summary:
+      "Raumhoher, griffloser Einbauschrank aus warmer Eiche, passgenau in eine Nische gebaut – ruhige Front, voller Stauraum. Gefertigt für einen Kunden in Schwetzingen.",
+    body: [
+      "Für einen Kunden in Schwetzingen haben wir eine vorhandene Nische in einen raumhohen Einbauschrank verwandelt. Statt eines freistehenden Möbels, das immer ein Stück Wand verschenkt, schließt der Schrank flächenbündig mit der Wand ab und wirkt wie ein Teil des Raums.",
+      "Die durchgehenden Fronten sind aus warmer Eiche gefertigt, grifflos und mit feiner, ruhiger Maserung. Innen sorgen Einlegeböden, Schubladen und Kleiderstangen für flexiblen Stauraum. Die schlichte Front lässt das Holz und seine Maserung wirken, ohne durch Griffe unterbrochen zu werden.",
+      "Eiche ist für einen Einbauschrank das ideale Holz: sehr hart, langlebig und mit einem warmen, lebendigen Maserbild, das jeden Raum erdet. Geölt bleibt die natürliche Haptik erhalten.",
+      "Nach dem Aufmaß in Schwetzingen haben wir den Schrank in unserer Werkstatt in Edingen-Neckarhausen gefertigt und vor Ort passgenau montiert.",
+    ],
+    features: [
+      "Raumhoher Einbauschrank, flächenbündig zur Wand",
+      "Grifflose Fronten aus warmer Eiche",
+      "Flexible Innenausstattung: Böden, Schubladen, Stangen",
+      "Ruhige, durchgehende Maserung",
+      "Geölte Oberfläche mit natürlicher Haptik",
+      "Aufmaß, Fertigung und Montage in Schwetzingen",
+    ],
+    year: 2025,
+    images: [
+      "/images/projects/einbauschrank-schwetzingen-eiche/einbauschrank-schwetzingen-eiche-01.jpg",
+      "/images/projects/einbauschrank-schwetzingen-eiche/einbauschrank-schwetzingen-eiche-02.jpg",
+      "/images/projects/einbauschrank-schwetzingen-eiche/einbauschrank-schwetzingen-eiche-03.jpg",
+      "/images/projects/einbauschrank-schwetzingen-eiche/einbauschrank-schwetzingen-eiche-04.jpg",
+      "/images/projects/einbauschrank-schwetzingen-eiche/einbauschrank-schwetzingen-eiche-05.jpg",
+    ],
+    cover:
+      "/images/projects/einbauschrank-schwetzingen-eiche/einbauschrank-schwetzingen-eiche-01.jpg",
+  },
+  {
+    slug: "fensterschrank-edingen-eiche",
+    city: "schreinerei-edingen-neckarhausen",
+    service: "moebelbauer",
+    material: "stiel-eiche",
+    title: "Fensterschrank mit Sitzbank aus Eiche — Projekt Edingen",
+    metaTitle: "Fensterschrank aus Eiche nach Maß | Projekt Edingen",
+    metaDescription:
+      "Eingebauter Fensterschrank aus Eiche mit Fensterbank-Sitz und seitlichen Regalen, passgenau um die Fensternische gebaut — von Alignum in Edingen-Neckarhausen.",
+    summary:
+      "Eingebauter Fensterschrank aus Eiche: Fensterbank zum Sitzen, seitliche Regale und Unterschränke, passgenau um die Fensternische gebaut.",
+    body: [
+      "Für ein Haus in Edingen-Neckarhausen haben wir eine Fensternische in ein eingebautes Möbel verwandelt: einen Fensterschrank, der die Fensterbank zur Sitzbank macht und den Platz links und rechts des Fensters mit Regalen und Unterschränken nutzt.",
+      "Die gesamte Einbauten sind aus Eiche gefertigt und exakt um die vorhandene Fensteröffnung herum konstruiert. Unter der gepolsterten Fensterbank verbergen sich Stauraumfächer, seitlich gliedern offene Regalböden die Wand. So entsteht aus einem ungenutzten Fensterbereich ein Lese- und Rückzugsplatz mit viel Ablage.",
+      "Eiche gibt dem Einbau die nötige Robustheit und eine warme, ruhige Ausstrahlung – ideal für ein Möbel, das gleichzeitig Sitzplatz, Regal und Fensterrahmen ist.",
+      "Geplant, gefertigt und montiert haben wir den Fensterschrank aus unserer Werkstatt in Edingen-Neckarhausen – ein Maßeinbau, der sich vollständig in die Architektur des Raums einfügt.",
+    ],
+    features: [
+      "Eingebauter Fensterschrank rund um die Fensternische",
+      "Fensterbank als Sitzplatz mit Stauraum darunter",
+      "Seitliche offene Regale und Unterschränke",
+      "Komplett aus massiver Eiche",
+      "Passgenau in die vorhandene Architektur eingefügt",
+      "Geplant und gefertigt in Edingen-Neckarhausen",
+    ],
+    year: 2025,
+    images: [
+      "/images/projects/fensterschrank-edingen-eiche/fensterschrank-edingen-eiche-01.jpg",
+      "/images/projects/fensterschrank-edingen-eiche/fensterschrank-edingen-eiche-02.jpg",
+      "/images/projects/fensterschrank-edingen-eiche/fensterschrank-edingen-eiche-03.jpg",
+      "/images/projects/fensterschrank-edingen-eiche/fensterschrank-edingen-eiche-04.jpg",
+      "/images/projects/fensterschrank-edingen-eiche/fensterschrank-edingen-eiche-05.jpg",
+      "/images/projects/fensterschrank-edingen-eiche/fensterschrank-edingen-eiche-06.jpg",
+      "/images/projects/fensterschrank-edingen-eiche/fensterschrank-edingen-eiche-07.jpg",
+      "/images/projects/fensterschrank-edingen-eiche/fensterschrank-edingen-eiche-08.jpg",
+      "/images/projects/fensterschrank-edingen-eiche/fensterschrank-edingen-eiche-09.jpg",
+      "/images/projects/fensterschrank-edingen-eiche/fensterschrank-edingen-eiche-10.jpg",
+    ],
+    cover:
+      "/images/projects/fensterschrank-edingen-eiche/fensterschrank-edingen-eiche-01.jpg",
+  },
+  {
+    slug: "garderobe-gauangelloch-kiefer",
+    city: "schreinerei-leimen",
+    service: "moebelbauer",
+    title: "Garderobe mit Sitzbank aus Kiefer — Projekt Gauangelloch",
+    metaTitle: "Garderobe nach Maß in Kiefer | Projekt Gauangelloch",
+    metaDescription:
+      "Eingebaute Flurgarderobe mit weißen Schränken, Kiefer-Sitzbank und vertikaler Lamellen-Rückwand — von Alignum für einen Kunden in Gauangelloch bei Leimen.",
+    summary:
+      "Eingebaute Flurgarderobe: weiße Hoch- und Unterschränke, eine Sitzbank aus Kiefer und eine warme Lamellen-Rückwand. Gefertigt für einen Kunden in Gauangelloch bei Leimen.",
+    body: [
+      "Für einen Flur in Gauangelloch bei Leimen haben wir eine eingebaute Garderobe entworfen, die Stauraum, Sitzplatz und einen warmen Blickfang vereint – auf engem Raum, vom Boden bis zur Decke geplant.",
+      "Weiße Hochschränke und ein Unterschrank fassen eine offene Nische ein, in der eine massive Sitzbank aus Kiefer zum Schuhe-Anziehen einlädt. Den Hintergrund bildet eine vertikale Lamellen-Wand aus Kiefer, die der sonst weißen Garderobe Wärme und Struktur gibt. So wird aus reiner Stauraum-Funktion ein gestalteter Eingangsbereich.",
+      "Kiefer ist hier bewusst gewählt: Das helle, warme Nadelholz bringt Freundlichkeit in den Flur und setzt einen ruhigen Kontrast zu den weißen Fronten. Die schmalen Lamellen lassen die Rückwand lebendig wirken, ohne aufdringlich zu sein.",
+      "Geplant, gefertigt und montiert haben wir die Garderobe aus unserer Werkstatt in Edingen-Neckarhausen – passgenau in den vorhandenen Flur eingebaut.",
+    ],
+    features: [
+      "Eingebaute Flurgarderobe, Boden bis Decke",
+      "Weiße Hoch- und Unterschränke",
+      "Sitzbank aus massiver Kiefer",
+      "Vertikale Lamellen-Rückwand aus Kiefer",
+      "Warmer Holz-Weiß-Kontrast im Eingangsbereich",
+      "Aufmaß, Fertigung und Montage in Gauangelloch bei Leimen",
+    ],
+    year: 2025,
+    images: [
+      "/images/projects/garderobe-gauangelloch-kiefer/garderobe-gauangelloch-kiefer-01.jpg",
+      "/images/projects/garderobe-gauangelloch-kiefer/garderobe-gauangelloch-kiefer-02.jpg",
+      "/images/projects/garderobe-gauangelloch-kiefer/garderobe-gauangelloch-kiefer-03.jpg",
+      "/images/projects/garderobe-gauangelloch-kiefer/garderobe-gauangelloch-kiefer-04.jpg",
+      "/images/projects/garderobe-gauangelloch-kiefer/garderobe-gauangelloch-kiefer-05.jpg",
+      "/images/projects/garderobe-gauangelloch-kiefer/garderobe-gauangelloch-kiefer-06.jpg",
+      "/images/projects/garderobe-gauangelloch-kiefer/garderobe-gauangelloch-kiefer-07.jpg",
+      "/images/projects/garderobe-gauangelloch-kiefer/garderobe-gauangelloch-kiefer-08.jpg",
+      "/images/projects/garderobe-gauangelloch-kiefer/garderobe-gauangelloch-kiefer-09.jpg",
+      "/images/projects/garderobe-gauangelloch-kiefer/garderobe-gauangelloch-kiefer-10.jpg",
+    ],
+    cover:
+      "/images/projects/garderobe-gauangelloch-kiefer/garderobe-gauangelloch-kiefer-01.jpg",
+  },
+  {
+    slug: "garderobenschrank-edingen-lackiert",
+    city: "schreinerei-edingen-neckarhausen",
+    service: "moebelbauer",
+    title: "Garderobenschrank in Weiß lackiert — Projekt Edingen",
+    metaTitle: "Garderobenschrank nach Maß, weiß lackiert | Edingen",
+    metaDescription:
+      "Raumhohe, grifflose Schrankwand in mattweißem Lack mit indirekter LED-Beleuchtung, passgenau in den Flur gebaut — von Alignum in Edingen-Neckarhausen.",
+    summary:
+      "Raumhohe, grifflose Schrankwand in mattweißem Lack mit indirekter LED-Beleuchtung – ruhig, flächenbündig, viel Stauraum. Gefertigt für einen Flur in Edingen-Neckarhausen.",
+    body: [
+      "Für einen Flur in Edingen-Neckarhausen haben wir eine raumhohe Schrankwand gefertigt, die eine ganze Wand vom Boden bis zur Decke füllt und doch fast unsichtbar bleibt – durch ihre ruhige, mattweiße Front und die flächenbündige Bauweise.",
+      "Die Fronten sind in mattem Weiß lackiert und grifflos ausgeführt; geöffnet werden sie über grifflose Mechaniken und schmale Griffkanten. Eine indirekte LED-Beleuchtung in der Deckenfuge lässt die Schrankwand leicht wirken und nimmt ihr jede Schwere. Dahinter steckt vollwertiger Stauraum mit Stangen, Böden und Auszügen.",
+      "Eine lackierte Oberfläche war hier die bewusste Wahl: Sie ergibt eine vollkommen ruhige, glatte Fläche ohne Maserung, die sich perfekt in einen modernen, reduzierten Flur einfügt und das Licht weich reflektiert.",
+      "Geplant, lackiert und montiert haben wir die Schrankwand aus unserer Werkstatt in Edingen-Neckarhausen – passgenau auf die Maße des Flurs und mit Anschluss der indirekten Beleuchtung.",
+    ],
+    features: [
+      "Raumhohe Schrankwand, Boden bis Decke",
+      "Mattweiß lackierte, grifflose Fronten",
+      "Indirekte LED-Beleuchtung in der Deckenfuge",
+      "Flächenbündige, ruhige Optik",
+      "Vollwertiger Stauraum: Stangen, Böden, Auszüge",
+      "Gefertigt und montiert in Edingen-Neckarhausen",
+    ],
+    year: 2025,
+    images: [
+      "/images/projects/garderobenschrank-edingen-lackiert/garderobenschrank-edingen-lackiert-08.jpg",
+      "/images/projects/garderobenschrank-edingen-lackiert/garderobenschrank-edingen-lackiert-10.jpg",
+      "/images/projects/garderobenschrank-edingen-lackiert/garderobenschrank-edingen-lackiert-02.jpg",
+      "/images/projects/garderobenschrank-edingen-lackiert/garderobenschrank-edingen-lackiert-03.jpg",
+      "/images/projects/garderobenschrank-edingen-lackiert/garderobenschrank-edingen-lackiert-04.jpg",
+      "/images/projects/garderobenschrank-edingen-lackiert/garderobenschrank-edingen-lackiert-05.jpg",
+      "/images/projects/garderobenschrank-edingen-lackiert/garderobenschrank-edingen-lackiert-06.jpg",
+      "/images/projects/garderobenschrank-edingen-lackiert/garderobenschrank-edingen-lackiert-07.jpg",
+      "/images/projects/garderobenschrank-edingen-lackiert/garderobenschrank-edingen-lackiert-09.jpg",
+    ],
+    cover:
+      "/images/projects/garderobenschrank-edingen-lackiert/garderobenschrank-edingen-lackiert-08.jpg",
+  },
 ];
 
 /* ─────────────── Helpers ─────────────── */

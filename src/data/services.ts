@@ -91,6 +91,7 @@ export const SERVICES: Service[] = [
     imageCategory: "schraenke",
     hubPath: SERVICE_HUB,
     keywords: ["Schrank nach Maß", "Einbauschrank Mannheim", "Möbelbauer"],
+    cover: "/images/projects/einbauschrank-mannheim-eiche/einbauschrank-mannheim-eiche-10.jpg",
   },
   {
     slug: "massivholzbetten",

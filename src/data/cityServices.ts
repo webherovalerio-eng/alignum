@@ -56,6 +56,7 @@ export const CITY_SERVICES: CityService[] = [
     imageCategory: "schraenke",
     metaTagline: "Schrank nach Maß vom Schreiner",
     lead: "Einbauschränke, Ankleiden und Schiebetüren nach Maß – millimetergenau für jede Wand in {city}.",
+    cover: "/images/projects/einbauschrank-mannheim-eiche/einbauschrank-mannheim-eiche-10.jpg",
   },
   {
     slug: "bueromoebel",
