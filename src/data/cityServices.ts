@@ -36,6 +36,8 @@ export type CityService = {
   metaTagline: string;
   /** Lead-Satz unter der H1 (Stadt wird via {city} interpoliert) */
   lead: string;
+  /** Optionales Cover (z.B. echtes Referenzprojekt) statt PHOTOS[imageCategory][0] */
+  cover?: string;
 };
 
 export const CITY_SERVICES: CityService[] = [
@@ -70,6 +72,7 @@ export const CITY_SERVICES: CityService[] = [
     imageCategory: "badmoebel",
     metaTagline: "Badmöbel nach Maß vom Schreiner",
     lead: "Waschtische, Hochschränke und Spiegelmodule aus wasserfestem Massivholz – nach Maß für Ihr Bad in {city}.",
+    cover: "/images/projects/badunterschrank-mannheim-ulme/badunterschrank-mannheim-ulme-01.jpg",
   },
   {
     slug: "treppenbau",

@@ -51,6 +51,9 @@ export const SERVICES: Service[] = [
     imageCategory: "badmoebel",
     hubPath: SERVICE_HUB,
     keywords: ["Badmöbel Mannheim", "Waschtisch nach Maß", "Holz im Bad"],
+    // Echtes Referenzprojekt (Badunterschrank Ulme, Mannheim) als Cover —
+    // wirkt in ServicesGrid „Zwölf Disziplinen" + Service-Hero + OG-Bild.
+    cover: "/images/projects/badunterschrank-mannheim-ulme/badunterschrank-mannheim-ulme-01.jpg",
   },
   {
     slug: "tische-und-stuehle",

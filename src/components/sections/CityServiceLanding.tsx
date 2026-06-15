@@ -24,8 +24,8 @@ import { buildCityServiceCopy } from "@/lib/cityServiceContent";
 export function CityServiceLanding({ city, combo }: { city: City; combo: CityService }) {
   const service = SERVICES.find((s) => s.slug === combo.serviceSlug);
   const photos = PHOTOS[combo.imageCategory] ?? [];
-  const cover = combo.imageCategory ? photos[0] : undefined;
-  const gallery = photos.slice(1, 5);
+  const cover = combo.cover ?? photos[0];
+  const gallery = photos.filter((p) => p !== cover).slice(0, 4);
   const copy = buildCityServiceCopy(city, combo);
   const lead = combo.lead.replace(/\{city\}/g, city.name);
 

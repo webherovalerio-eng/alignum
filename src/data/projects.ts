@@ -116,6 +116,45 @@ export const PROJECTS: Project[] = [
     cover:
       "/images/projects/shoji-schiebetuer-darmstadt-ahorn/shoji-schiebetuer-darmstadt-ahorn-01.jpg",
   },
+  {
+    slug: "badunterschrank-mannheim-ulme",
+    city: "schreinerei-mannheim",
+    service: "badmoebel",
+    title: "Badunterschrank aus Ulme — Projekt Mannheim",
+    metaTitle: "Badunterschrank aus Ulme nach Maß | Projekt in Mannheim",
+    metaDescription:
+      "Wandhängender Waschtisch-Unterschrank aus massiver Ulme mit grifflosen Schubladen und durchgehender Maserung — gefertigt von Alignum für ein Badezimmer in Mannheim.",
+    summary:
+      "Wandhängender Waschtisch-Unterschrank aus massiver Ulme mit grifflosen Schubladen und lebendiger, durchgehender Maserung — gefertigt für ein Bad in Mannheim.",
+    body: [
+      "Für ein Badezimmer in Mannheim haben wir einen wandhängenden Waschtisch-Unterschrank aus massiver Ulme entwickelt. Der Raum war hell gefliest und eher kühl – der Wunsch war ein warmes, natürliches Gegengewicht, das dem Bad Charakter gibt, ohne es voll zu stellen. Die schwebende Montage lässt den Steinboden durchlaufen und macht das kleine Bad optisch größer.",
+      "Der Korpus trägt ein keramisches Aufsatzbecken und zwei grifflose Schubladen mit Push-to-Open-Mechanik. Wir haben die Fronten so aus dem Stamm aufgetrennt, dass die markante Ulmen-Maserung von links nach rechts durchläuft – ein durchgehendes Bild über beide Schubladen, das es so nur einmal gibt. Die geschwungene Griffmulde an der Unterkante nimmt das natürliche Linienspiel des Holzes auf.",
+      "Ulme ist für ein Bad eine bewusste Wahl: Das heimische Holz hat eine lebendige, fast flammenartige Maserung mit warmen rotbraunen Tönen und ist von Natur aus zäh und formstabil. Mit der richtigen Oberfläche – wir verwenden ein wasserabweisendes Hartwachsöl und versiegelte Kanten – hält massives Holz im Bad jahrzehntelang, auch bei täglicher Feuchtigkeit.",
+      "Vom Aufmaß in Mannheim bis zur Montage vergingen rund fünf Wochen. Geliefert und an der bestehenden Wandinstallation montiert haben wir an einem Vormittag – inklusive Anschluss an Zu- und Ablauf des vorhandenen Beckens.",
+    ],
+    features: [
+      "Wandhängender Waschtisch-Unterschrank aus massiver Ulme",
+      "Zwei grifflose Schubladen mit Push-to-Open",
+      "Durchgehende Maserung über beide Fronten (aus einem Stamm)",
+      "Geschwungene Griffmulde an der Unterkante",
+      "Wasserabweisendes Hartwachsöl und versiegelte Kanten",
+      "Aufmaß, Lieferung und Montage in Mannheim",
+    ],
+    year: 2025,
+    images: [
+      "/images/projects/badunterschrank-mannheim-ulme/badunterschrank-mannheim-ulme-01.jpg",
+      "/images/projects/badunterschrank-mannheim-ulme/badunterschrank-mannheim-ulme-02.jpg",
+      "/images/projects/badunterschrank-mannheim-ulme/badunterschrank-mannheim-ulme-03.jpg",
+      "/images/projects/badunterschrank-mannheim-ulme/badunterschrank-mannheim-ulme-04.jpg",
+      "/images/projects/badunterschrank-mannheim-ulme/badunterschrank-mannheim-ulme-05.jpg",
+      "/images/projects/badunterschrank-mannheim-ulme/badunterschrank-mannheim-ulme-06.jpg",
+      "/images/projects/badunterschrank-mannheim-ulme/badunterschrank-mannheim-ulme-07.jpg",
+      "/images/projects/badunterschrank-mannheim-ulme/badunterschrank-mannheim-ulme-08.jpg",
+      "/images/projects/badunterschrank-mannheim-ulme/badunterschrank-mannheim-ulme-09.jpg",
+    ],
+    cover:
+      "/images/projects/badunterschrank-mannheim-ulme/badunterschrank-mannheim-ulme-01.jpg",
+  },
 ];
 
 /* ─────────────── Helpers ─────────────── */
