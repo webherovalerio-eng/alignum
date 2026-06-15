@@ -572,6 +572,14 @@ export const PROJECTS: Project[] = [
     ],
     year: 2025,
     images: [
+      "/images/projects/haustuer-heidelberg-eiche/haustuer-heidelberg-eiche-11.jpg",
+      "/images/projects/haustuer-heidelberg-eiche/haustuer-heidelberg-eiche-12.jpg",
+      "/images/projects/haustuer-heidelberg-eiche/haustuer-heidelberg-eiche-13.jpg",
+      "/images/projects/haustuer-heidelberg-eiche/haustuer-heidelberg-eiche-14.jpg",
+      "/images/projects/haustuer-heidelberg-eiche/haustuer-heidelberg-eiche-15.jpg",
+      "/images/projects/haustuer-heidelberg-eiche/haustuer-heidelberg-eiche-16.jpg",
+      "/images/projects/haustuer-heidelberg-eiche/haustuer-heidelberg-eiche-17.jpg",
+      "/images/projects/haustuer-heidelberg-eiche/haustuer-heidelberg-eiche-18.jpg",
       "/images/projects/haustuer-heidelberg-eiche/haustuer-heidelberg-eiche-01.jpg",
       "/images/projects/haustuer-heidelberg-eiche/haustuer-heidelberg-eiche-02.jpg",
       "/images/projects/haustuer-heidelberg-eiche/haustuer-heidelberg-eiche-03.jpg",
@@ -584,7 +592,7 @@ export const PROJECTS: Project[] = [
       "/images/projects/haustuer-heidelberg-eiche/haustuer-heidelberg-eiche-10.jpg",
     ],
     cover:
-      "/images/projects/haustuer-heidelberg-eiche/haustuer-heidelberg-eiche-01.jpg",
+      "/images/projects/haustuer-heidelberg-eiche/haustuer-heidelberg-eiche-11.jpg",
   },
   {
     slug: "hoftor-hockenheim-kiefer",
