@@ -545,6 +545,165 @@ export const PROJECTS: Project[] = [
     cover:
       "/images/projects/garderobenschrank-edingen-lackiert/garderobenschrank-edingen-lackiert-08.jpg",
   },
+  {
+    slug: "haustuer-heidelberg-eiche",
+    city: "schreinerei-heidelberg",
+    service: "tuerenbauer-in-der-naehe",
+    material: "stiel-eiche",
+    title: "Haustür aus Eiche restauriert — Projekt Heidelberg",
+    metaTitle: "Haustür aus Eiche restauriert | Projekt Heidelberg",
+    metaDescription:
+      "Historische Eichen-Haustür mit Glasfeldern aufgearbeitet und neu beschlagen — von Alignum für einen Kunden in der Heidelberger Altstadt. Restauration statt Austausch.",
+    summary:
+      "Historische Eichen-Haustür mit Glasfeldern fachgerecht aufgearbeitet, neu geölt und beschlagen – Charakter erhalten statt austauschen. Für einen Kunden in Heidelberg.",
+    body: [
+      "Für ein Altbau in Heidelberg haben wir eine historische Haustür aus Eiche aufgearbeitet, statt sie durch ein Neuteil zu ersetzen. Die Tür gehört zum Charakter des Hauses – mit ihren hohen Glasfeldern, dem geprägten Oberlicht und der gewachsenen Patina war ein Austausch keine Option.",
+      "Wir haben die Tür ausgehängt, in der Werkstatt zerlegt, schadhafte Stellen ausgebessert, das Holz neu aufgebaut und mit einer schützenden Oberfläche versehen. Beschläge, Schloss und Dichtungen wurden erneuert, sodass die alte Tür wieder satt schließt und dem Wetter standhält – ihren historischen Ausdruck behält sie dabei vollständig.",
+      "Eiche ist der Grund, warum sich diese Aufarbeitung lohnt: Das Holz ist nach Jahrzehnten noch kerngesund und lässt sich hervorragend restaurieren. Eine neue Tür von der Stange erreicht diese Tiefe und Substanz nicht.",
+      "Aus- und Wiedereinbau erfolgten in Heidelberg, die Aufarbeitung in unserer Werkstatt in Edingen-Neckarhausen – eine Restauration, die das Original bewahrt.",
+    ],
+    features: [
+      "Historische Eichen-Haustür fachgerecht aufgearbeitet",
+      "Hohe Glasfelder und Oberlicht erhalten",
+      "Holz ausgebessert und neu aufgebaut",
+      "Beschläge, Schloss und Dichtungen erneuert",
+      "Historischer Charakter vollständig bewahrt",
+      "Aus- und Wiedereinbau in Heidelberg",
+    ],
+    year: 2025,
+    images: [
+      "/images/projects/haustuer-heidelberg-eiche/haustuer-heidelberg-eiche-01.jpg",
+      "/images/projects/haustuer-heidelberg-eiche/haustuer-heidelberg-eiche-02.jpg",
+      "/images/projects/haustuer-heidelberg-eiche/haustuer-heidelberg-eiche-03.jpg",
+      "/images/projects/haustuer-heidelberg-eiche/haustuer-heidelberg-eiche-04.jpg",
+      "/images/projects/haustuer-heidelberg-eiche/haustuer-heidelberg-eiche-05.jpg",
+      "/images/projects/haustuer-heidelberg-eiche/haustuer-heidelberg-eiche-06.jpg",
+      "/images/projects/haustuer-heidelberg-eiche/haustuer-heidelberg-eiche-07.jpg",
+      "/images/projects/haustuer-heidelberg-eiche/haustuer-heidelberg-eiche-08.jpg",
+      "/images/projects/haustuer-heidelberg-eiche/haustuer-heidelberg-eiche-09.jpg",
+      "/images/projects/haustuer-heidelberg-eiche/haustuer-heidelberg-eiche-10.jpg",
+    ],
+    cover:
+      "/images/projects/haustuer-heidelberg-eiche/haustuer-heidelberg-eiche-01.jpg",
+  },
+  {
+    slug: "hoftor-hockenheim-kiefer",
+    city: "schreinerei-hockenheim",
+    service: "tuerenbauer-in-der-naehe",
+    title: "Hoftor-Anlage aus Kiefer — Projekt Hockenheim",
+    metaTitle: "Hoftor-Anlage aus Kiefer nach Maß | Projekt Hockenheim",
+    metaDescription:
+      "Hoftor-Anlage aus Kiefer mit integrierter, verglaster Pforte und Sprossenteilung — passgenau gefertigt von Alignum für einen Kunden in Hockenheim.",
+    summary:
+      "Hoftor-Anlage aus massiver Kiefer mit integrierter verglaster Pforte und feiner Sprossenteilung – passgenau gefertigt für einen Kunden in Hockenheim.",
+    body: [
+      "Für einen Kunden in Hockenheim haben wir eine komplette Hoftor-Anlage aus Kiefer gefertigt – mit einer integrierten, begehbaren Pforte, die sich harmonisch in das große Tor einfügt.",
+      "Die Pforte ist im oberen Bereich verglast und mit einer feinen, handwerklich verzapften Sprossenteilung gegliedert; darunter sitzen vertikale Massivholz-Füllungen. Rahmen und Sprossen sind aus Kiefer gearbeitet, sauber verzapft und verleimt – eine Konstruktion, die Wind und Wetter trägt und sich satt schließen lässt.",
+      "Kiefer ist für Tor und Pforte ein dankbares Holz: hell, harzhaltig und mit der richtigen Oberfläche gut für den Außenbereich geeignet. Die warme Tönung gibt der Anlage einen freundlichen, einladenden Charakter.",
+      "Gefertigt haben wir die Hoftor-Anlage in unserer Werkstatt in Edingen-Neckarhausen und vor Ort in Hockenheim montiert – inklusive Justierung von Bändern und Schloss.",
+    ],
+    features: [
+      "Komplette Hoftor-Anlage aus Kiefer",
+      "Integrierte, begehbare Pforte",
+      "Verglaster Oberteil mit verzapfter Sprossenteilung",
+      "Vertikale Massivholz-Füllungen",
+      "Wetterfeste Oberfläche für den Außenbereich",
+      "Fertigung und Montage in Hockenheim",
+    ],
+    year: 2025,
+    images: [
+      "/images/projects/hoftor-hockenheim-kiefer/hoftor-hockenheim-kiefer-10.jpg",
+      "/images/projects/hoftor-hockenheim-kiefer/hoftor-hockenheim-kiefer-08.jpg",
+      "/images/projects/hoftor-hockenheim-kiefer/hoftor-hockenheim-kiefer-01.jpg",
+      "/images/projects/hoftor-hockenheim-kiefer/hoftor-hockenheim-kiefer-02.jpg",
+      "/images/projects/hoftor-hockenheim-kiefer/hoftor-hockenheim-kiefer-03.jpg",
+      "/images/projects/hoftor-hockenheim-kiefer/hoftor-hockenheim-kiefer-04.jpg",
+      "/images/projects/hoftor-hockenheim-kiefer/hoftor-hockenheim-kiefer-05.jpg",
+      "/images/projects/hoftor-hockenheim-kiefer/hoftor-hockenheim-kiefer-06.jpg",
+      "/images/projects/hoftor-hockenheim-kiefer/hoftor-hockenheim-kiefer-07.jpg",
+    ],
+    cover:
+      "/images/projects/hoftor-hockenheim-kiefer/hoftor-hockenheim-kiefer-10.jpg",
+  },
+  {
+    slug: "wohnungseingangstuer-heidelberg-kiefer",
+    city: "schreinerei-heidelberg",
+    service: "tuerenbauer-in-der-naehe",
+    title: "Wohnungseingangstür mit Ätzglas — Projekt Heidelberg",
+    metaTitle: "Wohnungseingangstür nach Maß | Projekt Heidelberg",
+    metaDescription:
+      "Dreiteilige weiße Wohnungseingangstür mit Oberlicht, Seitenteil und dekorativem Ätzglas, klassisch profiliert — von Alignum für einen Kunden in Heidelberg.",
+    summary:
+      "Dreiteilige weiße Wohnungseingangstür mit Oberlicht, Seitenteil und dekorativem Ätzglas – klassisch profiliert, passgenau in den Altbau gebaut. Für einen Kunden in Heidelberg.",
+    body: [
+      "Für eine Wohnung in einem Heidelberger Altbau haben wir eine dreiteilige Eingangstür gefertigt – Türblatt, Oberlicht und Seitenteil als eine zusammenhängende, klassisch profilierte Anlage, die zur Stilistik des Hauses passt.",
+      "Die Felder sind mit dekorativem Ätzglas gefüllt, das Licht ins Treppenhaus und in den Flur lässt, ohne den Blick freizugeben. Rahmen und Profile sind sauber gearbeitet und deckend weiß lackiert; klassische Messingknäufe runden das Bild ab. So entsteht aus einer reinen Funktionstür ein repräsentativer Eingang.",
+      "Der Korpus ist aus Kiefer gefertigt – ein stabiles, gut zu verarbeitendes Holz, das unter dem deckenden Lack eine vollkommen ruhige Oberfläche ergibt. Genau richtig für eine Tür, die viele Jahre täglich benutzt wird.",
+      "Gefertigt haben wir die Anlage in unserer Werkstatt in Edingen-Neckarhausen und in Heidelberg passgenau in die vorhandene Öffnung eingebaut.",
+    ],
+    features: [
+      "Dreiteilige Wohnungseingangstür: Blatt, Oberlicht, Seitenteil",
+      "Dekoratives Ätzglas in den Feldern",
+      "Klassische Profilierung, deckend weiß lackiert",
+      "Messing-Beschläge",
+      "Korpus aus stabiler Kiefer",
+      "Fertigung und Einbau in Heidelberg",
+    ],
+    year: 2025,
+    images: [
+      "/images/projects/wohnungseingangstuer-heidelberg-kiefer/wohnungseingangstuer-heidelberg-kiefer-09.jpg",
+      "/images/projects/wohnungseingangstuer-heidelberg-kiefer/wohnungseingangstuer-heidelberg-kiefer-10.jpg",
+      "/images/projects/wohnungseingangstuer-heidelberg-kiefer/wohnungseingangstuer-heidelberg-kiefer-01.jpg",
+      "/images/projects/wohnungseingangstuer-heidelberg-kiefer/wohnungseingangstuer-heidelberg-kiefer-02.jpg",
+      "/images/projects/wohnungseingangstuer-heidelberg-kiefer/wohnungseingangstuer-heidelberg-kiefer-03.jpg",
+      "/images/projects/wohnungseingangstuer-heidelberg-kiefer/wohnungseingangstuer-heidelberg-kiefer-04.jpg",
+      "/images/projects/wohnungseingangstuer-heidelberg-kiefer/wohnungseingangstuer-heidelberg-kiefer-05.jpg",
+      "/images/projects/wohnungseingangstuer-heidelberg-kiefer/wohnungseingangstuer-heidelberg-kiefer-06.jpg",
+      "/images/projects/wohnungseingangstuer-heidelberg-kiefer/wohnungseingangstuer-heidelberg-kiefer-07.jpg",
+      "/images/projects/wohnungseingangstuer-heidelberg-kiefer/wohnungseingangstuer-heidelberg-kiefer-08.jpg",
+    ],
+    cover:
+      "/images/projects/wohnungseingangstuer-heidelberg-kiefer/wohnungseingangstuer-heidelberg-kiefer-09.jpg",
+  },
+  {
+    slug: "hoftor-haustuer-mannheim-laerche",
+    city: "schreinerei-mannheim",
+    service: "tuerenbauer-in-der-naehe",
+    material: "laerche",
+    title: "Haustür aus Lärche mit Oberlicht — Projekt Mannheim",
+    metaTitle: "Haustür aus Lärche nach Maß | Projekt Mannheim",
+    metaDescription:
+      "Massive Lärchen-Haustür mit strahlenförmigem Oberlicht im Sandstein-Rundbogen, vertikale Bohlen, Briefeinwurf — von Alignum für einen Kunden in Mannheim.",
+    summary:
+      "Massive Haustür aus Lärche mit strahlenförmigem Oberlicht, eingepasst in einen Sandstein-Rundbogen – warm, wetterfest, unverwechselbar. Für einen Kunden in Mannheim.",
+    body: [
+      "Für ein Haus mit historischem Sandstein-Rundbogen in Mannheim haben wir eine massive Haustür aus Lärche gefertigt, die sich exakt in die vorhandene Bogenöffnung einfügt – inklusive eines strahlenförmig aufgebauten Oberlichts, das den Rundbogen aufnimmt.",
+      "Das Türblatt ist aus vertikalen Lärchen-Bohlen aufgebaut, mit eingelassenem Briefeinwurf und schlichtem Drücker. Über der Tür fächert sich das Oberlicht in einem Sonnen-Motiv auf, das dem Eingang Charakter gibt und das Tageslicht in den Flur lässt. Tür und Oberlicht sind passgenau in den unregelmäßigen Sandsteinbogen eingearbeitet.",
+      "Lärche ist für eine Haustür die ideale Wahl: Das heimische Nadelholz ist von Natur aus witterungsbeständig und harzreich, mit einer warmen, goldgelben Tönung, die unter Sonnenlicht förmlich leuchtet. So überdauert die Tür Jahrzehnte im Außenbereich.",
+      "Gefertigt haben wir Tür und Oberlicht in unserer Werkstatt in Edingen-Neckarhausen und in Mannheim passgenau in den historischen Bogen eingesetzt.",
+    ],
+    features: [
+      "Massive Haustür aus witterungsbeständiger Lärche",
+      "Strahlenförmiges Oberlicht im Sonnen-Motiv",
+      "Passgenau in den Sandstein-Rundbogen eingearbeitet",
+      "Vertikale Bohlen mit eingelassenem Briefeinwurf",
+      "Warme, goldgelbe Lärchen-Tönung",
+      "Fertigung und Einbau in Mannheim",
+    ],
+    year: 2025,
+    images: [
+      "/images/projects/hoftor-haustuer-mannheim-laerche/hoftor-haustuer-mannheim-laerche-01.jpg",
+      "/images/projects/hoftor-haustuer-mannheim-laerche/hoftor-haustuer-mannheim-laerche-02.jpg",
+      "/images/projects/hoftor-haustuer-mannheim-laerche/hoftor-haustuer-mannheim-laerche-03.jpg",
+      "/images/projects/hoftor-haustuer-mannheim-laerche/hoftor-haustuer-mannheim-laerche-04.jpg",
+      "/images/projects/hoftor-haustuer-mannheim-laerche/hoftor-haustuer-mannheim-laerche-05.jpg",
+      "/images/projects/hoftor-haustuer-mannheim-laerche/hoftor-haustuer-mannheim-laerche-06.jpg",
+      "/images/projects/hoftor-haustuer-mannheim-laerche/hoftor-haustuer-mannheim-laerche-07.jpg",
+      "/images/projects/hoftor-haustuer-mannheim-laerche/hoftor-haustuer-mannheim-laerche-08.jpg",
+    ],
+    cover:
+      "/images/projects/hoftor-haustuer-mannheim-laerche/hoftor-haustuer-mannheim-laerche-01.jpg",
+  },
 ];
 
 /* ─────────────── Helpers ─────────────── */

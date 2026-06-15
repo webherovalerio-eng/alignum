@@ -148,6 +148,7 @@ export const SERVICES: Service[] = [
     imageCategory: "tueren",
     hubPath: SERVICE_HUB,
     keywords: ["Türenbauer Mannheim", "Haustür Holz", "Innentür nach Maß"],
+    cover: "/images/projects/hoftor-haustuer-mannheim-laerche/hoftor-haustuer-mannheim-laerche-01.jpg",
   },
   {
     slug: "shoji",

@@ -91,6 +91,7 @@ export const CITY_SERVICES: CityService[] = [
     imageCategory: "tueren",
     metaTagline: "Türen nach Maß vom Schreiner",
     lead: "Haustüren, Innentüren und Tore nach Maß – passgenau gefertigt und montiert für Ihr Haus in {city}.",
+    cover: "/images/projects/hoftor-haustuer-mannheim-laerche/hoftor-haustuer-mannheim-laerche-01.jpg",
   },
   {
     slug: "massivholzbetten",
