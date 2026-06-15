@@ -704,6 +704,197 @@ export const PROJECTS: Project[] = [
     cover:
       "/images/projects/hoftor-haustuer-mannheim-laerche/hoftor-haustuer-mannheim-laerche-01.jpg",
   },
+  {
+    slug: "badmoebel-roteiche-mannheim",
+    city: "schreinerei-mannheim",
+    service: "badmoebel",
+    title: "Badmöbel aus Roteiche — Projekt Mannheim",
+    metaTitle: "Badmöbel aus Roteiche nach Maß | Projekt Mannheim",
+    metaDescription:
+      "Komplette Badmöblierung aus Roteiche: Hochschrank, Spiegelschrank und Waschtisch-Unterschränke mit Schubladen — von Alignum für einen Kunden in Mannheim.",
+    summary:
+      "Komplette Badmöblierung aus warmer Roteiche: Hochschrank, breiter Spiegelschrank und Waschtisch-Unterschränke mit Schubladen – gefertigt für ein Bad in Mannheim.",
+    body: [
+      "Für ein Bad in Mannheim haben wir eine komplette, aufeinander abgestimmte Möblierung aus Roteiche gefertigt – vom raumhohen Hochschrank über den breiten Spiegelschrank bis zu den Waschtisch-Unterschränken. So bekommt das ganze Bad eine durchgehende, warme Holzhandschrift.",
+      "Der Hochschrank nimmt Handtücher und Vorräte auf, der Spiegelschrank über der Waschtischzeile bietet hinter den Türen Stauraum und gibt zugleich viel Spiegelfläche. Darunter sorgen Schubladen-Unterschränke für griffbereite Ordnung. Alle Fronten sind aus Roteiche mit ihrer lebhaften, warmen Maserung gearbeitet.",
+      "Roteiche bringt eine kräftigere, rötlichere Tönung mit als die heimische Stiel-Eiche – das gibt dem Bad eine besonders warme Atmosphäre. Mit einer feuchtraumgeeigneten Oberfläche behandelt, hält das Holz auch im Bad dauerhaft stand.",
+      "Geplant, gefertigt und montiert haben wir die Badmöbel aus unserer Werkstatt in Edingen-Neckarhausen – passgenau auf den vorhandenen Grundriss in Mannheim.",
+    ],
+    features: [
+      "Komplette Badmöblierung aus Roteiche",
+      "Raumhoher Hochschrank für Handtücher und Vorräte",
+      "Breiter Spiegelschrank mit Stauraum",
+      "Waschtisch-Unterschränke mit Schubladen",
+      "Feuchtraumgeeignete Oberfläche",
+      "Aufmaß, Fertigung und Montage in Mannheim",
+    ],
+    year: 2025,
+    images: [
+      "/images/projects/badmoebel-roteiche-mannheim/badmoebel-roteiche-mannheim-01.jpg",
+      "/images/projects/badmoebel-roteiche-mannheim/badmoebel-roteiche-mannheim-02.jpg",
+      "/images/projects/badmoebel-roteiche-mannheim/badmoebel-roteiche-mannheim-03.jpg",
+      "/images/projects/badmoebel-roteiche-mannheim/badmoebel-roteiche-mannheim-04.jpg",
+      "/images/projects/badmoebel-roteiche-mannheim/badmoebel-roteiche-mannheim-05.jpg",
+      "/images/projects/badmoebel-roteiche-mannheim/badmoebel-roteiche-mannheim-06.jpg",
+    ],
+    cover:
+      "/images/projects/badmoebel-roteiche-mannheim/badmoebel-roteiche-mannheim-01.jpg",
+  },
+  {
+    slug: "badschrank-wiesloch-eiche",
+    city: "schreinerei-wiesloch",
+    service: "badmoebel",
+    material: "stiel-eiche",
+    title: "Waschtisch und Spiegelschrank aus Eiche — Projekt Wiesloch",
+    metaTitle: "Badmöbel aus Eiche nach Maß | Projekt Wiesloch",
+    metaDescription:
+      "Wandhängender Eiche-Waschtisch mit grifflosen Schubladen und breiter Spiegelschrank vor anthrazitfarbenen Fliesen — von Alignum für einen Kunden in Wiesloch.",
+    summary:
+      "Wandhängender Waschtisch aus Eiche mit grifflosen Schubladen und ein breiter, raumhoher Spiegelschrank vor dunklen Fliesen – warmer Kontrast für ein modernes Bad in Wiesloch.",
+    body: [
+      "Für ein modernes Bad in Wiesloch haben wir einen wandhängenden Waschtisch und einen breiten Spiegelschrank aus Eiche gefertigt. Vor den großformatigen anthrazitfarbenen Fliesen setzt das warme Holz einen bewussten, freundlichen Kontrast.",
+      "Der schwebende Waschtisch-Unterschrank trägt ein weißes Aufsatzbecken und bietet darunter zwei grifflose Schubladen mit durchgehender Maserung. Der raumbreite Spiegelschrank verschwindet optisch hinter der Spiegelfläche und schließt oben mit einer schmalen Eiche-Blende ab, in die eine indirekte Beleuchtung integriert ist.",
+      "Eiche ist im Bad eine bewährte Wahl: Mit feuchtraumgeeigneter Oberfläche und sauber versiegelten Kanten trotzt das harte Holz der täglichen Feuchtigkeit und altert würdevoll. Die ruhige Maserung passt zur reduzierten, modernen Formensprache.",
+      "Geplant, gefertigt und montiert haben wir die Badmöbel aus unserer Werkstatt in Edingen-Neckarhausen – passgenau für das Bad in Wiesloch.",
+    ],
+    features: [
+      "Wandhängender Waschtisch-Unterschrank aus Eiche",
+      "Grifflose Schubladen mit durchgehender Maserung",
+      "Raumbreiter Spiegelschrank mit indirekter Beleuchtung",
+      "Warmer Holzkontrast vor anthrazitfarbenen Fliesen",
+      "Feuchtraumgeeignete Oberfläche, versiegelte Kanten",
+      "Aufmaß, Fertigung und Montage in Wiesloch",
+    ],
+    year: 2025,
+    images: [
+      "/images/projects/badschrank-wiesloch-eiche/badschrank-wiesloch-eiche-01.jpg",
+      "/images/projects/badschrank-wiesloch-eiche/badschrank-wiesloch-eiche-02.jpg",
+      "/images/projects/badschrank-wiesloch-eiche/badschrank-wiesloch-eiche-03.jpg",
+      "/images/projects/badschrank-wiesloch-eiche/badschrank-wiesloch-eiche-04.jpg",
+      "/images/projects/badschrank-wiesloch-eiche/badschrank-wiesloch-eiche-05.jpg",
+      "/images/projects/badschrank-wiesloch-eiche/badschrank-wiesloch-eiche-06.jpg",
+    ],
+    cover:
+      "/images/projects/badschrank-wiesloch-eiche/badschrank-wiesloch-eiche-01.jpg",
+  },
+  {
+    slug: "treppe-wandscheibe-edingen-eiche",
+    city: "schreinerei-edingen-neckarhausen",
+    service: "treppenbau-in-der-nahe",
+    material: "stiel-eiche",
+    title: "Treppe mit Wandscheibe aus Eiche — Projekt Edingen",
+    metaTitle: "Treppe mit Wandscheibe aus Eiche | Projekt Edingen",
+    metaDescription:
+      "Gewendelte Treppe mit Eiche-Stufen, geschwungener weißer Wandscheibe mit integriertem Stauraum und LED-Stufenbeleuchtung — von Alignum in Edingen-Neckarhausen.",
+    summary:
+      "Gewendelte Treppe mit Eiche-Stufen, einer geschwungenen weißen Wandscheibe mit verborgenem Stauraum und LED-Stufenbeleuchtung – gefertigt in Edingen-Neckarhausen.",
+    body: [
+      "Für ein Haus in Edingen-Neckarhausen haben wir eine gewendelte Treppe mit einer markanten, geschwungenen Wandscheibe gebaut. Die weiße Scheibe folgt elegant dem Treppenlauf, fasst ihn seitlich ein und nimmt zugleich verborgenen Stauraum auf.",
+      "Die Stufen sind aus massiver Eiche mit lebendiger Maserung gefertigt, in die Setzstufen ist eine indirekte LED-Beleuchtung eingelassen, die die Treppe abends weich erleuchtet. Die geschwungene Wandscheibe verbirgt hinter grifflosen Klappen Stauraum, der die sonst ungenutzte Fläche unter der Treppe nutzbar macht.",
+      "Eiche ist für Treppenstufen das ideale Holz: hart, abriebfest und mit einem warmen Maserbild, das jeden Tritt aushält und dabei schön bleibt. Gegen das Weiß der Wandscheibe wirkt es besonders edel.",
+      "Geplant, gefertigt und montiert haben wir Treppe und Wandscheibe aus unserer Werkstatt in Edingen-Neckarhausen – mit Statikplanung und millimetergenauem Einbau.",
+    ],
+    features: [
+      "Gewendelte Treppe mit massiven Eiche-Stufen",
+      "Geschwungene weiße Wandscheibe als Blickfang",
+      "Verborgener Stauraum unter der Treppe",
+      "Indirekte LED-Stufenbeleuchtung",
+      "Warmer Holz-Weiß-Kontrast",
+      "Statikplanung, Fertigung und Einbau in Edingen-Neckarhausen",
+    ],
+    year: 2025,
+    images: [
+      "/images/projects/treppe-wandscheibe-edingen-eiche/treppe-wandscheibe-edingen-eiche-05.jpg",
+      "/images/projects/treppe-wandscheibe-edingen-eiche/treppe-wandscheibe-edingen-eiche-01.jpg",
+      "/images/projects/treppe-wandscheibe-edingen-eiche/treppe-wandscheibe-edingen-eiche-02.jpg",
+      "/images/projects/treppe-wandscheibe-edingen-eiche/treppe-wandscheibe-edingen-eiche-03.jpg",
+      "/images/projects/treppe-wandscheibe-edingen-eiche/treppe-wandscheibe-edingen-eiche-04.jpg",
+      "/images/projects/treppe-wandscheibe-edingen-eiche/treppe-wandscheibe-edingen-eiche-06.jpg",
+    ],
+    cover:
+      "/images/projects/treppe-wandscheibe-edingen-eiche/treppe-wandscheibe-edingen-eiche-05.jpg",
+  },
+  {
+    slug: "treppe-wandscheibe-mannheim-eiche",
+    city: "schreinerei-mannheim",
+    service: "treppenbau-in-der-nahe",
+    material: "stiel-eiche",
+    title: "Treppe mit Wandscheibe aus Eiche — Projekt Mannheim",
+    metaTitle: "Treppe mit Wandscheibe aus Eiche | Projekt Mannheim",
+    metaDescription:
+      "Halbgewendelte Treppe mit Eiche-Stufen, weißen Setzstufen und einer raumteilenden weißen Wandscheibe — von Alignum für einen Kunden in Mannheim.",
+    summary:
+      "Halbgewendelte Treppe mit warmen Eiche-Stufen, weißen Setzstufen und einer raumteilenden weißen Wandscheibe – klare Linien, viel Licht. Gefertigt für einen Kunden in Mannheim.",
+    body: [
+      "Für ein Haus in Mannheim haben wir eine halbgewendelte Treppe mit einer raumteilenden Wandscheibe gebaut, die die beiden Treppenläufe trennt und dem Treppenhaus eine klare, ruhige Struktur gibt.",
+      "Die Trittstufen sind aus massiver Eiche gefertigt und sitzen auf weißen Setzstufen – ein klarer, zweifarbiger Aufbau, der die Treppe leicht und grafisch wirken lässt. Die weiße Wandscheibe übernimmt zugleich die Funktion des Geländers und hält den Treppenlauf optisch offen.",
+      "Eiche ist die Königin unter den Treppenhölzern: hart, langlebig und mit einer warmen, lebendigen Maserung, die jeden Tritt aushält. Gegen das klare Weiß der Setzstufen und der Wandscheibe kommt das Holz besonders schön zur Geltung.",
+      "Geplant, gefertigt und montiert haben wir Treppe und Wandscheibe aus unserer Werkstatt in Edingen-Neckarhausen – mit Statikplanung und passgenauem Einbau in Mannheim.",
+    ],
+    features: [
+      "Halbgewendelte Treppe mit massiven Eiche-Stufen",
+      "Weiße Setzstufen für einen klaren, grafischen Aufbau",
+      "Raumteilende weiße Wandscheibe statt klassischem Geländer",
+      "Offener, leichter Treppenlauf",
+      "Warmer Holz-Weiß-Kontrast",
+      "Statikplanung, Fertigung und Einbau in Mannheim",
+    ],
+    year: 2025,
+    images: [
+      "/images/projects/treppe-wandscheibe-mannheim-eiche/treppe-wandscheibe-mannheim-eiche-10.jpg",
+      "/images/projects/treppe-wandscheibe-mannheim-eiche/treppe-wandscheibe-mannheim-eiche-07.jpg",
+      "/images/projects/treppe-wandscheibe-mannheim-eiche/treppe-wandscheibe-mannheim-eiche-01.jpg",
+      "/images/projects/treppe-wandscheibe-mannheim-eiche/treppe-wandscheibe-mannheim-eiche-02.jpg",
+      "/images/projects/treppe-wandscheibe-mannheim-eiche/treppe-wandscheibe-mannheim-eiche-03.jpg",
+      "/images/projects/treppe-wandscheibe-mannheim-eiche/treppe-wandscheibe-mannheim-eiche-04.jpg",
+      "/images/projects/treppe-wandscheibe-mannheim-eiche/treppe-wandscheibe-mannheim-eiche-05.jpg",
+      "/images/projects/treppe-wandscheibe-mannheim-eiche/treppe-wandscheibe-mannheim-eiche-06.jpg",
+      "/images/projects/treppe-wandscheibe-mannheim-eiche/treppe-wandscheibe-mannheim-eiche-08.jpg",
+      "/images/projects/treppe-wandscheibe-mannheim-eiche/treppe-wandscheibe-mannheim-eiche-09.jpg",
+    ],
+    cover:
+      "/images/projects/treppe-wandscheibe-mannheim-eiche/treppe-wandscheibe-mannheim-eiche-10.jpg",
+  },
+  {
+    slug: "balkon-sichtschutz-mannheim-laerche",
+    city: "schreinerei-mannheim",
+    service: "regale-und-raumtrenner",
+    material: "laerche",
+    title: "Balkon-Sichtschutz aus Lärche — Projekt Mannheim",
+    metaTitle: "Balkon-Sichtschutz aus Lärche nach Maß | Mannheim",
+    metaDescription:
+      "Vertikaler Lamellen-Sichtschutz aus Lärche für Balkon und Terrasse, wetterfest und lichtdurchlässig — von Alignum für einen Kunden in Mannheim.",
+    summary:
+      "Vertikaler Lamellen-Sichtschutz aus Lärche für Balkon und Terrasse – wetterfest, blickdicht und doch licht- und luftdurchlässig. Gefertigt für einen Kunden in Mannheim.",
+    body: [
+      "Für eine Terrasse in Mannheim haben wir einen Sichtschutz aus Lärche gefertigt, der vor Blicken schützt, ohne den Raum abzuriegeln. Vom Wohnzimmer aus betrachtet rahmt er den Ausblick ins Grüne und gibt der Terrasse einen ruhigen, natürlichen Abschluss.",
+      "Der Sichtschutz besteht aus schmalen, vertikalen Lärchen-Lamellen mit gleichmäßigen Abständen. So bleibt er blickdicht, lässt aber Licht und Luft hindurch – kein massiver Riegel, sondern ein leichtes, gegliedertes Element, das den Außenbereich strukturiert.",
+      "Lärche ist für den Außenbereich das ideale heimische Holz: harzreich, von Natur aus witterungsbeständig und mit einer warmen Tönung, die mit der Zeit silbrig-edel vergraut, wenn man sie lässt. Genau richtig für ein Element, das ganzjährig draußen steht.",
+      "Gefertigt haben wir den Sichtschutz in unserer Werkstatt in Edingen-Neckarhausen und vor Ort in Mannheim montiert.",
+    ],
+    features: [
+      "Vertikaler Lamellen-Sichtschutz aus Lärche",
+      "Blickdicht, dabei licht- und luftdurchlässig",
+      "Witterungsbeständiges, harzreiches Lärchenholz",
+      "Strukturierter, natürlicher Terrassen-Abschluss",
+      "Optional natürlich vergrauend",
+      "Fertigung und Montage in Mannheim",
+    ],
+    year: 2025,
+    images: [
+      "/images/projects/balkon-sichtschutz-mannheim-laerche/balkon-sichtschutz-mannheim-laerche-01.jpg",
+      "/images/projects/balkon-sichtschutz-mannheim-laerche/balkon-sichtschutz-mannheim-laerche-02.jpg",
+      "/images/projects/balkon-sichtschutz-mannheim-laerche/balkon-sichtschutz-mannheim-laerche-03.jpg",
+      "/images/projects/balkon-sichtschutz-mannheim-laerche/balkon-sichtschutz-mannheim-laerche-04.jpg",
+      "/images/projects/balkon-sichtschutz-mannheim-laerche/balkon-sichtschutz-mannheim-laerche-05.jpg",
+      "/images/projects/balkon-sichtschutz-mannheim-laerche/balkon-sichtschutz-mannheim-laerche-06.jpg",
+      "/images/projects/balkon-sichtschutz-mannheim-laerche/balkon-sichtschutz-mannheim-laerche-07.jpg",
+      "/images/projects/balkon-sichtschutz-mannheim-laerche/balkon-sichtschutz-mannheim-laerche-08.jpg",
+      "/images/projects/balkon-sichtschutz-mannheim-laerche/balkon-sichtschutz-mannheim-laerche-09.jpg",
+    ],
+    cover:
+      "/images/projects/balkon-sichtschutz-mannheim-laerche/balkon-sichtschutz-mannheim-laerche-01.jpg",
+  },
 ];
 
 /* ─────────────── Helpers ─────────────── */
