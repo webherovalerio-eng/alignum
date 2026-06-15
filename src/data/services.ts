@@ -51,6 +51,9 @@ export const SERVICES: Service[] = [
     imageCategory: "badmoebel",
     hubPath: SERVICE_HUB,
     keywords: ["Badmöbel Mannheim", "Waschtisch nach Maß", "Holz im Bad"],
+    // Echtes Referenzprojekt (Badunterschrank Ulme, Mannheim) als Cover —
+    // wirkt in ServicesGrid „Zwölf Disziplinen" + Service-Hero + OG-Bild.
+    cover: "/images/projects/badunterschrank-mannheim-ulme/badunterschrank-mannheim-ulme-01.jpg",
   },
   {
     slug: "tische-und-stuehle",
@@ -69,6 +72,7 @@ export const SERVICES: Service[] = [
     imageCategory: "tische",
     hubPath: SERVICE_HUB,
     keywords: ["Esstisch Mannheim", "Massivholztisch", "Tischlerei Tisch"],
+    cover: "/images/projects/tisch-bank-edingen-ulme/tisch-bank-edingen-ulme-01.jpg",
   },
   {
     slug: "moebelbauer",
@@ -87,6 +91,7 @@ export const SERVICES: Service[] = [
     imageCategory: "schraenke",
     hubPath: SERVICE_HUB,
     keywords: ["Schrank nach Maß", "Einbauschrank Mannheim", "Möbelbauer"],
+    cover: "/images/projects/einbauschrank-mannheim-eiche/einbauschrank-mannheim-eiche-10.jpg",
   },
   {
     slug: "massivholzbetten",
@@ -123,6 +128,8 @@ export const SERVICES: Service[] = [
     imageCategory: "treppen",
     hubPath: SERVICE_HUB,
     keywords: ["Treppenbau Mannheim", "Holztreppe", "Schreiner Treppe"],
+    // Echtes Referenzprojekt (Treppenverkleidung Kiefer, Gauangelloch) als Cover.
+    cover: "/images/projects/treppenverkleidung-gauangelloch-kiefer/treppenverkleidung-gauangelloch-kiefer-01.jpg",
   },
   {
     slug: "tuerenbauer-in-der-naehe",
@@ -141,6 +148,7 @@ export const SERVICES: Service[] = [
     imageCategory: "tueren",
     hubPath: SERVICE_HUB,
     keywords: ["Türenbauer Mannheim", "Haustür Holz", "Innentür nach Maß"],
+    cover: "/images/projects/haustuer-heidelberg-eiche/haustuer-heidelberg-eiche-11.jpg",
   },
   {
     slug: "shoji",
@@ -159,7 +167,7 @@ export const SERVICES: Service[] = [
     imageCategory: "shoji",
     hubPath: SERVICE_HUB,
     keywords: ["Shoji Mannheim", "Japanische Schiebewand", "Reispapier-Wand"],
-    cover: "/images/services/shoji/shoji-cover.jpg",
+    cover: "/images/projects/shoji-schiebetuer-maxdorf-zeder/shoji-schiebetuer-maxdorf-zeder-01.jpg",
   },
   {
     slug: "regale-und-raumtrenner",
@@ -214,6 +222,7 @@ export const SERVICES: Service[] = [
     imageCategory: "schraenke",
     hubPath: SERVICE_HUB,
     keywords: ["Kommode nach Maß", "Sideboard Holz", "Schreinerei Kommode"],
+    cover: "/images/projects/kommode-edingen-ulme/kommode-edingen-ulme-01.jpg",
   },
   {
     slug: "alignum-art",

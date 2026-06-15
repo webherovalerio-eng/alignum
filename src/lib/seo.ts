@@ -14,7 +14,9 @@ export function buildMetadata({ title, description, path = "/", image, noindex }
   const fullTitle = title.includes("Alignum") ? title : `${title} | Alignum Schreinerei Mannheim`;
   const ogImage = image ?? "/images/hero/og-default.jpg";
   return {
-    title: fullTitle,
+    // absolute: verhindert, dass das Layout-Template („%s | Alignum Schreinerei
+    // Mannheim") den Brand-Suffix ein zweites Mal anhängt (doppeltes „Alignum").
+    title: { absolute: fullTitle },
     description,
     metadataBase: new URL(SITE.url),
     alternates: { canonical: url },

@@ -9,7 +9,7 @@ import { SITE } from "@/data/site";
 import { cn } from "@/lib/cn";
 
 type FormState = {
-  service: string;
+  services: string[];
   scope: string;
   budget: string;
   timeline: string;
@@ -23,7 +23,7 @@ type FormState = {
 };
 
 const SCOPES = ["Komplett-Projekt", "Einzelmöbel", "Sanierung / Umbau", "Beratung & Planung"];
-const BUDGETS = ["bis 3.000 €", "3.000 – 8.000 €", "8.000 – 20.000 €", "20.000 – 50.000 €", "über 50.000 €"];
+const BUDGETS = ["bis 3.000 €", "3.000 – 8.000 €", "8.000 – 20.000 €", "20.000 – 50.000 €", "über 50.000 €", "Weiß ich noch nicht"];
 const TIMELINES = ["Sofort", "in 1–3 Monaten", "in 3–6 Monaten", "Flexibel"];
 
 const STEPS = ["Leistung", "Projekt", "Kontakt", "Übersicht"];
@@ -33,7 +33,7 @@ export function AnfrageForm({ initialService }: { initialService?: string }) {
   const [submitted, setSubmitted] = useState(false);
 
   const [form, setForm] = useState<FormState>({
-    service: initialService ?? "",
+    services: initialService ? [initialService] : [],
     scope: "",
     budget: "",
     timeline: "",
@@ -47,24 +47,43 @@ export function AnfrageForm({ initialService }: { initialService?: string }) {
   });
 
   useEffect(() => {
-    if (initialService) setForm((f) => ({ ...f, service: initialService }));
+    if (initialService)
+      setForm((f) => ({
+        ...f,
+        services: f.services.includes(initialService)
+          ? f.services
+          : [...f.services, initialService],
+      }));
   }, [initialService]);
 
   function update<K extends keyof FormState>(key: K, value: FormState[K]) {
     setForm((f) => ({ ...f, [key]: value }));
   }
 
+  /** Leistung an-/abwählen (Multiple-Choice). */
+  function toggleService(slug: string) {
+    setForm((f) => ({
+      ...f,
+      services: f.services.includes(slug)
+        ? f.services.filter((s) => s !== slug)
+        : [...f.services, slug],
+    }));
+  }
+
   const canNext = useMemo(() => {
-    if (step === 0) return form.service.length > 0;
-    if (step === 1) return form.scope && form.timeline && form.description.trim().length >= 10;
+    if (step === 0) return form.services.length > 0;
+    // Beschreibung & Maße sind optional — nur Umfang + Zeitrahmen nötig.
+    if (step === 1) return Boolean(form.scope && form.timeline);
     if (step === 2) return form.name.trim() && form.email.trim() && form.email.includes("@");
     return true;
   }, [step, form]);
 
-  const serviceObj = SERVICES.find((s) => s.slug === form.service);
+  const serviceNames = form.services.map(
+    (slug) => SERVICES.find((s) => s.slug === slug)?.name ?? slug,
+  );
 
   function buildMailto() {
-    const serviceName = serviceObj?.name ?? form.service;
+    const serviceName = serviceNames.join(" + ") || "—";
     const city = form.city ? ` aus ${form.city}` : "";
     const subject = `🪵 Neue Anfrage · ${serviceName} · ${form.name}${city}`;
 
@@ -104,9 +123,9 @@ export function AnfrageForm({ initialService }: { initialService?: string }) {
       ``,
       SEP,
       ``,
-      `▸ LEISTUNG`,
+      `▸ LEISTUNG${serviceNames.length > 1 ? "EN" : ""}`,
       ``,
-      `   ${serviceName}`,
+      ...serviceNames.map((n) => `   • ${n}`),
       ``,
       SUB,
       ``,
@@ -217,8 +236,8 @@ export function AnfrageForm({ initialService }: { initialService?: string }) {
           >
             {step === 0 && (
               <Step1
-                value={form.service}
-                onChange={(v) => update("service", v)}
+                values={form.services}
+                onToggle={toggleService}
               />
             )}
             {step === 1 && (
@@ -236,7 +255,7 @@ export function AnfrageForm({ initialService }: { initialService?: string }) {
             {step === 3 && (
               <Step4
                 form={form}
-                serviceName={serviceObj?.name ?? "—"}
+                serviceNames={serviceNames}
               />
             )}
 
@@ -283,24 +302,29 @@ export function AnfrageForm({ initialService }: { initialService?: string }) {
   );
 }
 
-function Step1({ value, onChange }: { value: string; onChange: (v: string) => void }) {
+function Step1({
+  values,
+  onToggle,
+}: {
+  values: string[];
+  onToggle: (v: string) => void;
+}) {
   return (
     <div>
       <h2 className="font-display text-3xl sm:text-4xl mb-3">
         Was dürfen wir für Sie bauen?
       </h2>
       <p className="text-muted-foreground mb-8">
-        Wählen Sie die Leistung, die am besten passt. Sie können später
-        weitere ergänzen.
+        Wählen Sie eine oder mehrere Leistungen – Mehrfachauswahl ist möglich.
       </p>
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
         {SERVICES.map((s) => {
-          const active = value === s.slug;
+          const active = values.includes(s.slug);
           return (
             <button
               type="button"
               key={s.slug}
-              onClick={() => onChange(s.slug)}
+              onClick={() => onToggle(s.slug)}
               className={cn(
                 "group relative text-left rounded-xl border p-5 transition-all",
                 active
@@ -409,7 +433,7 @@ function Step2({
       </fieldset>
 
       <Field
-        label="Beschreibung des Projekts"
+        label="Beschreibung des Projekts (optional)"
         as="textarea"
         rows={5}
         value={form.description}
@@ -480,7 +504,7 @@ function Step3({
   );
 }
 
-function Step4({ form, serviceName }: { form: FormState; serviceName: string }) {
+function Step4({ form, serviceNames }: { form: FormState; serviceNames: string[] }) {
   return (
     <div className="space-y-8">
       <div>
@@ -494,11 +518,14 @@ function Step4({ form, serviceName }: { form: FormState; serviceName: string }) 
       </div>
 
       <dl className="rounded-2xl border border-border bg-card divide-y divide-border">
-        <Row k="Leistung" v={serviceName} />
+        <Row
+          k={serviceNames.length > 1 ? "Leistungen" : "Leistung"}
+          v={serviceNames.join(", ") || "—"}
+        />
         <Row k="Umfang" v={form.scope} />
         {form.budget && <Row k="Budget" v={form.budget} />}
         <Row k="Timeline" v={form.timeline} />
-        <Row k="Beschreibung" v={form.description} />
+        {form.description.trim() && <Row k="Beschreibung" v={form.description} />}
         {form.measurements && <Row k="Maße / Räume" v={form.measurements} />}
         <Row k="Kontakt" v={`${form.name} · ${form.email}${form.phone ? ` · ${form.phone}` : ""}${form.city ? ` · ${form.city}` : ""}`} />
       </dl>

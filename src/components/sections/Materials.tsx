@@ -12,7 +12,7 @@ export function Materials() {
   const m = MATERIALS[active];
 
   return (
-    <section className="relative py-24 sm:py-32 overflow-hidden">
+    <section id="hoelzer" className="relative py-24 sm:py-32 overflow-hidden scroll-mt-28">
       <div className="container-prose">
         <Reveal className="max-w-3xl mb-16">
           <p className="text-sm tracking-widest uppercase text-primary font-medium mb-4">
@@ -95,7 +95,6 @@ export function Materials() {
                     sizes="(max-width: 1024px) 100vw, 50vw"
                     className="object-cover"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-foreground/40 to-transparent" />
                   <span className="absolute top-4 left-4 inline-block px-3 py-1 rounded-full bg-background/90 backdrop-blur text-xs uppercase tracking-wider text-foreground">
                     {m.hardness === "hart" ? "Hartholz" : m.hardness === "mittel" ? "Mittelhart" : "Weichholz"}
                   </span>

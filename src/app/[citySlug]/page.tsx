@@ -13,10 +13,12 @@ import { FAQ } from "@/components/sections/FAQ";
 import { CTA } from "@/components/sections/CTA";
 import { Reveal } from "@/components/ui/Reveal";
 import { JsonLd } from "@/components/seo/JsonLd";
+import { SERVICE_HUB } from "@/data/services";
+import { CITY_SERVICES, isTopCity, cityServicePath } from "@/data/cityServices";
 import { CITIES, type City } from "@/data/cities";
 import { HERO_PHOTOS } from "@/data/photos";
 import { GENERAL_FAQS } from "@/data/faqs";
-import { buildCityClosing } from "@/lib/cityContent";
+import { buildCityClosing, buildCitySecretSauce } from "@/lib/cityContent";
 import { buildMetadata } from "@/lib/seo";
 import { SITE } from "@/data/site";
 
@@ -26,13 +28,30 @@ export function generateStaticParams() {
   return CITIES.map((c) => ({ citySlug: c.slug }));
 }
 
+/**
+ * Kuratierte Service→Stadt-Verlinkung für den SEO-Block am Seitenende.
+ * Reihenfolge & Labels nach Search-Console-Nachfrage (Longtails wie
+ * „schreinerküche {stadt}", „büromöbel {stadt}", „badmöbel {stadt}",
+ * „treppen {stadt}" — viel Impressionen, bisher schwach geranked).
+ */
+const CITY_SERVICE_LINKS: { label: string; slug: string }[] = [
+  { label: "Schreinerküche", slug: "kuechenbau-in-der-naehe" },
+  { label: "Einbauschränke", slug: "moebelbauer" },
+  { label: "Büromöbel", slug: "bueromoebel" },
+  { label: "Badmöbel", slug: "badmoebel" },
+  { label: "Treppen", slug: "treppenbau-in-der-nahe" },
+  { label: "Innentüren", slug: "tuerenbauer-in-der-naehe" },
+  { label: "Massivholzbetten", slug: "massivholzbetten" },
+  { label: "Massivholztische", slug: "tische-und-stuehle" },
+];
+
 export async function generateMetadata({ params }: { params: Promise<{ citySlug: string }> }) {
   const { citySlug } = await params;
   const city = CITIES.find((c) => c.slug === citySlug);
   if (!city) return {};
   return buildMetadata({
-    title: `Schreinerei ${city.name} – Maßmöbel aus unserer Werkstatt | Alignum`,
-    description: `Schreiner für ${city.name}: Aus unserer Werkstatt in ${SITE.address.city} liefern und montieren wir Maßmöbel, Küchen, Treppen und Türen bei Ihnen vor Ort. Anfahrt inklusive.`,
+    title: `Schreinerei ${city.name} & Tischler – Möbel nach Maß | Alignum`,
+    description: `Schreinerei & Tischler für ${city.name}: Aus unserer Werkstatt in ${SITE.address.city} fertigen, liefern und montieren wir Möbel nach Maß – Küchen, Einbauschränke, Büromöbel, Badmöbel, Treppen, Türen und Betten. Aufmaß und Montage in ${city.name} inklusive.`,
     path: `/${city.slug}/`,
   });
 }
@@ -45,6 +64,7 @@ export default async function CityPage({ params }: { params: Promise<{ citySlug:
   const heroPhoto =
     HERO_PHOTOS[Math.abs(hashString(city.slug)) % Math.max(HERO_PHOTOS.length, 1)] ?? HERO_PHOTOS[0];
   const closing = buildCityClosing(city);
+  const secretSauce = buildCitySecretSauce(city);
   const ld = buildLocalBusinessLD(city);
 
   return (
@@ -52,14 +72,14 @@ export default async function CityPage({ params }: { params: Promise<{ citySlug:
       {/* 1. Hero — Keyword in H1-Badge, Spintax-Display, CTA */}
       <CityHero city={city} photo={heroPhoto} />
 
-      {/* 2. So arbeiten wir mit {Stadt} — Statement-Strip */}
+      {/* 2. Schreinerei {Stadt} — Statement-Strip */}
       <CitySecretSauce city={city} />
 
-      {/* 2b. Echte Projekte in dieser Stadt (rendert nichts wenn keine Einträge) */}
-      <ProjectsByCity city={city} />
-
-      {/* 3. Der Schreiner hinter Alignum — Jan persönlich */}
+      {/* 3. Schreinermeister für {Stadt} — Jan persönlich (direkt nach Hero-Strip) */}
       <MeetJan city={city} />
+
+      {/* 3b. Echte Projekte in dieser Stadt (rendert nichts wenn keine Einträge) */}
+      <ProjectsByCity city={city} />
 
       {/* 4. Was Kunden sagen — Social Proof */}
       <Reviews />
@@ -90,7 +110,61 @@ export default async function CityPage({ params }: { params: Promise<{ citySlug:
         title={`Häufige Fragen aus ${city.name}`}
       />
 
-      {/* 11. Closing + CTA */}
+      {/* 11. Secret Sauce — keyword-dichter Local-SEO-Block am Seitenende */}
+      <section className="relative py-16 sm:py-20 border-t border-border bg-muted/30 grain-overlay">
+        <div className="container-prose">
+          <Reveal className="max-w-3xl">
+            <p className="text-xs uppercase tracking-[0.25em] text-primary font-medium mb-5">
+              Schreiner für {city.name} und die Region
+            </p>
+            <h2 className="font-display text-[clamp(1.5rem,3vw,2.25rem)] leading-[1.15] tracking-tight mb-6">
+              Möbelschreinerei für {city.name} und Umgebung
+            </h2>
+            <div className="space-y-4">
+              {secretSauce.map((p, i) => (
+                <p
+                  key={i}
+                  className="text-sm sm:text-base text-muted-foreground leading-relaxed"
+                >
+                  {p}
+                </p>
+              ))}
+            </div>
+
+            {/* Keyword-reiche Service→Stadt-Verlinkung (Longtails aus GSC) */}
+            <div className="mt-8 pt-6 border-t border-border">
+              <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground mb-4">
+                Unsere Leistungen für {city.name}
+              </p>
+              <div className="flex flex-wrap gap-2.5">
+                {isTopCity(city.slug)
+                  ? /* Top-Stadt: auf die eigenen Service×Stadt-Landingpages verlinken */
+                    CITY_SERVICES.map((s) => (
+                      <a
+                        key={s.slug}
+                        href={cityServicePath(city.slug, s.slug)}
+                        className="inline-flex items-center rounded-full border border-border bg-card px-4 py-2 text-sm text-foreground/85 hover:border-primary/50 hover:text-foreground transition-colors"
+                      >
+                        {s.h1} {city.name}
+                      </a>
+                    ))
+                  : /* übrige Städte: auf die generischen Service-Seiten */
+                    CITY_SERVICE_LINKS.map((s) => (
+                      <a
+                        key={s.slug}
+                        href={`/${SERVICE_HUB}/${s.slug}/`}
+                        className="inline-flex items-center rounded-full border border-border bg-card px-4 py-2 text-sm text-foreground/85 hover:border-primary/50 hover:text-foreground transition-colors"
+                      >
+                        {s.label} für {city.name}
+                      </a>
+                    ))}
+              </div>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* 12. Closing + CTA */}
       <section className="relative py-20">
         <div className="container-tight">
           <Reveal>

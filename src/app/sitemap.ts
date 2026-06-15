@@ -2,7 +2,8 @@ import type { MetadataRoute } from "next";
 import { SITE } from "@/data/site";
 import { SERVICES, SERVICE_HUB } from "@/data/services";
 import { CITIES } from "@/data/cities";
-import { PROJECTS } from "@/data/projects";
+import { PROJECTS, projectPath } from "@/data/projects";
+import { cityServicePairs, cityServicePath } from "@/data/cityServices";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
@@ -39,11 +40,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
   }));
 
   const projectPages = PROJECTS.map((p) => ({
-    url: `${SITE.url}/projekte/${p.slug}/`,
+    url: `${SITE.url}${projectPath(p)}`,
     lastModified: now,
     changeFrequency: "yearly" as const,
     priority: 0.75,
   }));
 
-  return [...staticPages, ...servicePages, ...cityPages, ...projectPages];
+  // Service×Stadt-Landingpages (Top-Städte × Kern-Leistungen)
+  const cityServicePages = cityServicePairs().map(({ citySlug, slug }) => ({
+    url: `${SITE.url}${cityServicePath(citySlug, slug)}`,
+    lastModified: now,
+    changeFrequency: "monthly" as const,
+    priority: 0.78,
+  }));
+
+  return [...staticPages, ...servicePages, ...cityPages, ...projectPages, ...cityServicePages];
 }
