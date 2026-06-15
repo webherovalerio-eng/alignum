@@ -1132,6 +1132,47 @@ export const PROJECTS: Project[] = [
     cover:
       "/images/projects/shoji-schiebetuer-maxdorf-zeder/shoji-schiebetuer-maxdorf-zeder-01.jpg",
   },
+  {
+    slug: "tisch-kommode-hochhausen-eiche",
+    city: "schreinerei-hassmersheim",
+    service: "tische-und-stuehle",
+    material: "stiel-eiche",
+    title: "Esstisch und Kommoden aus Wildeiche — Projekt Hochhausen",
+    metaTitle: "Esstisch aus Wildeiche nach Maß | Projekt Hochhausen",
+    metaDescription:
+      "Massiver Esstisch aus Wildeiche mit Baumkante und dunkler Mittelfuge, dazu passende Kommoden — von Alignum für einen Kunden in Hochhausen am Neckar (Haßmersheim).",
+    summary:
+      "Massiver Esstisch aus Wildeiche mit Baumkante und dunkler Mittelfuge, dazu passende Kommoden – ein zusammengehöriges Ensemble für einen Kunden in Hochhausen am Neckar bei Haßmersheim.",
+    body: [
+      "Für einen Kunden in Hochhausen am Neckar bei Haßmersheim haben wir ein ganzes Ensemble aus Wildeiche gefertigt: einen großen Esstisch und dazu passende Kommoden, alle aus demselben Holz und in derselben Handschrift.",
+      "Die Tischplatte zeigt die Eiche in ihrer wildesten, ehrlichsten Form – mit lebendigen Astbildern, natürlichen Rissen und einer sichtbaren Baumkante. Eine dunkle Mittelfuge teilt die Platte und macht aus zwei Bohlen ein bewusst gestaltetes Ganzes. Getragen wird die schwere Platte von einem schlanken Stahlgestell, das sie schweben lässt. Die Kommoden nehmen dasselbe Holz und dieselbe ruhige Formensprache auf.",
+      "Wildeiche ist für Liebhaber gemacht: Wo andere Hölzer Äste und Risse verstecken, feiert die Wildeiche sie. Jede Platte ist ein Unikat, das sich nicht wiederholen lässt – geölt fühlt sich die Oberfläche warm und lebendig an.",
+      "Gefertigt haben wir Tisch und Kommoden in unserer Werkstatt in Edingen-Neckarhausen und nach Hochhausen am Neckar geliefert – ein aufeinander abgestimmtes Ensemble aus einer Hand.",
+    ],
+    features: [
+      "Massiver Esstisch aus Wildeiche mit Baumkante",
+      "Dunkle Mittelfuge als gestalterischer Akzent",
+      "Schlankes Stahlgestell, das die Platte schweben lässt",
+      "Passende Kommoden aus demselben Holz",
+      "Lebendiges Astbild – jedes Stück ein Unikat",
+      "Aufmaß, Fertigung und Lieferung nach Hochhausen am Neckar",
+    ],
+    year: 2025,
+    images: [
+      "/images/projects/tisch-kommode-hochhausen-eiche/tisch-kommode-hochhausen-eiche-01.jpg",
+      "/images/projects/tisch-kommode-hochhausen-eiche/tisch-kommode-hochhausen-eiche-02.jpg",
+      "/images/projects/tisch-kommode-hochhausen-eiche/tisch-kommode-hochhausen-eiche-03.jpg",
+      "/images/projects/tisch-kommode-hochhausen-eiche/tisch-kommode-hochhausen-eiche-04.jpg",
+      "/images/projects/tisch-kommode-hochhausen-eiche/tisch-kommode-hochhausen-eiche-05.jpg",
+      "/images/projects/tisch-kommode-hochhausen-eiche/tisch-kommode-hochhausen-eiche-06.jpg",
+      "/images/projects/tisch-kommode-hochhausen-eiche/tisch-kommode-hochhausen-eiche-07.jpg",
+      "/images/projects/tisch-kommode-hochhausen-eiche/tisch-kommode-hochhausen-eiche-08.jpg",
+      "/images/projects/tisch-kommode-hochhausen-eiche/tisch-kommode-hochhausen-eiche-09.jpg",
+      "/images/projects/tisch-kommode-hochhausen-eiche/tisch-kommode-hochhausen-eiche-10.jpg",
+    ],
+    cover:
+      "/images/projects/tisch-kommode-hochhausen-eiche/tisch-kommode-hochhausen-eiche-01.jpg",
+  },
 ];
 
 /* ─────────────── Helpers ─────────────── */

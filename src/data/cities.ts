@@ -12,6 +12,7 @@ export const CITIES: City[] = [
   { slug: "schreinerei-ludwigshafen-am-rhein", name: "Ludwigshafen am Rhein", state: "Rheinland-Pfalz", population: 174715, distanceKm: 6 },
   { slug: "schreinerei-darmstadt", name: "Darmstadt", state: "Hessen", population: 159878, distanceKm: 50 },
   { slug: "schreinerei-maxdorf", name: "Maxdorf", state: "Rheinland-Pfalz", population: 7300, distanceKm: 12 },
+  { slug: "schreinerei-hassmersheim", name: "Haßmersheim", state: "Baden-Württemberg", population: 5200, distanceKm: 55 },
   { slug: "schreinerei-worms", name: "Worms", state: "Rheinland-Pfalz", population: 83330, distanceKm: 25 },
   { slug: "schreinerei-speyer", name: "Speyer", state: "Rheinland-Pfalz", population: 51277, distanceKm: 20 },
   { slug: "schreinerei-frankenthal", name: "Frankenthal", state: "Rheinland-Pfalz", population: 49001, distanceKm: 14 },
