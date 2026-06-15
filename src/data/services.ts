@@ -167,7 +167,7 @@ export const SERVICES: Service[] = [
     imageCategory: "shoji",
     hubPath: SERVICE_HUB,
     keywords: ["Shoji Mannheim", "Japanische Schiebewand", "Reispapier-Wand"],
-    cover: "/images/services/shoji/shoji-cover.jpg",
+    cover: "/images/projects/shoji-schiebetuer-maxdorf-zeder/shoji-schiebetuer-maxdorf-zeder-01.jpg",
   },
   {
     slug: "regale-und-raumtrenner",
