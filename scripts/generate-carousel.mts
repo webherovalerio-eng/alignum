@@ -60,6 +60,12 @@ const projectPlace = (titlePlace ?? city?.name ?? "").trim();
 const woodFromTitle = (coverTitle?.trim() ?? "").match(/\baus\s+(.+?)\s*$/i)?.[1]?.trim();
 const woodLabel = project.woodLabel ?? woodFromTitle ?? material?.name ?? "Massivholz";
 
+// Helle Hölzer brauchen auf dem „Das Holz"-Slide eine helle Behandlung:
+// dunkler Vollflächen-Scrim würde das cremige Maserbild zu Grau abmuten.
+// Stattdessen heller Cream-Schleier + dunkler Text.
+const LIGHT_WOODS = new Set(["ahorn", "esche", "buche", "birnbaum"]);
+const woodIsLight = !!project.material && LIGHT_WOODS.has(project.material);
+
 const outDir = path.join(OUTPUT_BASE, classic ? `${slug}-classic` : slug);
 await fs.mkdir(outDir, { recursive: true });
 
@@ -180,20 +186,20 @@ const slides: string[] = [
   </div>
   `,
 
-  // 4. DAS HOLZ — Material-Story
+  // 4. DAS HOLZ — Material-Story (helle Hölzer: helle Behandlung, dunkler Text)
   `
-  <div class="slide" id="slide-4">
+  <div class="slide">
     <img class="bg" src="${imgUrl(`/images/woods/${material?.slug ?? "stiel-eiche"}.jpg`)}" />
-    <div class="scrim-full"></div>
-    <div class="brand-top brand-top--light">
-      <img src="${logoLightUri}" class="brand-logo" alt="Alignum" />
+    <div class="${woodIsLight ? "scrim-wood-light" : "scrim-full"}"></div>
+    <div class="brand-top ${woodIsLight ? "" : "brand-top--light"}">
+      <img src="${woodIsLight ? logoDarkUri : logoLightUri}" class="brand-logo" alt="Alignum" />
     </div>
-    <div class="center-block">
+    <div class="center-block ${woodIsLight ? "center-block--dark" : ""}">
       <div class="eyebrow eyebrow--gold">Das Holz</div>
       <h2 class="material-title">${woodLabel}</h2>
       <p class="material-body">${project.body[2] ?? material?.description ?? ""}</p>
     </div>
-    <div class="page-pill page-pill--light">4 / 6</div>
+    <div class="page-pill ${woodIsLight ? "" : "page-pill--light"}"></div>
   </div>
   `,
 
@@ -327,6 +333,29 @@ const css = `
         rgba(0,0,0,0.28) 100%
       );
   }
+  /* Heller-Holz-Slide: cremiger Schleier links für dunklen Text,
+     Maserung bleibt rechts in voller Wärme sichtbar. */
+  .scrim-wood-light {
+    position: absolute; inset: 0;
+    background:
+      linear-gradient(
+        to right,
+        rgba(251,248,243,0.86) 0%,
+        rgba(251,248,243,0.55) 40%,
+        rgba(251,248,243,0.12) 72%,
+        rgba(251,248,243,0) 100%
+      ),
+      linear-gradient(
+        to bottom,
+        rgba(251,248,243,0.3) 0%,
+        rgba(251,248,243,0) 28%,
+        rgba(251,248,243,0) 72%,
+        rgba(251,248,243,0.35) 100%
+      );
+  }
+  .center-block--dark { color: var(--fg-dark); }
+  .center-block--dark .material-title { color: var(--fg-dark); }
+  .center-block--dark .material-body { color: rgba(20,20,20,0.82); }
   .scrim-soft-top {
     position: absolute; inset: 0;
     background: linear-gradient(

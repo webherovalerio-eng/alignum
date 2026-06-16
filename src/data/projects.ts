@@ -956,6 +956,7 @@ export const PROJECTS: Project[] = [
     images: [
       "/images/projects/shoji-einbauschrank-schriesheim-ahorn/shoji-einbauschrank-schriesheim-ahorn-01.jpg",
       "/images/projects/shoji-einbauschrank-schriesheim-ahorn/shoji-einbauschrank-schriesheim-ahorn-02.jpg",
+      "/images/projects/shoji-einbauschrank-schriesheim-ahorn/shoji-einbauschrank-schriesheim-ahorn-09.jpg",
       "/images/projects/shoji-einbauschrank-schriesheim-ahorn/shoji-einbauschrank-schriesheim-ahorn-03.jpg",
       "/images/projects/shoji-einbauschrank-schriesheim-ahorn/shoji-einbauschrank-schriesheim-ahorn-04.jpg",
       "/images/projects/shoji-einbauschrank-schriesheim-ahorn/shoji-einbauschrank-schriesheim-ahorn-05.jpg",
