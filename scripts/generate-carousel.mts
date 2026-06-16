@@ -54,6 +54,12 @@ const material = MATERIALS.find((m) => m.slug === project.material);
 const [coverTitle, titlePlace] = project.title.split(/\s*[—–-]\s*Projekt\s+/);
 const projectPlace = (titlePlace ?? city?.name ?? "").trim();
 
+// Holzart-Label: muss exakt dem entsprechen, was im Titel steht
+// („… aus {Holz}"), NICHT dem Katalog-Namen (z.B. Titel „Ahorn", aber
+// material.name „Berg-Ahorn"). Reihenfolge: expliziter Override > Titel > Katalog.
+const woodFromTitle = (coverTitle?.trim() ?? "").match(/\baus\s+(.+?)\s*$/i)?.[1]?.trim();
+const woodLabel = project.woodLabel ?? woodFromTitle ?? material?.name ?? "Massivholz";
+
 const outDir = path.join(OUTPUT_BASE, classic ? `${slug}-classic` : slug);
 await fs.mkdir(outDir, { recursive: true });
 
@@ -179,7 +185,7 @@ const slides: string[] = [
     </div>
     <div class="center-block">
       <div class="eyebrow eyebrow--gold">Das Holz</div>
-      <h2 class="material-title">${project.woodLabel ?? material?.name ?? "Massivholz"}</h2>
+      <h2 class="material-title">${woodLabel}</h2>
       <p class="material-body">${project.body[2] ?? material?.description ?? ""}</p>
     </div>
     <div class="page-pill page-pill--light">4 / 6</div>
@@ -298,12 +304,23 @@ const css = `
   }
   .scrim-full {
     position: absolute; inset: 0;
-    background: linear-gradient(
-      to bottom,
-      rgba(0,0,0,0.55) 0%,
-      rgba(0,0,0,0.65) 50%,
-      rgba(0,0,0,0.85) 100%
-    );
+    /* Links dunkel (Text lesbar), nach rechts transparent — lässt das
+       Holz-Maserbild sichtbar, statt es flächig grau zu überdecken. */
+    background:
+      linear-gradient(
+        to right,
+        rgba(0,0,0,0.80) 0%,
+        rgba(0,0,0,0.55) 38%,
+        rgba(0,0,0,0.18) 72%,
+        rgba(0,0,0,0.04) 100%
+      ),
+      linear-gradient(
+        to bottom,
+        rgba(0,0,0,0.18) 0%,
+        rgba(0,0,0,0) 30%,
+        rgba(0,0,0,0) 70%,
+        rgba(0,0,0,0.28) 100%
+      );
   }
   .scrim-soft-top {
     position: absolute; inset: 0;

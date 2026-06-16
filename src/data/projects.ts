@@ -949,9 +949,9 @@ export const PROJECTS: Project[] = [
       "Fertigung und Montage in Schriesheim",
     ],
     images: [
-      "/images/projects/shoji-einbauschrank-schriesheim-ahorn/shoji-einbauschrank-schriesheim-ahorn-02.jpg",
-      "/images/projects/shoji-einbauschrank-schriesheim-ahorn/shoji-einbauschrank-schriesheim-ahorn-09.jpg",
       "/images/projects/shoji-einbauschrank-schriesheim-ahorn/shoji-einbauschrank-schriesheim-ahorn-05.jpg",
+      "/images/projects/shoji-einbauschrank-schriesheim-ahorn/shoji-einbauschrank-schriesheim-ahorn-09.jpg",
+      "/images/projects/shoji-einbauschrank-schriesheim-ahorn/shoji-einbauschrank-schriesheim-ahorn-02.jpg",
       "/images/projects/shoji-einbauschrank-schriesheim-ahorn/shoji-einbauschrank-schriesheim-ahorn-06.jpg",
       "/images/projects/shoji-einbauschrank-schriesheim-ahorn/shoji-einbauschrank-schriesheim-ahorn-10.jpg",
       "/images/projects/shoji-einbauschrank-schriesheim-ahorn/shoji-einbauschrank-schriesheim-ahorn-08.jpg",
