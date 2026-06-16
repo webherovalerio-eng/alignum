@@ -26,18 +26,20 @@ export function CityIntent({ city }: { city: City }) {
   return (
     <section className="relative py-20 sm:py-28">
       <div className="container-prose">
-        {/* Eyebrow */}
+        {/* SEO-Keyword: kleines, unauffälliges H2 (kein Display-Font) —
+            „Tischler" laut Search-Console stark nachgefragt + bisher ungenutzt. */}
         <Reveal className="max-w-3xl mb-3">
-          <p className="text-xs uppercase tracking-[0.25em] text-primary font-medium">
-            Für Sie in {city.name}
-          </p>
+          <h2 className="text-xs uppercase tracking-[0.25em] text-primary font-medium">
+            Schreinerei &amp; Tischler {city.name}
+          </h2>
         </Reveal>
 
-        {/* H2 */}
+        {/* Visueller Blickfang: große Display-Zeile als „fake H2" (<p>) */}
         <Reveal className="max-w-3xl mb-10">
-          <h2 className="font-display text-[clamp(2rem,4.5vw,3.75rem)] leading-[1.05] tracking-tight">
-            Schreinerei {city.name}
-          </h2>
+          <p className="font-display text-[clamp(2rem,4.5vw,3.75rem)] leading-[1.05] tracking-tight">
+            Für Sie in{" "}
+            <span className="text-primary italic">{city.name}</span>
+          </p>
         </Reveal>
 
         {/* Pull-Quote-Lead */}

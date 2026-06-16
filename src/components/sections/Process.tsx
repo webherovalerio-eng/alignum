@@ -21,7 +21,7 @@ export function Process() {
             Wie wir arbeiten
           </p>
           <h2 className="font-display text-[clamp(2.25rem,5vw,4rem)] leading-[1.05] tracking-tight">
-            Sechs Schritte vom <br />
+            Vier Schritte vom <br />
             <span className="italic text-muted-foreground">ersten Strich</span> zum fertigen Möbel.
           </h2>
         </Reveal>

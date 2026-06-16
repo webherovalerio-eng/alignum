@@ -1,38 +1,29 @@
+// Der Weg vom ersten Gespräch bis zum montierten Möbel — vier Schritte.
+// Identisch zu <WerkstattZuIhnen> (City-Pages), hier nur ohne Stadt-Bezug
+// für Home- und Service-Seiten.
 export const PROCESS_STEPS = [
   {
     n: "01",
-    title: "Erstgespräch",
+    title: "Erstgespräch & Aufmaß",
     body:
-      "Wir hören zu, lange. Welche Räume wollen Sie verändern? Was funktioniert nicht? Welches Möbel haben Sie im Kopf, das Sie noch nirgends gesehen haben?",
+      "Wir kommen kostenlos zu Ihnen, hören zu, vermessen den Raum bis auf den Millimeter und besprechen Ideen, Material und Budget. Jan persönlich – als Tischlermeister und Inhaber.",
   },
   {
     n: "02",
-    title: "Aufmaß & Skizze",
+    title: "Gemeinsame Planung & Skizze",
     body:
-      "Wir kommen zu Ihnen, vermessen den Raum bis auf den Millimeter und skizzieren – per Hand, mit Bleistift und Zeichenkohle. Manchmal entstehen so erste Aha-Momente.",
+      "Aus Ihren Ideen entstehen erst Handskizzen mit Bleistift, dann präzise CAD-Pläne mit Renderings. Erst wenn alles passt, geht es in die Fertigung – verbindlicher Festpreis inklusive.",
   },
   {
     n: "03",
-    title: "Material­auswahl",
+    title: "Fertigung in unserer Werkstatt",
     body:
-      "In der Werkstatt zeigen wir Ihnen Hölzer, Beschläge und Oberflächen. Sie fassen an. Sie riechen. Sie entscheiden – wir beraten.",
+      "Gebaut wird in unserer Werkstatt in Edingen-Neckarhausen. Massivholz, traditionelles Schreiner­handwerk plus 5-Achs-CNC – was die Maschine besser kann, macht die Maschine. Was die Hand besser kann, die Hand.",
   },
   {
     n: "04",
-    title: "Werk­planung",
+    title: "Lieferung & Montage",
     body:
-      "Aus den Skizzen werden präzise CAD-Pläne. Sie bekommen Renderings, damit Sie sehen, was kommt. Erst wenn alles passt, geht es los.",
-  },
-  {
-    n: "05",
-    title: "Werkstatt",
-    body:
-      "Tradition trifft 5-Achs-CNC. Was die Maschine schneller kann, schneidet die Maschine. Was die Hand besser kann, macht die Hand. Immer.",
-  },
-  {
-    n: "06",
-    title: "Montage vor Ort",
-    body:
-      "Wir kommen mit dem fertigen Werk, montieren sauber, justieren, säubern. Sie sehen Ihr Möbel zum ersten Mal in seinem neuen Zuhause.",
+      "Unser eigenes Montage-Team kommt zu Ihnen. Wir liefern, montieren, justieren und säubern – Sie sehen Ihr Möbel zum ersten Mal in seinem neuen Zuhause. Schutt nehmen wir wieder mit.",
   },
 ];

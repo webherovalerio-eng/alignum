@@ -26,8 +26,8 @@ export function WerkstattZuIhnen({ city }: { city: City }) {
     {
       n: "02",
       Icon: PenTool,
-      title: "Planung & Skizze",
-      body: `Aus Ihren Ideen entstehen erst Handskizzen mit Bleistift und Kohle, dann präzise CAD-Pläne mit Renderings. Erst wenn alles passt, geht es in die Fertigung – verbindlicher Festpreis inklusive.`,
+      title: "Gemeinsame Planung & Skizze",
+      body: `Aus Ihren Ideen entstehen erst Handskizzen mit Bleistift, dann präzise CAD-Pläne mit Renderings. Erst wenn alles passt, geht es in die Fertigung – verbindlicher Festpreis inklusive.`,
       tag: "Entwurf",
     },
     {
