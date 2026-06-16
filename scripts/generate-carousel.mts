@@ -105,18 +105,14 @@ const slides = [
   </div>
   `,
 
-  // 2. DIE IDEE — Statement (classic: Bild im Vordergrund, nur ein Satz)
+  // 2. DIE IDEE (classic: reines Vollbild, kein Text — lässt das Möbel wirken)
   classic
     ? `
   <div class="slide" id="slide-2">
     <img class="bg" src="${imgUrl(project.images[2] ?? project.cover)}" />
-    <div class="scrim-bottom"></div>
+    <div class="scrim-soft-top"></div>
     <div class="brand-top brand-top--light">
       <img src="${logoLightUri}" class="brand-logo" alt="Alignum" />
-    </div>
-    <div class="statement-bottom">
-      <div class="eyebrow eyebrow--gold">Die Idee</div>
-      <p class="image-quote">${project.body[0].split(/(?<=\.)\s+/)[0]}</p>
     </div>
     <div class="page-pill page-pill--light">2 / 6</div>
   </div>
@@ -273,6 +269,15 @@ const css = `
       rgba(0,0,0,0.55) 0%,
       rgba(0,0,0,0.65) 50%,
       rgba(0,0,0,0.85) 100%
+    );
+  }
+  .scrim-soft-top {
+    position: absolute; inset: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(0,0,0,0.45) 0%,
+      rgba(0,0,0,0.12) 22%,
+      rgba(0,0,0,0) 45%
     );
   }
   .surface-deep {
