@@ -41,7 +41,7 @@ export const SITE = {
     name: "Jan",
     fullName: "Jan Gerathewohl",
     role: "Tischlermeister & Inhaber",
-    image: "/images/team/jan-schreinerei.jpg",
+    image: "/images/team/jan-gerathewohl.jpg",
   },
   team: [
     { name: "Jan Gerathewohl", role: "Tischlermeister & Inhaber" },
