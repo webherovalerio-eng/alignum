@@ -87,10 +87,10 @@ const fontCss = (
 const SLIDE_W = 1080;
 const SLIDE_H = 1350;
 
-const slides = [
+const slides: string[] = [
   // 1. COVER — Hook
   `
-  <div class="slide" id="slide-1">
+  <div class="slide">
     <img class="bg" src="${imgUrl(project.cover)}" />
     <div class="scrim-bottom"></div>
     <div class="brand-top brand-top--light">
@@ -101,9 +101,25 @@ const slides = [
       <h1 class="hero-title">${project.title}</h1>
       <div class="hero-sub">${project.summary}</div>
     </div>
-    <div class="page-pill page-pill--light">1 / 6</div>
+    <div class="page-pill page-pill--light"></div>
   </div>
   `,
+
+  // 1b. ESTABLISHING — optionales textfreies Vollbild (z.B. Gesamt-Ensemble)
+  ...(project.establishingImage
+    ? [
+        `
+  <div class="slide">
+    <img class="bg" src="${imgUrl(project.establishingImage)}" />
+    <div class="scrim-soft-top"></div>
+    <div class="brand-top brand-top--light">
+      <img src="${logoLightUri}" class="brand-logo" alt="Alignum" />
+    </div>
+    <div class="page-pill page-pill--light"></div>
+  </div>
+  `,
+      ]
+    : []),
 
   // 2. DIE IDEE (classic: reines Vollbild, kein Text — lässt das Möbel wirken)
   classic
@@ -208,6 +224,18 @@ const slides = [
   </div>
   `,
 ];
+
+// Slide-Anzahl ist dynamisch (optionaler Establishing-Slide) — IDs und
+// „n / total"-Seitenzahlen werden hier zentral vergeben, statt sie in jedem
+// Template hart zu codieren.
+const SLIDE_COUNT = slides.length;
+const numberedSlides = slides.map((html, i) => {
+  const n = i + 1;
+  return html
+    .replace(/ id="slide-\d+"/, "")
+    .replace('<div class="slide"', `<div class="slide" id="slide-${n}"`)
+    .replace(/(<div class="page-pill[^"]*">)[^<]*(<\/div>)/, `$1${n} / ${SLIDE_COUNT}$2`);
+});
 
 // ─────────────── STYLES ───────────────
 
@@ -608,7 +636,7 @@ const html = `<!doctype html>
 <style>${css}${classic ? classicCss : ""}</style>
 </head>
 <body>
-${slides.join("\n")}
+${numberedSlides.join("\n")}
 </body>
 </html>`;
 
@@ -628,11 +656,12 @@ await page.goto(pathToFileURL(htmlFile).href);
 await page.evaluateHandle("document.fonts.ready");
 await page.waitForTimeout(800);
 
-for (let i = 1; i <= 6; i++) {
+for (let i = 1; i <= SLIDE_COUNT; i++) {
+  const nn = String(i).padStart(2, "0");
   const slide = await page.locator(`#slide-${i}`);
-  const outPath = path.join(outDir, `slide-0${i}.png`);
+  const outPath = path.join(outDir, `slide-${nn}.png`);
   await slide.screenshot({ path: outPath, omitBackground: false });
-  console.log(`✓ slide-0${i}.png`);
+  console.log(`✓ slide-${nn}.png`);
 }
 
 await browser.close();

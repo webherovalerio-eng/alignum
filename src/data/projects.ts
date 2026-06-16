@@ -28,6 +28,12 @@ export type Project = {
    */
   woodLabel?: string;
   /**
+   * Optionales Vollbild (root-relative Pfad), das im Carousel direkt nach dem
+   * Cover als textfreie Establishing-Aufnahme eingeschoben wird — z.B. das
+   * Gesamt-Ensemble. Ohne Wert entfällt der Slide (Carousel bleibt 6-teilig).
+   */
+  establishingImage?: string;
+  /**
    * Überschrift im Carousel-Slide „Was wir gebaut haben". Beschreibt das
    * konkret gebaute Möbel, falls die Service-Kategorie zu allgemein ist —
    * z.B. "Esstisch & Kommode" statt der Kategorie "Tische und Stühle".
@@ -1161,6 +1167,8 @@ export const PROJECTS: Project[] = [
     material: "stiel-eiche",
     woodLabel: "Wildeiche",
     builtLabel: "Esstisch & Kommode",
+    establishingImage:
+      "/images/projects/tisch-kommode-hochhausen-eiche/tisch-kommode-hochhausen-eiche-01.jpg",
     title: "Esstisch und Kommoden aus Wildeiche — Projekt Hochhausen",
     metaTitle: "Esstisch aus Wildeiche nach Maß | Projekt Hochhausen",
     metaDescription:

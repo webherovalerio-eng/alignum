@@ -15,9 +15,9 @@ import { PROJECTS } from "../src/data/projects.ts";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const SOCIAL_DIR = path.resolve(__dirname, "..", "..", "_extracted", "social");
 
-const SLIDE_NAMES = ["Cover", "Die Idee", "Die Lösung", "Das Holz", "Features", "CTA"];
+const BASE_NAMES = ["Cover", "Die Idee", "Die Lösung", "Das Holz", "Features", "CTA"];
 
-type Section = { title: string; variant: string; dir: string; slides: string[] };
+type Section = { title: string; variant: string; dir: string; slides: string[]; names: string[] };
 
 const sections: Section[] = [];
 for (const entry of (await fs.readdir(SOCIAL_DIR, { withFileTypes: true })).sort((a, b) =>
@@ -31,11 +31,15 @@ for (const entry of (await fs.readdir(SOCIAL_DIR, { withFileTypes: true })).sort
 
   const baseSlug = entry.name.replace(/-classic$/, "");
   const project = PROJECTS.find((p) => p.slug === baseSlug);
+  // Optionaler Establishing-Slide wird direkt nach dem Cover eingeschoben.
+  const names = [...BASE_NAMES];
+  if (project?.establishingImage) names.splice(1, 0, "Ensemble");
   sections.push({
     title: project?.title ?? baseSlug,
     variant: entry.name.endsWith("-classic") ? "Classic · Cinzel" : "Fraunces",
     dir: entry.name,
     slides,
+    names,
   });
 }
 
@@ -49,7 +53,7 @@ const sectionHtml = sections
       ${s.slides
         .map((f, i) => {
           const href = `${s.dir}/${f}`;
-          const name = SLIDE_NAMES[i] ?? `Slide ${i + 1}`;
+          const name = s.names[i] ?? `Slide ${i + 1}`;
           return `<a class="card" href="${href}" target="_blank">
         <img src="${href}" alt="${s.title} — ${name}" loading="lazy">
         <div class="label">${i + 1} / ${s.slides.length} · ${name}<div class="meta">${f}</div></div>
