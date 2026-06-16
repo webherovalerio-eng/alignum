@@ -157,7 +157,7 @@ const slides = [
     </div>
     <div class="center-block">
       <div class="eyebrow eyebrow--gold">Das Holz</div>
-      <h2 class="material-title">${material?.name ?? "Massivholz"}</h2>
+      <h2 class="material-title">${project.woodLabel ?? material?.name ?? "Massivholz"}</h2>
       <p class="material-body">${project.body[2] ?? material?.description ?? ""}</p>
     </div>
     <div class="page-pill page-pill--light">4 / 6</div>
@@ -174,7 +174,7 @@ const slides = [
     </div>
     <div class="features-block">
       <div class="eyebrow eyebrow--gold">Was wir gebaut haben</div>
-      <h2 class="features-title">${service?.name ?? "Maßmöbel"}</h2>
+      <h2 class="features-title">${project.builtLabel ?? service?.name ?? "Maßmöbel"}</h2>
       <ul class="features-list">
         ${project.features.slice(0, 5).map((f) => `<li><span class="check">✓</span><span>${f}</span></li>`).join("")}
       </ul>

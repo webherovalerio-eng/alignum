@@ -21,6 +21,19 @@ export type Project = {
   service: string;
   /** Material-Slug aus src/data/materials.ts (z.B. "ahorn") — optional */
   material?: string;
+  /**
+   * Anzeige-Name des Holzes im Carousel (Slide „Das Holz"), falls er vom
+   * Katalog-Namen abweicht — z.B. "Wildeiche" statt "Stiel-Eiche".
+   * Fällt auf material.name zurück.
+   */
+  woodLabel?: string;
+  /**
+   * Überschrift im Carousel-Slide „Was wir gebaut haben". Beschreibt das
+   * konkret gebaute Möbel, falls die Service-Kategorie zu allgemein ist —
+   * z.B. "Esstisch & Kommode" statt der Kategorie "Tische und Stühle".
+   * Fällt auf service.name zurück.
+   */
+  builtLabel?: string;
   title: string;
   /** Suchmaschinen-Title (60 chars) und H1 */
   metaTitle: string;
@@ -1146,6 +1159,8 @@ export const PROJECTS: Project[] = [
     city: "schreinerei-hassmersheim",
     service: "tische-und-stuehle",
     material: "stiel-eiche",
+    woodLabel: "Wildeiche",
+    builtLabel: "Esstisch & Kommode",
     title: "Esstisch und Kommoden aus Wildeiche — Projekt Hochhausen",
     metaTitle: "Esstisch aus Wildeiche nach Maß | Projekt Hochhausen",
     metaDescription:
