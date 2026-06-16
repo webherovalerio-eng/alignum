@@ -133,20 +133,24 @@ const slides: string[] = [
       ]
     : []),
 
-  // 2. DIE IDEE (classic: reines Vollbild, kein Text — lässt das Möbel wirken)
-  classic
-    ? `
-  <div class="slide" id="slide-2">
+  // 2. DIE IDEE (classic: reines Vollbild, kein Text — lässt das Möbel wirken).
+  // Per skipIdea abschaltbar, z.B. wenn ein Establishing-Slide das Möbel bereits zeigt.
+  ...(project.skipIdea
+    ? []
+    : [
+        classic
+          ? `
+  <div class="slide">
     <img class="bg" src="${imgUrl(project.images[2] ?? project.cover)}" />
     <div class="scrim-soft-top"></div>
     <div class="brand-top brand-top--light">
       <img src="${logoLightUri}" class="brand-logo" alt="Alignum" />
     </div>
-    <div class="page-pill page-pill--light">2 / 6</div>
+    <div class="page-pill page-pill--light"></div>
   </div>
   `
-    : `
-  <div class="slide" id="slide-2">
+          : `
+  <div class="slide">
     <div class="surface-deep"></div>
     <div class="watermark">${city?.name ?? "Projekt"}</div>
     <div class="brand-top brand-top--light">
@@ -156,9 +160,10 @@ const slides: string[] = [
       <div class="eyebrow eyebrow--gold">Die Idee</div>
       <p class="big-quote">${project.body[0]}</p>
     </div>
-    <div class="page-pill page-pill--light">2 / 6</div>
+    <div class="page-pill page-pill--light"></div>
   </div>
   `,
+      ]),
 
   // 3. DIE LÖSUNG — Bild + Body[1]
   `

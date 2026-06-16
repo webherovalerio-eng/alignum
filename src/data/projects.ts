@@ -34,6 +34,11 @@ export type Project = {
    */
   establishingImage?: string;
   /**
+   * Lässt den Carousel-Slide „Die Idee" weg — sinnvoll, wenn z.B. ein
+   * establishingImage das Möbel bereits zeigt und der Slide redundant wäre.
+   */
+  skipIdea?: boolean;
+  /**
    * Überschrift im Carousel-Slide „Was wir gebaut haben". Beschreibt das
    * konkret gebaute Möbel, falls die Service-Kategorie zu allgemein ist —
    * z.B. "Esstisch & Kommode" statt der Kategorie "Tische und Stühle".
@@ -1167,6 +1172,7 @@ export const PROJECTS: Project[] = [
     builtLabel: "Esstisch & Kommode",
     establishingImage:
       "/images/projects/tisch-kommode-hochhausen-eiche/tisch-kommode-hochhausen-eiche-01.jpg",
+    skipIdea: true,
     title: "Esstisch und Kommoden aus Wildeiche — Projekt Hochhausen",
     metaTitle: "Esstisch aus Wildeiche nach Maß | Projekt Hochhausen",
     metaDescription:
