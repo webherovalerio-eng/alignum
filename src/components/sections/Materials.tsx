@@ -31,39 +31,40 @@ export function Materials() {
         </Reveal>
 
         <div className="grid lg:grid-cols-12 gap-10 items-start">
-          {/* Tab list (links) */}
+          {/* Tab list (links) — Mobile: umbrechende Pills, Desktop: Liste */}
           <div className="lg:col-span-5">
-            <ul className="flex lg:flex-col gap-1 overflow-x-auto lg:overflow-visible -mx-4 px-4 lg:mx-0 lg:px-0">
+            <ul className="flex flex-wrap lg:flex-col gap-2 lg:gap-1">
               {MATERIALS.map((mat, i) => (
-                <li key={mat.slug} className="shrink-0 lg:shrink">
+                <li key={mat.slug}>
                   <button
                     type="button"
                     onClick={() => setActive(i)}
                     className={cn(
-                      "group relative w-full text-left px-5 py-4 rounded-xl transition-all border",
+                      "group relative text-left transition-all border",
+                      "rounded-full px-4 py-2 lg:rounded-xl lg:w-full lg:px-5 lg:py-4",
                       i === active
                         ? "border-primary/60 bg-card shadow-[var(--shadow-soft)]"
-                        : "border-transparent hover:bg-muted/60",
+                        : "border-border bg-card/40 hover:bg-muted/60 lg:border-transparent lg:bg-transparent",
                     )}
                     aria-pressed={i === active}
                   >
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-2.5 lg:gap-3">
                       <span
                         aria-hidden
-                        className="size-3 rounded-full ring-2 ring-offset-2 ring-offset-background transition-all"
+                        className="size-2.5 lg:size-3 shrink-0 rounded-full ring-2 ring-offset-2 ring-offset-background transition-all"
                         style={{
                           background: `hsl(${mat.color})`,
                           boxShadow: i === active ? `0 0 0 2px hsl(var(--primary))` : "none",
                         }}
                       />
-                      <span className="font-display text-lg">{mat.name}</span>
-                      <span className="ml-auto text-[10px] uppercase tracking-wider text-muted-foreground">
+                      <span className="font-display text-base lg:text-lg whitespace-nowrap">{mat.name}</span>
+                      <span className="ml-auto hidden lg:inline text-[10px] uppercase tracking-wider text-muted-foreground">
                         {mat.hardness === "hart" ? "Hart" : mat.hardness === "mittel" ? "Mittel" : "Weich"}
                       </span>
                     </div>
                     <p
                       className={cn(
-                        "text-xs mt-1 transition-colors",
+                        "hidden lg:block text-xs mt-1 transition-colors",
                         i === active ? "text-foreground" : "text-muted-foreground",
                       )}
                     >
@@ -100,9 +101,9 @@ export function Materials() {
                   </span>
                 </div>
 
-                <div className="p-8 sm:p-10">
-                  <h3 className="font-display text-4xl sm:text-5xl tracking-tight mb-4">{m.name}</h3>
-                  <p className="text-lg text-foreground/85 leading-relaxed mb-8 max-w-prose">
+                <div className="p-6 sm:p-10">
+                  <h3 className="font-display text-3xl sm:text-5xl tracking-tight mb-4">{m.name}</h3>
+                  <p className="text-base sm:text-lg text-foreground/85 leading-relaxed mb-8 max-w-prose">
                     {m.description}
                   </p>
                   <div className="border-t border-border pt-6">
