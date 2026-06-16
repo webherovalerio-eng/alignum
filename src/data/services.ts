@@ -33,6 +33,7 @@ export const SERVICES: Service[] = [
     imageCategory: "kuechen",
     hubPath: SERVICE_HUB,
     keywords: ["Küchenbauer Mannheim", "Massivholzküche", "Schreinerküche", "Küche nach Maß"],
+    cover: "/images/services/kuechen/kuechen-ref.jpg",
   },
   {
     slug: "badmoebel",
@@ -204,6 +205,7 @@ export const SERVICES: Service[] = [
     imageCategory: "bueromoebel",
     hubPath: SERVICE_HUB,
     keywords: ["Büromöbel Mannheim", "Schreibtisch nach Maß", "Empfangstheke Holz"],
+    cover: "/images/services/bueromoebel/bueromoebel-ref.jpg",
   },
   {
     slug: "kommoden",

@@ -48,6 +48,7 @@ export const CITY_SERVICES: CityService[] = [
     imageCategory: "kuechen",
     metaTagline: "Küche nach Maß vom Schreiner",
     lead: "Massivholzküchen nach Maß – geplant, gefertigt und montiert für Ihr Zuhause in {city}.",
+    cover: "/images/services/kuechen/kuechen-ref.jpg",
   },
   {
     slug: "einbauschrank",
@@ -65,6 +66,7 @@ export const CITY_SERVICES: CityService[] = [
     imageCategory: "bueromoebel",
     metaTagline: "Büromöbel nach Maß vom Schreiner",
     lead: "Schreibtische, Konferenztische und Empfangstheken nach Maß – repräsentativ und langlebig für Ihr Büro in {city}.",
+    cover: "/images/services/bueromoebel/bueromoebel-ref.jpg",
   },
   {
     slug: "badmoebel",
