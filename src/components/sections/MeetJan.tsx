@@ -28,8 +28,8 @@ export function MeetJan({ city }: { city?: City }) {
             />
             {/* Signature sticker */}
             <motion.div
-              initial={{ opacity: 0, scale: 0.8, rotate: -8 }}
-              whileInView={{ opacity: 1, scale: 1, rotate: -6 }}
+              initial={{ opacity: 0, scale: 0.8 }}
+              whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.9, delay: 0.4, ease: [0.19, 1, 0.22, 1] }}
               className="absolute top-5 right-5 inline-flex items-center gap-2 rounded-full bg-background/95 backdrop-blur px-4 py-2 shadow-[var(--shadow-soft)] border border-border"
