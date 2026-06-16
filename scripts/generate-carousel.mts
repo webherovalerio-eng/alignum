@@ -47,6 +47,13 @@ const city = CITIES.find((c) => c.slug === project.city);
 const service = SERVICES.find((s) => s.slug === project.service);
 const material = MATERIALS.find((m) => m.slug === project.material);
 
+// Cover-Template: Titel folgt dem Muster „{Produkt} aus {Holz} — Projekt {Ort}".
+// Für die Cover-Headline nur den Produkt-Teil zeigen; den Ort separat als
+// Eyebrow „Projekt · {Ort}". Der Ort im Titel ist oft präziser als die
+// City-Page (z.B. Hochhausen statt der zugeordneten Stadt Haßmersheim).
+const [coverTitle, titlePlace] = project.title.split(/\s*[—–-]\s*Projekt\s+/);
+const projectPlace = (titlePlace ?? city?.name ?? "").trim();
+
 const outDir = path.join(OUTPUT_BASE, classic ? `${slug}-classic` : slug);
 await fs.mkdir(outDir, { recursive: true });
 
@@ -97,9 +104,8 @@ const slides: string[] = [
       <img src="${logoLightUri}" class="brand-logo" alt="Alignum" />
     </div>
     <div class="hero-bottom">
-      <div class="eyebrow">Referenz · ${city?.name ?? ""}${project.year ? " · " + project.year : ""}</div>
-      <h1 class="hero-title">${project.title}</h1>
-      <div class="hero-sub">${project.summary}</div>
+      <div class="eyebrow">Projekt · ${projectPlace}</div>
+      <h1 class="hero-title">${coverTitle.trim()}</h1>
     </div>
     <div class="page-pill page-pill--light"></div>
   </div>
