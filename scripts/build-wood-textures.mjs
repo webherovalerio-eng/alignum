@@ -36,12 +36,12 @@ const WOODS = [
   "kirschbaum",
   "buche",
   "laerche",
-  "birnbaum",
+  "kiefer",
   "ahorn",
   "birke",
-  "zwetschge",
+  "ulme",
   "elsbeere",
-  "platane",
+  "pappel",
 ];
 
 const EXTS = [".jpg", ".jpeg", ".png", ".webp"];

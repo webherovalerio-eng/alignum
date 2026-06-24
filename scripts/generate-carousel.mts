@@ -63,7 +63,7 @@ const woodLabel = project.woodLabel ?? woodFromTitle ?? material?.name ?? "Massi
 // Helle Hölzer brauchen auf dem „Das Holz"-Slide eine helle Behandlung:
 // dunkler Vollflächen-Scrim würde das cremige Maserbild zu Grau abmuten.
 // Stattdessen heller Cream-Schleier + dunkler Text.
-const LIGHT_WOODS = new Set(["ahorn", "esche", "buche", "birnbaum"]);
+const LIGHT_WOODS = new Set(["ahorn", "esche", "buche", "kiefer", "pappel"]);
 const woodIsLight = !!project.material && LIGHT_WOODS.has(project.material);
 
 const outDir = path.join(OUTPUT_BASE, classic ? `${slug}-classic` : slug);

@@ -66,7 +66,7 @@ export function GmbGallery({ limit = 13 }: { limit?: number }) {
             Aus unserer Werkstatt
           </p>
           <h2 className="font-display text-[clamp(2.25rem,5vw,4rem)] leading-[1.05] tracking-tight">
-            Möbel, die unser Holz <span className="italic text-muted-foreground">verlassen.</span>
+            Möbel, die unsere Werkstatt <span className="italic text-muted-foreground">verlassen.</span>
           </h2>
           <p className="mt-6 text-lg text-muted-foreground max-w-xl">
             Ein Querschnitt aus Projekten der letzten Jahre – jedes Stück ist
