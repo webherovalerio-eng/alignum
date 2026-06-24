@@ -55,8 +55,8 @@ const [coverTitle, titlePlace] = project.title.split(/\s*[—–-]\s*Projekt\s+/
 const projectPlace = (titlePlace ?? city?.name ?? "").trim();
 
 // Holzart-Label: muss exakt dem entsprechen, was im Titel steht
-// („… aus {Holz}"), NICHT dem Katalog-Namen (z.B. Titel „Ahorn", aber
-// material.name „Berg-Ahorn"). Reihenfolge: expliziter Override > Titel > Katalog.
+// („… aus {Holz}"), NICHT dem Katalog-Namen (z.B. Titel „Wildeiche", aber
+// material.name „Eiche"). Reihenfolge: expliziter Override > Titel > Katalog.
 const woodFromTitle = (coverTitle?.trim() ?? "").match(/\baus\s+(.+?)\s*$/i)?.[1]?.trim();
 const woodLabel = project.woodLabel ?? woodFromTitle ?? material?.name ?? "Massivholz";
 

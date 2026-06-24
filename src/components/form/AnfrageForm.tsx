@@ -24,7 +24,7 @@ type FormState = {
 
 const SCOPES = ["Komplett-Projekt", "Einzelmöbel", "Sanierung / Umbau", "Beratung & Planung"];
 const BUDGETS = ["bis 3.000 €", "3.000 – 8.000 €", "8.000 – 20.000 €", "20.000 – 50.000 €", "über 50.000 €", "Weiß ich noch nicht"];
-const TIMELINES = ["Sofort", "in 1–3 Monaten", "in 3–6 Monaten", "Flexibel"];
+const TIMELINES = ["in 1–3 Monaten", "in 3–6 Monaten", "Flexibel"];
 
 const STEPS = ["Leistung", "Projekt", "Kontakt", "Übersicht"];
 

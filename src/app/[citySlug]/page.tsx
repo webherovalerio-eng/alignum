@@ -16,7 +16,6 @@ import { JsonLd } from "@/components/seo/JsonLd";
 import { SERVICE_HUB } from "@/data/services";
 import { CITY_SERVICES, isTopCity, cityServicePath } from "@/data/cityServices";
 import { CITIES, type City } from "@/data/cities";
-import { HERO_PHOTOS } from "@/data/photos";
 import { GENERAL_FAQS } from "@/data/faqs";
 import { buildCityClosing, buildCitySecretSauce } from "@/lib/cityContent";
 import { buildMetadata } from "@/lib/seo";
@@ -45,6 +44,13 @@ const CITY_SERVICE_LINKS: { label: string; slug: string }[] = [
   { label: "Massivholztische", slug: "tische-und-stuehle" },
 ];
 
+/**
+ * ABF/Hero-Bild aller City-Pages: immer das kuratierte Shoji-Ambient-Motiv.
+ * Shoji ist Alignums Signatur-Handwerk; das Bild ist hero-optimiert
+ * (atmosphärisch, dunkel genug für den Text-Scrim im CityHero).
+ */
+const CITY_HERO_PHOTO = "/images/hero/hero-shoji-ambient.jpg";
+
 export async function generateMetadata({ params }: { params: Promise<{ citySlug: string }> }) {
   const { citySlug } = await params;
   const city = CITIES.find((c) => c.slug === citySlug);
@@ -61,8 +67,6 @@ export default async function CityPage({ params }: { params: Promise<{ citySlug:
   const city = CITIES.find((c) => c.slug === citySlug);
   if (!city) notFound();
 
-  const heroPhoto =
-    HERO_PHOTOS[Math.abs(hashString(city.slug)) % Math.max(HERO_PHOTOS.length, 1)] ?? HERO_PHOTOS[0];
   const closing = buildCityClosing(city);
   const secretSauce = buildCitySecretSauce(city);
   const ld = buildLocalBusinessLD(city);
@@ -70,7 +74,7 @@ export default async function CityPage({ params }: { params: Promise<{ citySlug:
   return (
     <>
       {/* 1. Hero — Keyword in H1-Badge, Spintax-Display, CTA */}
-      <CityHero city={city} photo={heroPhoto} />
+      <CityHero city={city} photo={CITY_HERO_PHOTO} />
 
       {/* 2. Schreinerei {Stadt} — Statement-Strip */}
       <CitySecretSauce city={city} />
@@ -183,12 +187,6 @@ export default async function CityPage({ params }: { params: Promise<{ citySlug:
       <JsonLd id={`ld-city-${city.slug}`} data={ld} />
     </>
   );
-}
-
-function hashString(s: string) {
-  let h = 0;
-  for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) | 0;
-  return h;
 }
 
 function buildLocalBusinessLD(city: City) {

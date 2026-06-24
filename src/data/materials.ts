@@ -13,7 +13,7 @@ export type Material = {
 export const MATERIALS: Material[] = [
   {
     slug: "stiel-eiche",
-    name: "Stiel-Eiche",
+    name: "Eiche",
     short: "Hart, lebendig, ehrlich.",
     description:
       "Die Königin unserer Werkstatt. Sehr hart, sehr langlebig, mit lebendigen Maserbildern. Nimmt Öl und Lauge perfekt an, altert würdevoll.",
@@ -90,7 +90,7 @@ export const MATERIALS: Material[] = [
   },
   {
     slug: "ahorn",
-    name: "Berg-Ahorn",
+    name: "Ahorn",
     short: "Skandinavisch hell, nordisch klar.",
     description:
       "Cremeweiß bis hell-rötlich, sehr feine Textur. Ideal für moderne, helle Interieurs und Räume, die ruhiger wirken sollen.",

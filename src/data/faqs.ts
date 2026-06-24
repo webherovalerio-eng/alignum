@@ -9,7 +9,7 @@ export const GENERAL_FAQS = [
   },
   {
     q: "Welche Hölzer verwendet Alignum?",
-    a: "Wir arbeiten ausschließlich mit europäischen Massivhölzern: Stiel-Eiche, Nuss, Esche, Kirsche, Buche, Birke, Lärche, Berg-Ahorn, Birnbaum und Schwarznuss. Alle Hölzer stammen aus nachhaltiger, möglichst regionaler Forstwirtschaft.",
+    a: "Wir arbeiten ausschließlich mit europäischen Massivhölzern: Eiche, Nuss, Esche, Kirsche, Buche, Birke, Lärche, Ahorn, Birnbaum und Schwarznuss. Alle Hölzer stammen aus nachhaltiger, möglichst regionaler Forstwirtschaft.",
   },
   {
     q: "Liefert Alignum auch außerhalb von Mannheim?",

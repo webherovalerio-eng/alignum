@@ -3,6 +3,7 @@ import { Reveal, MaskWords } from "@/components/ui/Reveal";
 import { Badge } from "@/components/ui/Badge";
 import { LinkButton } from "@/components/ui/Button";
 import { Reviews } from "@/components/sections/Reviews";
+import { KontaktMap } from "@/components/sections/KontaktMap";
 import { buildMetadata } from "@/lib/seo";
 import { SITE } from "@/data/site";
 
@@ -99,6 +100,17 @@ export default function KontaktPage() {
                 </LinkButton>
               </div>
             </div>
+          </Reveal>
+        </div>
+      </section>
+
+      <section className="relative pb-16 sm:pb-24">
+        <div className="container-prose">
+          <Reveal>
+            <p className="text-sm uppercase tracking-widest text-muted-foreground mb-4">
+              So finden Sie uns
+            </p>
+            <KontaktMap />
           </Reveal>
         </div>
       </section>

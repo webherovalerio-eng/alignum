@@ -23,7 +23,7 @@ export type Project = {
   material?: string;
   /**
    * Anzeige-Name des Holzes im Carousel (Slide „Das Holz"), falls er vom
-   * Katalog-Namen abweicht — z.B. "Wildeiche" statt "Stiel-Eiche".
+   * Katalog-Namen abweicht — z.B. "Wildeiche" statt "Eiche".
    * Fällt auf material.name zurück.
    */
   woodLabel?: string;
@@ -77,7 +77,7 @@ export const PROJECTS: Project[] = [
       "Wandhängendes TV-Lowboard mit massiver Ahornplatte und passendem Vitrinen-Hochschrank — gefertigt für ein Wohnzimmer in Mannheim.",
     body: [
       "Für einen Kunden in Mannheim haben wir ein wandhängendes TV-Möbel entwickelt, das die warme Wandfarbe des Raums aufgreift und durch eine massive Ahornplatte ergänzt. Die schwebende Konstruktion lässt den Bodenbelag durchgängig erscheinen — der Raum wirkt dadurch deutlich größer als mit einem klassisch stehenden Möbel.",
-      "Die Korpusse fertigen wir in Hochglanz-Weiß mit grifflosen Push-to-Open-Mechaniken. Die obere Ablage besteht aus europäischem Berg-Ahorn (Acer pseudoplatanus) – ein Massivholz, das mit seiner cremig-hellen Farbe und der feinen, fast unsichtbaren Maserung perfekt zu modernen Interieurs passt. Wir haben die Platte aus einem einzigen Stamm aufgetrennt, damit Maserung und Farbverlauf von links nach rechts durchgehen.",
+      "Die Korpusse fertigen wir in Hochglanz-Weiß mit grifflosen Push-to-Open-Mechaniken. Die obere Ablage besteht aus europäischem Ahorn (Acer pseudoplatanus) – ein Massivholz, das mit seiner cremig-hellen Farbe und der feinen, fast unsichtbaren Maserung perfekt zu modernen Interieurs passt. Wir haben die Platte aus einem einzigen Stamm aufgetrennt, damit Maserung und Farbverlauf von links nach rechts durchgehen.",
       "Der passende Vitrinen-Hochschrank wiederholt das Materialspiel: weißer Korpus, Ahorn-Boden, Glastüren mit Ahorn-Rahmen. Beleuchtet wird er von innen über dimmbare LED-Spots, die wir bauseits an die bestehende Hauselektrik angeschlossen haben.",
       "Vom ersten Aufmaßtermin in Mannheim bis zur Montage vergingen sieben Wochen. Geliefert und montiert haben wir an einem Werktag — der Kunde konnte am Abend desselben Tages bereits Fernsehen.",
     ],
@@ -116,7 +116,7 @@ export const PROJECTS: Project[] = [
     body: [
       "Für einen Kunden in Darmstadt haben wir eine komplette Wandseite im Flur in eine Shoji-Schiebewand verwandelt. Der Raum mit seinem Eichenparkett wirkte vorher eng und dunkel — der Wunsch war eine Front, die Stauraum verschließt, ohne wie eine massive Schrankwand zu wirken. Eine klassische Schiebetür aus Vollholz hätte das Licht geschluckt; die Shoji-Lösung macht das Gegenteil.",
       "Entstanden sind vier raumhohe Schiebeelemente aus massivem Ahorn mit transluzenter Bespannung in Washi-Optik. Das feine Sprossenraster folgt der traditionellen japanischen Aufteilung: schmale, präzise gefräste Quersprossen, die das Licht in ruhige Felder gliedern. Die Elemente laufen auf zwei Spuren und lassen sich flächenbündig hintereinander schieben — die Front bleibt grifflos und vollkommen ruhig. Trifft Tageslicht oder die Flurleuchte auf die Bespannung, leuchtet die ganze Wand sanft auf.",
-      "Ahorn ist für Shoji die erste Wahl unter den heimischen Hölzern: europäischer Bergahorn ist cremig-hell, fast weiß, mit einer so feinen Maserung, dass die Rahmen optisch hinter die Bespannung zurücktreten. Genau diese Zurückhaltung braucht eine Shoji-Wand — das Holz gibt die Struktur vor, ohne sich in den Vordergrund zu spielen. Gegen das warme Eichenparkett setzt der helle Ahorn einen feinen, bewusst leisen Kontrast.",
+      "Ahorn ist für Shoji die erste Wahl unter den heimischen Hölzern: europäischer Ahorn ist cremig-hell, fast weiß, mit einer so feinen Maserung, dass die Rahmen optisch hinter die Bespannung zurücktreten. Genau diese Zurückhaltung braucht eine Shoji-Wand — das Holz gibt die Struktur vor, ohne sich in den Vordergrund zu spielen. Gegen das warme Eichenparkett setzt der helle Ahorn einen feinen, bewusst leisen Kontrast.",
       "Nach dem Aufmaßtermin in Darmstadt haben wir die Elemente in unserer Werkstatt in Edingen-Neckarhausen gefertigt und bespannt. Von Aufmaß bis Montage vergehen bei einer Schiebewand dieser Größe rund sechs Wochen — montiert war die fertige Anlage an einem Vormittag, inklusive Justierung der Laufschienen.",
     ],
     features: [
@@ -750,7 +750,7 @@ export const PROJECTS: Project[] = [
     body: [
       "Für ein Bad in Mannheim haben wir eine komplette, aufeinander abgestimmte Möblierung aus Roteiche gefertigt – vom raumhohen Hochschrank über den breiten Spiegelschrank bis zu den Waschtisch-Unterschränken. So bekommt das ganze Bad eine durchgehende, warme Holzhandschrift.",
       "Der Hochschrank nimmt Handtücher und Vorräte auf, der Spiegelschrank über der Waschtischzeile bietet hinter den Türen Stauraum und gibt zugleich viel Spiegelfläche. Darunter sorgen Schubladen-Unterschränke für griffbereite Ordnung. Alle Fronten sind aus Roteiche mit ihrer lebhaften, warmen Maserung gearbeitet.",
-      "Roteiche bringt eine kräftigere, rötlichere Tönung mit als die heimische Stiel-Eiche – das gibt dem Bad eine besonders warme Atmosphäre. Mit einer feuchtraumgeeigneten Oberfläche behandelt, hält das Holz auch im Bad dauerhaft stand.",
+      "Roteiche bringt eine kräftigere, rötlichere Tönung mit als die heimische Eiche – das gibt dem Bad eine besonders warme Atmosphäre. Mit einer feuchtraumgeeigneten Oberfläche behandelt, hält das Holz auch im Bad dauerhaft stand.",
       "Geplant, gefertigt und montiert haben wir die Badmöbel aus unserer Werkstatt in Edingen-Neckarhausen – passgenau auf den vorhandenen Grundriss in Mannheim.",
     ],
     features: [
