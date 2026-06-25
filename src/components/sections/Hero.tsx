@@ -40,11 +40,11 @@ export function Hero() {
           Inline-Gradient (statt Tailwind-Stops), damit die soliden Stopps zuverlässig greifen. */}
       <div
         aria-hidden
-        className="absolute inset-0 -z-10 bg-surface-charcoal/85 lg:hidden grain-overlay"
+        className="absolute inset-0 -z-10 bg-surface-charcoal/85 lg:hidden"
       />
       <div
         aria-hidden
-        className="absolute inset-0 -z-10 hidden lg:block grain-overlay"
+        className="absolute inset-0 -z-10 hidden lg:block"
         style={{
           background:
             "linear-gradient(to right, hsl(var(--surface-charcoal)) 0%, hsl(var(--surface-charcoal)) 45%, hsl(var(--surface-charcoal) / 0.55) 60%, transparent 78%)",
