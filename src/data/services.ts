@@ -42,12 +42,11 @@ export const SERVICES: Service[] = [
     intro:
       "Holz im Bad? Mit der richtigen Schreinerkunst eine sinnliche Antwort auf seelenlose Standardlösungen – warm, wasserfest und unverwechselbar Ihres.",
     description:
-      "Wir verbinden traditionelles Schreinerhandwerk mit modernem Bad-Design. Vom freistehenden Waschtischunterbau über raumhohe Spiegelschränke bis zu Saunabereichen – jedes Stück wird so gefertigt, dass es Feuchtigkeit, Hitze und tägliche Nutzung jahrzehntelang aushält. Spezialbeschichtungen und ausgewählte Hölzer wie Eiche, Nuss oder Teak machen das Bad zum Rückzugsort.",
+      "Wir verbinden traditionelles Schreinerhandwerk mit modernem Bad-Design. Vom freistehenden Waschtischunterbau über raumhohe Spiegelschränke – jedes Stück wird so gefertigt, dass es Feuchtigkeit und tägliche Nutzung jahrzehntelang aushält. Spezialbeschichtungen und ausgewählte Hölzer wie Eiche oder Nuss machen das Bad zum Rückzugsort.",
     features: [
       "Wasserfeste Spezialoberflächen für Massivholz",
       "Maßgefertigte Waschtische, Hochschränke und Spiegelmodule",
       "Integration von Beleuchtung, Steckdosen und Lautsprechern",
-      "Saunaplanung und Wellnessräume in Holz",
     ],
     imageCategory: "badmoebel",
     hubPath: SERVICE_HUB,
@@ -66,7 +65,7 @@ export const SERVICES: Service[] = [
       "Ein Esstisch ist das vielleicht wichtigste Möbelstück eines Hauses. Wir fertigen Tafeln aus Eiche, Nuss, Esche oder Kirsche – mit lebendiger Maserung, fühlbaren Kanten und einer Verbindung, die hält. Dazu passende Stühle und Bänke, ergonomisch entwickelt und einzeln aufeinander abgestimmt.",
     features: [
       "Massivholz-Tische mit lebendigem Astbild",
-      "Verschraubte oder gezapfte Tischgestelle aus Stahl oder Holz",
+      "Verschraubte oder gezapfte Tischgestelle aus Holz",
       "Maßanfertigung für 4 bis 16 Personen",
       "Passende Stuhl- und Bankkollektionen",
     ],
@@ -120,12 +119,11 @@ export const SERVICES: Service[] = [
     intro:
       "Eine Treppe verbindet nicht nur Stockwerke – sie zieht den Blick. Wir bauen Treppen, die Ihr Haus tragen und gleichzeitig zum Mittelpunkt machen.",
     description:
-      "Ob freitragende Holztreppen, gewendelte Konstruktionen oder reduziertes Stahl-Holz-Design: Treppen sind unsere Königsdisziplin. Jede Stufe wird einzeln eingepasst, jede Rundung handgeschliffen, jedes Geländer auf Ihre Statik berechnet. Wir bauen für Neubau und Sanierung – mit minimalem Eingriff in Ihr Zuhause.",
+      "Ob freitragende Holztreppen oder gewendelte Konstruktionen: Treppen sind unsere Königsdisziplin. Jede Stufe wird einzeln eingepasst, jede Rundung handgeschliffen, jedes Geländer auf Ihre Statik berechnet. Wir bauen für Neubau und Sanierung – mit minimalem Eingriff in Ihr Zuhause.",
     features: [
       "Freitragende Treppen, gewendelt, Faltwerk, Mittelholm",
-      "Geländer aus Holz, Stahl, Glas oder Seil",
+      "Geländer aus Holz",
       "Massivholzstufen aus Eiche, Buche, Nuss",
-      "Sanierung alter Treppen mit neuen Stufenauflagen",
     ],
     imageCategory: "treppen",
     hubPath: SERVICE_HUB,
@@ -143,8 +141,7 @@ export const SERVICES: Service[] = [
     features: [
       "Haustüren mit RC-2 Sicherheitsausstattung",
       "Innentüren raumhoch, schwellenfrei, mit Schiebebeschlag",
-      "Hoftore aus Holz oder Holz-Stahl-Kombination",
-      "Restauration historischer Türen",
+      "Hoftore aus Holz",
     ],
     imageCategory: "tueren",
     hubPath: SERVICE_HUB,
@@ -156,12 +153,12 @@ export const SERVICES: Service[] = [
     name: "Shoji",
     short: "Japanische Schiebewände",
     intro:
-      "Licht, Stille, Klarheit. Authentische Shoji-Schiebetüren aus Japan-zertifiziertem Reispapier und feinsten Holzgittern, gefertigt nach traditioneller Bauweise.",
+      "Licht, Stille, Klarheit. Authentische Shoji-Schiebetüren aus Madoca Japan Papier und feinsten Holzstreben, gefertigt nach traditioneller Bauweise.",
     description:
-      "Shoji sind unsere stille Leidenschaft. Wir fertigen die japanischen Schiebewände mit handverleimten Holzgittern aus Hemlock, Lärche oder Kiefer und beziehen sie mit echtem Washi-Papier. Jedes Element ist ein Stück Architektur, das Räume teilt, ohne sie zu trennen, und Licht weicher fließen lässt, als jeder Vorhang es könnte.",
+      "Shoji sind unsere stille Leidenschaft. Wir fertigen die japanischen Schiebewände mit handverleimten Holzstreben aus diversen Hölzern und beziehen sie mit echtem Madoca Japan Papier. Jedes Element ist ein Stück Architektur, das Räume teilt, ohne sie zu trennen, und Licht weicher fließen lässt, als jeder Vorhang es könnte.",
     features: [
-      "Authentische Shoji-Konstruktion mit verleimten Gittern",
-      "Originales Washi-Papier aus Japan",
+      "Authentische Shoji-Konstruktion mit verleimten Holzstreben",
+      "Originales Madoca Japan Papier",
       "Schiebetüren, raumtrennende Stellwände, Fenster-Shoji",
       "Auch in moderner westlicher Variante",
     ],

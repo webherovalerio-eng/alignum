@@ -7,7 +7,7 @@ import { buildMetadata } from "@/lib/seo";
 export const metadata = buildMetadata({
   title: "Anfrage starten – Schreinerei Alignum Mannheim",
   description:
-    "Beschreiben Sie uns in vier Schritten Ihr Projekt – Küche, Treppe, Tür, Möbel oder Raumkonzept. Wir antworten innerhalb eines Werktags.",
+    "Beschreiben Sie uns in vier Schritten Ihr Projekt – Küche, Treppe, Tür, Möbel oder Raumkonzept.",
   path: "/anfrage/",
 });
 
@@ -30,7 +30,7 @@ export default function AnfragePage() {
             </h1>
             <p className="mt-8 max-w-xl text-lg text-muted-foreground leading-relaxed">
               Vier kurze Schritte. Keine Werbe-E-Mails. Wir lesen jede Anfrage
-              persönlich und antworten innerhalb eines Werktags.
+              persönlich.
             </p>
           </Reveal>
         </div>

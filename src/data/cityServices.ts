@@ -109,7 +109,7 @@ export const CITY_SERVICES: CityService[] = [
     h1: "Shoji",
     imageCategory: "shoji",
     metaTagline: "Japanische Schiebewände nach Maß",
-    lead: "Authentische Shoji-Schiebewände mit echtem Washi-Reispapier – Räume teilen, ohne sie zu trennen, gefertigt für {city}.",
+    lead: "Authentische Shoji-Schiebewände mit echtem Madoca Japan Papier – Räume teilen, ohne sie zu trennen, gefertigt für {city}.",
     cover: "/images/projects/shoji-schiebetuer-maxdorf-zeder/shoji-schiebetuer-maxdorf-zeder-01.jpg",
   },
 ];

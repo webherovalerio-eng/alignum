@@ -136,7 +136,7 @@ export function Philosophy() {
         {/* Closing statement */}
         <Reveal className="mt-20 max-w-3xl mx-auto text-center">
           <p className="font-display text-2xl sm:text-3xl leading-snug italic text-foreground/90">
-            „Wir bauen Möbel, die nicht weggeworfen werden."
+            „Wir bauen Möbel, die Generationen überdauern."
           </p>
           <p className="mt-4 text-sm text-muted-foreground">
             – Jan, Tischlermeister & Inhaber

@@ -28,9 +28,9 @@ export default function AboutPage() {
               Über Alignum
             </Badge>
             <h1 className="font-display text-[clamp(2.75rem,7vw,7rem)] leading-[0.95] tracking-tight">
-              <MaskWords text="Wir sind Schreiner." />
+              <MaskWords text="Wir sind Schreiner" />
               <br />
-              <span className="italic text-primary inline-block">Aus Leidenschaft.</span>
+              <span className="italic text-primary inline-block">aus Leidenschaft.</span>
             </h1>
           </Reveal>
           <Reveal className="mt-10 lg:ml-auto lg:max-w-md">
@@ -79,8 +79,7 @@ export default function AboutPage() {
               Alignum entstand aus dem Wunsch, etwas zu bauen, das nicht
               weggeworfen wird. Heute ist Alignum ein Meisterbetrieb mit eigener
               Werkstatt im Rhein-Neckar-Raum – ausgestattet mit traditionellen
-              Werkzeugen und einer 5-Achs-CNC-Fräse, die selbst die komplexesten
-              Verbindungen perfekt schneidet.
+              Werkzeugen und gewachsenem Handwerk.
             </p>
             <p className="text-lg text-muted-foreground leading-relaxed">
               Wir bauen, was Sie nicht im Möbelhaus finden. Tische, die zu

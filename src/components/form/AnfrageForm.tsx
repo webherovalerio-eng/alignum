@@ -465,7 +465,7 @@ function Step3({
           Wie erreichen wir Sie?
         </h2>
         <p className="text-muted-foreground">
-          Wir antworten innerhalb eines Werktags.
+          Wir melden uns persönlich bei Ihnen.
         </p>
       </div>
 

@@ -40,9 +40,7 @@ export function PhilosophySplit() {
             <p className="mt-6 text-lg text-muted-foreground leading-relaxed">
               Bei der Auswahl unserer Materialien liegen die Kriterien neben
               der Gestaltungsfrage immer in der Berücksichtigung der
-              ökologischen und gesundheitlichen Auswirkungen. Wir leimen
-              schadstoffarm, schleifen ohne Polier­wachse, ölen mit reinen
-              Naturprodukten.
+              ökologischen und gesundheitlichen Auswirkungen.
             </p>
           </Reveal>
         </div>

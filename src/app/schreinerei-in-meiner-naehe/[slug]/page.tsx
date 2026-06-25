@@ -79,7 +79,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
       <RelatedServices exclude={service.slug} />
       <CTA
         heading={`Bereit für Ihr ${service.name}-Projekt?`}
-        body="Senden Sie uns eine Skizze, ein Foto oder eine Idee – wir antworten innerhalb eines Werktags."
+        body="Senden Sie uns eine Skizze, ein Foto oder eine Idee."
       />
       <JsonLd id={`ld-service-${service.slug}`} data={serviceLd} />
     </>
