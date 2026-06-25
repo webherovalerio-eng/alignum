@@ -35,14 +35,20 @@ export function Hero() {
         />
       </motion.div>
 
-      {/* Lesbarkeits-Overlay — Mobile: voller Scrim · Desktop: charcoal → transparent (5/7) */}
+      {/* Lesbarkeits-Overlay — Mobile: voller Scrim · Desktop: solider Charcoal-Bereich
+          hinter dem Text (≈5/12), der erst nach rechts ins durchlaufende Bild ausläuft.
+          Inline-Gradient (statt Tailwind-Stops), damit die soliden Stopps zuverlässig greifen. */}
       <div
         aria-hidden
-        className="absolute inset-0 -z-10 bg-surface-charcoal/80 lg:hidden grain-overlay"
+        className="absolute inset-0 -z-10 bg-surface-charcoal/85 lg:hidden grain-overlay"
       />
       <div
         aria-hidden
-        className="absolute inset-0 -z-10 hidden lg:block grain-overlay bg-gradient-to-r from-surface-charcoal from-40% via-surface-charcoal/75 via-60% to-transparent"
+        className="absolute inset-0 -z-10 hidden lg:block grain-overlay"
+        style={{
+          background:
+            "linear-gradient(to right, hsl(var(--surface-charcoal)) 0%, hsl(var(--surface-charcoal)) 45%, hsl(var(--surface-charcoal) / 0.55) 60%, transparent 78%)",
+        }}
       />
 
       {/* Giant decorative letter */}
