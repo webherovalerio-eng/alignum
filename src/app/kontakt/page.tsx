@@ -30,7 +30,7 @@ export default function KontaktPage() {
             <p className="mt-8 max-w-2xl text-lg sm:text-xl text-muted-foreground leading-relaxed">
               Egal ob Sie eine konkrete Idee haben, eine Skizze auf der
               Serviette oder einfach nur einen Raum, der nicht funktioniert –
-              schreiben Sie uns. Wir antworten innerhalb eines Werktags.
+              schreiben Sie uns.
             </p>
           </Reveal>
         </div>

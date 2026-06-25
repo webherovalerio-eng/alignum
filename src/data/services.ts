@@ -111,6 +111,7 @@ export const SERVICES: Service[] = [
     imageCategory: "betten",
     hubPath: SERVICE_HUB,
     keywords: ["Massivholzbett", "Bett nach Maß", "Schreiner Bett"],
+    cover: "/images/services/betten/betten-ref.jpg",
   },
   {
     slug: "treppenbau-in-der-nahe",
@@ -129,8 +130,7 @@ export const SERVICES: Service[] = [
     imageCategory: "treppen",
     hubPath: SERVICE_HUB,
     keywords: ["Treppenbau Mannheim", "Holztreppe", "Schreiner Treppe"],
-    // Echtes Referenzprojekt (Treppenverkleidung Kiefer, Gauangelloch) als Cover.
-    cover: "/images/projects/treppenverkleidung-gauangelloch-kiefer/treppenverkleidung-gauangelloch-kiefer-01.jpg",
+    cover: "/images/services/treppen/treppen-ref.jpg",
   },
   {
     slug: "tuerenbauer-in-der-naehe",
@@ -187,6 +187,7 @@ export const SERVICES: Service[] = [
     imageCategory: "regale",
     hubPath: SERVICE_HUB,
     keywords: ["Regal nach Maß", "Raumtrenner Holz", "Bücherregal Schreiner"],
+    cover: "/images/services/regale/regale-ref.jpg",
   },
   {
     slug: "bueromoebel",
