@@ -23,45 +23,51 @@ export function Hero() {
       ref={ref}
       className="relative min-h-[100svh] w-full overflow-hidden grid lg:grid-cols-12"
     >
-      {/* ──────────── LEFT: Statement panel ──────────── */}
+      {/* ──────────── Durchgängiges Shoji-Bild als Vollflächen-Hintergrund ──────────── */}
+      <motion.div aria-hidden style={{ y: yImg }} className="absolute inset-0 -z-20">
+        <Image
+          src={heroSrc}
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover"
+        />
+      </motion.div>
+
+      {/* Lesbarkeits-Overlay — Mobile: voller Scrim · Desktop: charcoal → transparent (5/7) */}
+      <div
+        aria-hidden
+        className="absolute inset-0 -z-10 bg-surface-charcoal/80 lg:hidden grain-overlay"
+      />
+      <div
+        aria-hidden
+        className="absolute inset-0 -z-10 hidden lg:block grain-overlay bg-gradient-to-r from-surface-charcoal from-40% via-surface-charcoal/75 via-60% to-transparent"
+      />
+
+      {/* Giant decorative letter */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -bottom-[10vw] -left-[2vw] select-none font-display text-[clamp(20rem,40vw,52rem)] leading-[0.85] text-white/[0.05] tracking-tighter"
+      >
+        A
+      </div>
+
+      {/* Subtle gold accent line */}
+      <motion.div
+        aria-hidden
+        initial={{ scaleX: 0 }}
+        animate={{ scaleX: 1 }}
+        transition={{ duration: 1.4, delay: 0.3, ease: [0.19, 1, 0.22, 1] }}
+        className="absolute top-32 left-6 sm:left-10 lg:left-12 xl:left-14 h-px w-24 bg-gradient-to-r from-primary to-primary/0 origin-left z-10"
+      />
+
+      {/* ──────────── LEFT: Statement panel (Text über dem durchlaufenden Bild) ──────────── */}
       <motion.div
         style={{ opacity }}
-        className="relative lg:col-span-4 bg-surface-charcoal text-surface-charcoal-foreground flex flex-col justify-center px-6 sm:px-10 lg:px-12 xl:px-14 pt-32 pb-20 lg:pt-28 lg:pb-32 min-h-[70svh] lg:min-h-[100svh] grain-overlay"
+        className="relative z-10 lg:col-span-5 text-surface-charcoal-foreground flex flex-col justify-center px-6 sm:px-10 lg:px-12 xl:px-14 pt-32 pb-20 lg:pt-28 lg:pb-32 min-h-[70svh] lg:min-h-[100svh]"
       >
-        {/* Shoji background atmosphere — sehr dezent, gibt dem Panel Tiefe */}
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 overflow-hidden"
-        >
-          <Image
-            src="/images/hero/hero-shoji-ambient.jpg"
-            alt=""
-            fill
-            priority
-            sizes="(max-width: 1024px) 100vw, 60vw"
-            className="object-cover opacity-[0.22]"
-          />
-          <div className="absolute inset-0 bg-gradient-to-br from-surface-charcoal/82 via-surface-charcoal/68 to-surface-charcoal/88" />
-        </div>
-
-        {/* Giant decorative letter */}
-        <div
-          aria-hidden
-          className="pointer-events-none absolute -bottom-[10vw] -left-[2vw] select-none font-display text-[clamp(20rem,40vw,52rem)] leading-[0.85] text-white/[0.05] tracking-tighter"
-        >
-          A
-        </div>
-
-        {/* Subtle gold accent line */}
-        <motion.div
-          aria-hidden
-          initial={{ scaleX: 0 }}
-          animate={{ scaleX: 1 }}
-          transition={{ duration: 1.4, delay: 0.3, ease: [0.19, 1, 0.22, 1] }}
-          className="absolute top-32 left-6 sm:left-10 lg:left-12 xl:left-14 h-px w-24 bg-gradient-to-r from-primary to-primary/0 origin-left"
-        />
-
-        <div className="relative z-10 max-w-2xl">
+        <div className="max-w-xl">
           <Badge
             variant="outline"
             className="self-start mb-7 border-white/20 bg-white/5 text-white/85 backdrop-blur-sm"
@@ -70,7 +76,7 @@ export function Hero() {
             Schreinerei seit 1992 · Edingen-Neckarhausen
           </Badge>
 
-          <h1 className="font-display text-[clamp(2rem,3.2vw,3.75rem)] leading-[0.95] tracking-tight">
+          <h1 className="font-display text-[clamp(2.25rem,3.6vw,4.25rem)] leading-[0.95] tracking-tight">
             <MaskWords text="Schreiner aus" />
             <br />
             <motion.span
@@ -143,26 +149,6 @@ export function Hero() {
           </motion.div>
         </div>
       </motion.div>
-
-      {/* ──────────── RIGHT: Hero photo column ──────────── */}
-      <div className="relative lg:col-span-8 min-h-[60svh] lg:min-h-[100svh] overflow-hidden bg-card">
-        <motion.div style={{ y: yImg }} className="absolute inset-0">
-          <Image
-            src={heroSrc}
-            alt="Alignum – Shoji-Schrank aus Massivholz"
-            fill
-            priority
-            sizes="(max-width: 1024px) 100vw, 67vw"
-            className="object-cover"
-          />
-        </motion.div>
-
-        {/* Vertical gold edge */}
-        <div
-          aria-hidden
-          className="absolute left-0 inset-y-0 w-px bg-gradient-to-b from-transparent via-primary/40 to-transparent"
-        />
-      </div>
 
       {/* Mobile-only scroll cue */}
       <motion.div
