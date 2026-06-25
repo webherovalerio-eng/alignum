@@ -113,9 +113,9 @@ export const MATERIALS: Material[] = [
   {
     slug: "ulme",
     name: "Ulme / Rüster",
-    short: "Lebhaft, warm, gesucht.",
+    short: "Lebhaft, warm, ausdrucksstark.",
     description:
-      "Lebhafte, dekorative Maserung in warmem Braun. Robust und charaktervoll – durch das Ulmensterben selten geworden und darum besonders gesucht.",
+      "Lebhafte, dekorative Maserung in warmem Braun. Robust und charaktervoll – ein ausdrucksstarkes Holz für Möbel, die auffallen sollen, von der Tischplatte bis zur Schrankfront.",
     uses: ["Tische", "Stühle", "Kommoden", "Schränke"],
     hardness: "hart",
     color: "26 45% 38%",
@@ -137,7 +137,7 @@ export const MATERIALS: Material[] = [
     name: "Yellow Poplar (Pappel)",
     short: "Leicht, hell, maßstabil.",
     description:
-      "Helles, leichtes Holz mit ruhiger, gleichmäßiger Maserung. Maßstabil und gut zu bearbeiten – ideal für tragende Teile, die im Verborgenen arbeiten.",
+      "Helles, leichtes Holz mit ruhiger, gleichmäßiger Maserung. Maßstabil und angenehm zu bearbeiten – nimmt Lack und Farbe gleichmäßig an und eignet sich für leichte Konstruktionen, Rahmen und Verkleidungen.",
     uses: ["Treppenwangen", "Bilderrahmen", "Leichtbauholz"],
     hardness: "weich",
     color: "45 25% 78%",
