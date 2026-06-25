@@ -9,17 +9,13 @@ import { LinkButton } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { MaskWords } from "@/components/ui/Reveal";
 import { REVIEW_SUMMARY } from "@/data/reviews";
-import { HERO_PHOTOS } from "@/data/photos";
-import { SITE } from "@/data/site";
 
 export function Hero() {
-  const heroSrc = HERO_PHOTOS[1] ?? HERO_PHOTOS[0] ?? "/images/hero/hero-02.jpg";
-  const accentSrc = HERO_PHOTOS[3] ?? HERO_PHOTOS[2] ?? "/images/hero/hero-04.jpg";
+  const heroSrc = "/images/hero/hero-shoji-ez12.jpg";
   const ref = useRef<HTMLDivElement>(null);
   const reduce = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const yImg = useTransform(scrollYProgress, [0, 1], [0, reduce ? 0 : 100]);
-  const yAccent = useTransform(scrollYProgress, [0, 1], [0, reduce ? 0 : -60]);
   const opacity = useTransform(scrollYProgress, [0, 0.7], [1, 0.4]);
 
   return (
@@ -30,7 +26,7 @@ export function Hero() {
       {/* ──────────── LEFT: Statement panel ──────────── */}
       <motion.div
         style={{ opacity }}
-        className="relative lg:col-span-7 bg-surface-charcoal text-surface-charcoal-foreground flex flex-col justify-center px-6 sm:px-10 lg:px-16 xl:px-24 pt-32 pb-20 lg:pt-28 lg:pb-32 min-h-[70svh] lg:min-h-[100svh] grain-overlay"
+        className="relative lg:col-span-4 bg-surface-charcoal text-surface-charcoal-foreground flex flex-col justify-center px-6 sm:px-10 lg:px-12 xl:px-14 pt-32 pb-20 lg:pt-28 lg:pb-32 min-h-[70svh] lg:min-h-[100svh] grain-overlay"
       >
         {/* Shoji background atmosphere — sehr dezent, gibt dem Panel Tiefe */}
         <div
@@ -62,7 +58,7 @@ export function Hero() {
           initial={{ scaleX: 0 }}
           animate={{ scaleX: 1 }}
           transition={{ duration: 1.4, delay: 0.3, ease: [0.19, 1, 0.22, 1] }}
-          className="absolute top-32 left-6 sm:left-10 lg:left-16 xl:left-24 h-px w-24 bg-gradient-to-r from-primary to-primary/0 origin-left"
+          className="absolute top-32 left-6 sm:left-10 lg:left-12 xl:left-14 h-px w-24 bg-gradient-to-r from-primary to-primary/0 origin-left"
         />
 
         <div className="relative z-10 max-w-2xl">
@@ -74,7 +70,7 @@ export function Hero() {
             Schreinerei seit 1992 · Edingen-Neckarhausen
           </Badge>
 
-          <h1 className="font-display text-[clamp(2.5rem,5.6vw,6rem)] leading-[0.92] tracking-tight">
+          <h1 className="font-display text-[clamp(2rem,3.2vw,3.75rem)] leading-[0.95] tracking-tight">
             <MaskWords text="Schreiner aus" />
             <br />
             <motion.span
@@ -149,14 +145,14 @@ export function Hero() {
       </motion.div>
 
       {/* ──────────── RIGHT: Hero photo column ──────────── */}
-      <div className="relative lg:col-span-5 min-h-[60svh] lg:min-h-[100svh] overflow-hidden bg-card">
+      <div className="relative lg:col-span-8 min-h-[60svh] lg:min-h-[100svh] overflow-hidden bg-card">
         <motion.div style={{ y: yImg }} className="absolute inset-0">
           <Image
             src={heroSrc}
-            alt="Alignum Schreinerei – Werkstatt"
+            alt="Alignum – Shoji-Schrank aus Massivholz"
             fill
             priority
-            sizes="(max-width: 1024px) 100vw, 42vw"
+            sizes="(max-width: 1024px) 100vw, 67vw"
             className="object-cover"
           />
         </motion.div>
@@ -166,35 +162,6 @@ export function Hero() {
           aria-hidden
           className="absolute left-0 inset-y-0 w-px bg-gradient-to-b from-transparent via-primary/40 to-transparent"
         />
-
-        {/* Floating accent card — Jan, der Schreiner hinter Alignum */}
-        <motion.div
-          style={{ y: yAccent }}
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1.2, delay: 1, ease: [0.19, 1, 0.22, 1] }}
-          className="absolute bottom-8 left-8 right-8 lg:bottom-12 lg:left-auto lg:right-12 lg:w-72"
-        >
-          <div className="relative rounded-2xl overflow-hidden border border-white/20 shadow-[var(--shadow-elev)]">
-            <div className="relative aspect-[4/5]">
-              <Image
-                src={SITE.owner.image}
-                alt={`${SITE.owner.name} – ${SITE.owner.role} bei Alignum`}
-                fill
-                sizes="(max-width: 1024px) 100vw, 280px"
-                className="object-cover"
-              />
-            </div>
-            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
-            <div className="absolute inset-x-0 bottom-0 p-4 text-white">
-              <p className="text-[10px] uppercase tracking-[0.25em] text-primary mb-1">
-                Der Schreiner hinter Alignum
-              </p>
-              <p className="font-display text-xl">{SITE.owner.name}</p>
-              <p className="text-xs text-white/70">{SITE.owner.role}</p>
-            </div>
-          </div>
-        </motion.div>
       </div>
 
       {/* Mobile-only scroll cue */}

@@ -7,7 +7,7 @@ const SIGNALS = [
   { Icon: Trees, label: "Heimische Hölzer" },
   { Icon: PenTool, label: "Eigene Planung" },
   { Icon: Sparkles, label: "Unikate auf Maß" },
-  { Icon: Leaf, label: "Ökologisch geleimt" },
+  { Icon: Leaf, label: "Ökologische Oberflächen" },
 ];
 
 export function TrustBar() {
