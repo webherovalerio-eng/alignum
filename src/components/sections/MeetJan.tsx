@@ -50,24 +50,19 @@ export function MeetJan({ city }: { city?: City }) {
           </h2>
           {/* Visueller Blickfang: „Hi, ich bin Jan." groß als fake-H1 (<p>) */}
           <p className="font-display text-[clamp(2rem,4.5vw,3.75rem)] leading-[1.05] tracking-tight">
-            Hi, ich bin <span className="text-primary italic">{SITE.owner.name}.</span>
+            Hallo, ich bin <span className="text-primary italic">{SITE.owner.name}.</span>
           </p>
           <p className="text-lg sm:text-xl text-foreground/90 leading-relaxed max-w-2xl">
-            Tischlermeister, Inhaber von Alignum
-            {city ? (
-              <>
-                {" "}– und derjenige, der für Ihr Projekt nach{" "}
-                <strong className="text-foreground">{city.name}</strong> kommt.
-              </>
-            ) : (
-              " – und derjenige, der bei Ihnen am Esstisch sitzt."
-            )}
+            Zum ersten Gespräch bringe ich nicht nur Zollstock und
+            Skizzenpapier mit, sondern auch jahrzehntelange Werkstatt-Erfahrung.
+            Bei uns sprechen Sie nicht mit einem Verkäufer oder Zwischenhändler,
+            sondern direkt mit einem Fachmann, der Ihre Wünsche versteht und in
+            eine konkrete Planung übersetzt.
           </p>
           <p className="text-base sm:text-lg text-muted-foreground leading-relaxed max-w-2xl">
-            Ich bringe das Aufmaß mit, eine Skizze auf Papier und Jahrzehnte
-            Werkstatt-Erfahrung im Kopf. Kein Verkäufer, kein
-            Zwischenhändler – Sie sprechen direkt mit dem Menschen, der Ihr
-            Möbel später baut.
+            Gemeinsam bringen wir Ihre Ideen, Träume und Vorstellungen zu
+            Papier. Anschließend setzt unser erfahrenes Team die Planung
+            individuell und mit viel handwerklicher Sorgfalt in Holz um.
           </p>
 
           <div className="flex flex-wrap items-center gap-4 pt-2">

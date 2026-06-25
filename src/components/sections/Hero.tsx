@@ -47,7 +47,7 @@ export function Hero() {
         className="absolute inset-0 -z-10 hidden lg:block"
         style={{
           background:
-            "linear-gradient(to right, hsl(var(--surface-charcoal)) 0%, hsl(var(--surface-charcoal)) 45%, hsl(var(--surface-charcoal) / 0.55) 60%, transparent 78%)",
+            "linear-gradient(to right, hsl(var(--surface-charcoal) / 0.85) 0%, hsl(var(--surface-charcoal) / 0.85) 45%, hsl(var(--surface-charcoal) / 0.5) 60%, transparent 78%)",
         }}
       />
 
