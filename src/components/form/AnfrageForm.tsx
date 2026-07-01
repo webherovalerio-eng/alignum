@@ -37,6 +37,7 @@ export function AnfrageForm({ initialService }: { initialService?: string }) {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [files, setFiles] = useState<File[]>([]);
+  const [company, setCompany] = useState(""); // Honeypot – bleibt bei echten Nutzern leer
 
   const [form, setForm] = useState<FormState>({
     services: initialService ? [initialService] : [],
@@ -118,6 +119,7 @@ export function AnfrageForm({ initialService }: { initialService?: string }) {
     try {
       const fd = new FormData();
       fd.append("payload", JSON.stringify({ ...form, serviceNames }));
+      fd.append("company", company); // Honeypot
       files.forEach((f) => fd.append("files", f));
       const res = await fetch("/api/anfrage", { method: "POST", body: fd });
       if (!res.ok) throw new Error(String(res.status));
@@ -133,6 +135,18 @@ export function AnfrageForm({ initialService }: { initialService?: string }) {
 
   return (
     <div className="relative">
+      {/* Honeypot – für Menschen unsichtbar, fängt Bots ab */}
+      <input
+        type="text"
+        name="company"
+        value={company}
+        onChange={(e) => setCompany(e.target.value)}
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden="true"
+        className="absolute left-[-9999px] top-0 h-0 w-0 opacity-0"
+      />
+
       {/* Progress */}
       <div className="mb-10">
         <div className="flex items-center justify-between mb-3">
