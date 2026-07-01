@@ -29,7 +29,7 @@ export function MaskWords({ text, className }: { text: string; className?: strin
   const reduce = useReducedMotion();
   const words = text.split(" ");
   return (
-    <span className={className} aria-label={text}>
+    <span role="img" className={className} aria-label={text}>
       {words.map((word, i) => (
         <span key={i} className="mask-reveal" aria-hidden>
           <motion.span
