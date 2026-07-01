@@ -121,7 +121,9 @@ export function AnfrageForm({ initialService }: { initialService?: string }) {
       fd.append("payload", JSON.stringify({ ...form, serviceNames }));
       fd.append("company", company); // Honeypot
       files.forEach((f) => fd.append("files", f));
-      const res = await fetch("/api/anfrage", { method: "POST", body: fd });
+      // Trailing Slash wichtig: trailingSlash:true würde "/api/anfrage" sonst
+      // per 308 umleiten — bei POST fragil. Direkt auf den Slash-Pfad posten.
+      const res = await fetch("/api/anfrage/", { method: "POST", body: fd });
       if (!res.ok) throw new Error(String(res.status));
       setSubmitted(true);
     } catch {
@@ -144,6 +146,8 @@ export function AnfrageForm({ initialService }: { initialService?: string }) {
         tabIndex={-1}
         autoComplete="off"
         aria-hidden="true"
+        data-1p-ignore
+        data-lpignore="true"
         className="absolute left-[-9999px] top-0 h-0 w-0 opacity-0"
       />
 
