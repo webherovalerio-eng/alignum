@@ -2,7 +2,7 @@
 
 import { useState, useMemo, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Check, ArrowRight, ArrowLeft, Send, Sparkles } from "lucide-react";
+import { Check, ArrowRight, ArrowLeft, Send, Sparkles, Paperclip, X } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { SERVICES } from "@/data/services";
 import { SITE } from "@/data/site";
@@ -28,9 +28,15 @@ const TIMELINES = ["in 1–3 Monaten", "in 3–6 Monaten", "Flexibel"];
 
 const STEPS = ["Leistung", "Projekt", "Kontakt", "Übersicht"];
 
+const MAX_FILES = 5;
+const MAX_TOTAL_BYTES = 8 * 1024 * 1024; // 8 MB gesamt
+
 export function AnfrageForm({ initialService }: { initialService?: string }) {
   const [step, setStep] = useState(0);
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [files, setFiles] = useState<File[]>([]);
 
   const [form, setForm] = useState<FormState>({
     services: initialService ? [initialService] : [],
@@ -70,6 +76,30 @@ export function AnfrageForm({ initialService }: { initialService?: string }) {
     }));
   }
 
+  /** Datei-Anhänge hinzufügen (mit Limit + Dedupe). */
+  function addFiles(list: FileList | null) {
+    if (!list) return;
+    setError(null);
+    const incoming = Array.from(list);
+    setFiles((prev) => {
+      const combined = [...prev];
+      for (const f of incoming) {
+        if (combined.length >= MAX_FILES) break;
+        if (!combined.some((c) => c.name === f.name && c.size === f.size)) combined.push(f);
+      }
+      const total = combined.reduce((s, f) => s + f.size, 0);
+      if (total > MAX_TOTAL_BYTES) {
+        setError("Die Dateien sind zusammen zu groß (max. 8 MB). Bitte kleinere Dateien wählen.");
+        return prev;
+      }
+      return combined.slice(0, MAX_FILES);
+    });
+  }
+
+  function removeFile(idx: number) {
+    setFiles((prev) => prev.filter((_, i) => i !== idx));
+  }
+
   const canNext = useMemo(() => {
     if (step === 0) return form.services.length > 0;
     // Beschreibung & Maße sind optional — nur Umfang + Zeitrahmen nötig.
@@ -82,114 +112,23 @@ export function AnfrageForm({ initialService }: { initialService?: string }) {
     (slug) => SERVICES.find((s) => s.slug === slug)?.name ?? slug,
   );
 
-  function buildMailto() {
-    const serviceName = serviceNames.join(" + ") || "—";
-    const city = form.city ? ` aus ${form.city}` : "";
-    const subject = `🪵 Neue Anfrage · ${serviceName} · ${form.name}${city}`;
-
-    // Locale-Datum/Uhrzeit
-    const now = new Date();
-    const dateStr = now.toLocaleDateString("de-DE", {
-      weekday: "long",
-      day: "2-digit",
-      month: "long",
-      year: "numeric",
-    });
-    const timeStr = now.toLocaleTimeString("de-DE", {
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-
-    const contactPrefLabel: Record<string, string> = {
-      email: "E-Mail bevorzugt",
-      phone: "Telefon bevorzugt",
-      either: "Egal — E-Mail oder Telefon",
-    };
-
-    // Strukturierte Mail mit Box-Drawing-Trennern.
-    // Mailto verschickt nur Plain Text — aber wenn Mail-Clients es in
-    // monospace darstellen (Apple Mail, iOS Mail, Outlook), wirkt es wie
-    // ein sauberer Steckbrief.
-    const SEP = "━".repeat(46);
-    const SUB = "─".repeat(46);
-
-    const lines = [
-      `╔${SEP}╗`,
-      `   ALIGNUM · NEUE ANFRAGE`,
-      `╚${SEP}╝`,
-      ``,
-      `Eingegangen am ${dateStr}`,
-      `um ${timeStr} Uhr · über alignum.de/anfrage`,
-      ``,
-      SEP,
-      ``,
-      `▸ LEISTUNG${serviceNames.length > 1 ? "EN" : ""}`,
-      ``,
-      ...serviceNames.map((n) => `   • ${n}`),
-      ``,
-      SUB,
-      ``,
-      `▸ PROJEKT-RAHMEN`,
-      ``,
-      `   Umfang     ${form.scope}`,
-      `   Budget     ${form.budget || "— keine Angabe —"}`,
-      `   Zeitrahmen ${form.timeline}`,
-      ``,
-      SUB,
-      ``,
-      `▸ BESCHREIBUNG`,
-      ``,
-      indent(form.description, "   "),
-      ``,
-      SUB,
-      ``,
-      `▸ MAßE / RÄUME`,
-      ``,
-      `   ${form.measurements || "— keine Angabe —"}`,
-      ``,
-      SUB,
-      ``,
-      `▸ KONTAKT`,
-      ``,
-      `   Name          ${form.name}`,
-      `   E-Mail        ${form.email}`,
-      `   Telefon       ${form.phone || "—"}`,
-      `   Ort           ${form.city || "—"}`,
-      `   Erreichbar    ${contactPrefLabel[form.contactPref] ?? form.contactPref}`,
-      ``,
-      SEP,
-      ``,
-      `📩 SCHNELLE ANTWORT`,
-      ``,
-      `   Klicke „Antworten" — die Mail geht direkt`,
-      `   an ${form.name} (${form.email}).`,
-      ``,
-      `   Tipp für Telefon-Rückruf:`,
-      `   ${form.phone ? `tel:${form.phone.replace(/[^\d+]/g, "")}` : "— keine Nummer hinterlegt —"}`,
-      ``,
-      SEP,
-      ``,
-      `Diese Anfrage wurde über das Multistep-Formular auf`,
-      `alignum.de eingereicht. Bei Rückfragen zur Website:`,
-      `${SITE.formMailto}`,
-    ];
-
-    const body = encodeURIComponent(lines.join("\n"));
-    return `mailto:${SITE.formMailto}?subject=${encodeURIComponent(subject)}&body=${body}`;
-  }
-
-  /** Multi-line text mit Prefix einrücken — für Beschreibungsblock. */
-  function indent(text: string, prefix: string): string {
-    return (text || "—")
-      .split(/\r?\n/)
-      .map((l) => `${prefix}${l}`)
-      .join("\n");
-  }
-
-  function handleSubmit() {
-    const href = buildMailto();
-    window.location.href = href;
-    setSubmitted(true);
+  async function handleSubmit() {
+    setSubmitting(true);
+    setError(null);
+    try {
+      const fd = new FormData();
+      fd.append("payload", JSON.stringify({ ...form, serviceNames }));
+      files.forEach((f) => fd.append("files", f));
+      const res = await fetch("/api/anfrage", { method: "POST", body: fd });
+      if (!res.ok) throw new Error(String(res.status));
+      setSubmitted(true);
+    } catch {
+      setError(
+        `Senden fehlgeschlagen. Bitte versuchen Sie es erneut oder schreiben Sie direkt an ${SITE.email}.`,
+      );
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   return (
@@ -256,6 +195,9 @@ export function AnfrageForm({ initialService }: { initialService?: string }) {
               <Step4
                 form={form}
                 serviceNames={serviceNames}
+                files={files}
+                onAddFiles={addFiles}
+                onRemoveFile={removeFile}
               />
             )}
 
@@ -287,15 +229,22 @@ export function AnfrageForm({ initialService }: { initialService?: string }) {
                   type="button"
                   variant="primary"
                   size="lg"
+                  disabled={submitting}
                   onClick={handleSubmit}
                 >
-                  <Send className="size-4" /> Anfrage absenden
+                  <Send className="size-4" /> {submitting ? "Wird gesendet …" : "Anfrage absenden"}
                 </Button>
               )}
             </div>
+
+            {error && (
+              <p className="mt-4 text-sm text-destructive" role="alert">
+                {error}
+              </p>
+            )}
           </motion.div>
         ) : (
-          <SuccessState />
+          <SuccessState prefEmail={form.contactPref !== "phone"} />
         )}
       </AnimatePresence>
     </div>
@@ -504,7 +453,19 @@ function Step3({
   );
 }
 
-function Step4({ form, serviceNames }: { form: FormState; serviceNames: string[] }) {
+function Step4({
+  form,
+  serviceNames,
+  files,
+  onAddFiles,
+  onRemoveFile,
+}: {
+  form: FormState;
+  serviceNames: string[];
+  files: File[];
+  onAddFiles: (list: FileList | null) => void;
+  onRemoveFile: (idx: number) => void;
+}) {
   return (
     <div className="space-y-8">
       <div>
@@ -512,8 +473,8 @@ function Step4({ form, serviceNames }: { form: FormState; serviceNames: string[]
           Sieht das richtig aus?
         </h2>
         <p className="text-muted-foreground">
-          Mit Klick auf „Anfrage absenden" öffnet sich Ihr E-Mail-Programm – die
-          Anfrage ist bereits ausgefüllt, Sie müssen nur noch absenden.
+          Mit Klick auf „Anfrage absenden" schicken wir Ihre Anfrage direkt an
+          unsere Werkstatt – und Sie erhalten eine Bestätigung per E-Mail.
         </p>
       </div>
 
@@ -529,6 +490,54 @@ function Step4({ form, serviceNames }: { form: FormState; serviceNames: string[]
         {form.measurements && <Row k="Maße / Räume" v={form.measurements} />}
         <Row k="Kontakt" v={`${form.name} · ${form.email}${form.phone ? ` · ${form.phone}` : ""}${form.city ? ` · ${form.city}` : ""}`} />
       </dl>
+
+      {/* Datei-Upload (optional) */}
+      <div>
+        <p className="text-sm font-medium mb-2">Skizzen oder Bilder (optional)</p>
+        <label
+          htmlFor="anfrage-files"
+          className="flex cursor-pointer items-center gap-3 rounded-xl border border-dashed border-border bg-background px-4 py-4 text-sm text-muted-foreground transition-colors hover:border-primary/50"
+        >
+          <Paperclip className="size-4 shrink-0 text-primary" />
+          <span>Foto, Skizze oder PDF anhängen – max. 5 Dateien, 8 MB gesamt</span>
+          <input
+            id="anfrage-files"
+            type="file"
+            multiple
+            accept="image/*,application/pdf"
+            className="sr-only"
+            onChange={(e) => {
+              onAddFiles(e.target.files);
+              e.target.value = "";
+            }}
+          />
+        </label>
+        {files.length > 0 && (
+          <ul className="mt-3 space-y-2">
+            {files.map((f, i) => (
+              <li
+                key={`${f.name}-${i}`}
+                className="flex items-center justify-between gap-3 rounded-lg border border-border bg-card px-3 py-2 text-sm"
+              >
+                <span className="truncate">{f.name}</span>
+                <span className="flex items-center gap-3 shrink-0">
+                  <span className="text-xs text-muted-foreground">
+                    {(f.size / 1024 / 1024).toFixed(1)} MB
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => onRemoveFile(i)}
+                    className="text-muted-foreground hover:text-foreground transition-colors"
+                    aria-label={`${f.name} entfernen`}
+                  >
+                    <X className="size-4" />
+                  </button>
+                </span>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
     </div>
   );
 }
@@ -588,7 +597,7 @@ function Field({
   );
 }
 
-function SuccessState() {
+function SuccessState({ prefEmail }: { prefEmail: boolean }) {
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.95 }}
@@ -615,13 +624,14 @@ function SuccessState() {
         </motion.span>
 
         <h2 className="font-display text-3xl sm:text-4xl mb-3">
-          Danke, Ihre Anfrage ist <span className="text-primary italic">unterwegs.</span>
+          Danke, Ihre Anfrage ist <span className="text-primary italic">angekommen.</span>
         </h2>
 
         <p className="text-base sm:text-lg text-muted-foreground max-w-md mx-auto leading-relaxed">
-          Jan liest jede Anfrage persönlich und meldet sich innerhalb von{" "}
-          <strong className="text-foreground">einem Werktag</strong> bei Ihnen
-          – per E-Mail oder Telefon, je nachdem wie Sie es bevorzugen.
+          Eine Bestätigung ist bereits in Ihrem Postfach. Jan liest jede Anfrage
+          persönlich und meldet sich bei Ihnen
+          {prefEmail ? " – per E-Mail oder Telefon" : " – telefonisch"}, je
+          nachdem wie Sie es bevorzugen.
         </p>
 
         {/* Was als nächstes passiert */}
@@ -632,7 +642,7 @@ function SuccessState() {
 
           {[
             { n: "1", t: "Wir prüfen Ihre Anfrage", b: "Jan schaut sich Ihre Skizze, Maße und Wünsche an." },
-            { n: "2", t: "Wir melden uns binnen 24 h", b: "Per E-Mail mit ersten Rückfragen oder direkt mit Terminvorschlag." },
+            { n: "2", t: "Wir melden uns persönlich", b: "Per E-Mail mit ersten Rückfragen oder direkt mit Terminvorschlag." },
             { n: "3", t: "Aufmaß bei Ihnen vor Ort", b: "Kostenlos und unverbindlich. Erst danach gibt's ein Angebot." },
           ].map((s) => (
             <div key={s.n} className="flex items-start gap-3">
@@ -647,13 +657,13 @@ function SuccessState() {
           ))}
         </div>
 
-        {/* Fallback */}
+        {/* Direkter Kontakt */}
         <p className="mt-8 pt-6 border-t border-border text-xs text-muted-foreground max-w-sm mx-auto leading-relaxed">
-          Falls sich Ihr E-Mail-Programm nicht geöffnet hat:{" "}
-          <a className="text-primary underline-grain" href={`mailto:${SITE.formMailto}`}>
-            {SITE.formMailto}
+          Lieber direkt?{" "}
+          <a className="text-primary underline-grain" href={`mailto:${SITE.email}`}>
+            {SITE.email}
           </a>{" "}
-          oder direkt anrufen:{" "}
+          oder anrufen:{" "}
           <a className="text-primary underline-grain" href={`tel:${SITE.phone.replace(/\s/g, "")}`}>
             {SITE.phoneDisplay}
           </a>
