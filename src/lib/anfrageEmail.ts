@@ -68,7 +68,6 @@ function shell(o: {
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light dark">
 <meta name="supported-color-schemes" content="light dark">
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
 <style>
   :root { color-scheme: light dark; supported-color-schemes: light dark; }
   body,table,td { margin:0; padding:0; }
