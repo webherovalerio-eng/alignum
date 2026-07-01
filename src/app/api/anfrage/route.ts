@@ -7,7 +7,7 @@ export const maxDuration = 20;
 const RESEND_ENDPOINT = "https://api.resend.com/emails";
 
 // Absender MUSS eine in Resend verifizierte Domain sein, sonst 403.
-const MAIL_FROM = process.env.MAIL_FROM ?? "Alignum <anfrage@alignum.de>";
+const MAIL_FROM = process.env.MAIL_FROM ?? "Alignum <info@alignum.de>";
 const MAIL_TO = process.env.MAIL_TO ?? "info@alignum.de";
 
 const MAX_FILES = 5;
