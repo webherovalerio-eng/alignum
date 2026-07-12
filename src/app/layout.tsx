@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { SmoothScroll } from "@/components/providers/SmoothScroll";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { HideOnStudio } from "@/components/layout/HideOnStudio";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { ConsentProvider } from "@/components/consent/ConsentContext";
 import { GoogleAnalytics } from "@/components/consent/GoogleAnalytics";
@@ -76,15 +77,23 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="min-h-dvh antialiased">
         <ThemeProvider>
           <ConsentProvider>
-            <SmoothScroll />
-            <Header />
+            <HideOnStudio>
+              <SmoothScroll />
+            </HideOnStudio>
+            <HideOnStudio>
+              <Header />
+            </HideOnStudio>
             <main className="relative">{children}</main>
-            <Footer />
+            <HideOnStudio>
+              <Footer />
+            </HideOnStudio>
             <JsonLd id="ld-business" data={localBusinessJsonLd()} />
 
             {/* DSGVO — GA wird nur geladen wenn consent.analytics === true */}
             <GoogleAnalytics />
-            <CookieBanner />
+            <HideOnStudio>
+              <CookieBanner />
+            </HideOnStudio>
             <ConsentSettings />
           </ConsentProvider>
         </ThemeProvider>
