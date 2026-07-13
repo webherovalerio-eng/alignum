@@ -48,6 +48,11 @@ printf '%s' "$(openssl rand -base64 32)" | vercel env add AUTH_SECRET production
 vercel env add ANTHROPIC_API_KEY production   # fragt den Wert ab
 ```
 
+**Go-Live-Status (2026-07):** Vercel Blob ✅, `AUTH_SECRET` ✅ gesetzt.
+Offen: `ANTHROPIC_API_KEY` (liefert Valerio) → danach ist die Text-Generierung
+aktiv. Redeploy läuft ausschließlich über `git push` ([[feedback-alignum-deploy]]),
+NICHT via `vercel redeploy`/`--prod` (Classifier blockt CLI-Prod-Deploys).
+
 > Die Generierung braucht bis zu ~40 s (Opus 4.8). Die Function ist auf
 > `maxDuration = 60` gesetzt — dafür wird der **Pro-Plan / Fluid Compute**
 > benötigt (Hobby-Plan cappt Functions bei 10 s). Euer Anfrageformular nutzt
