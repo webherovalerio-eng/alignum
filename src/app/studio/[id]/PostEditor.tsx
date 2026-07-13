@@ -52,7 +52,9 @@ export function PostEditor({
   const folderRef = useRef<HTMLInputElement>(null);
 
   const [images, setImages] = useState<PostImage[]>(initialPost.images);
-  const [ort, setOrt] = useState(initialPost.ort);
+  const [ortName, setOrtName] = useState(
+    initialPost.ortName || ortNameFor(initialPost.ort),
+  );
   const [holzart, setHolzart] = useState(initialPost.holzart);
   const [moebeltyp, setMoebeltyp] = useState(initialPost.moebeltyp);
   const [notiz, setNotiz] = useState(initialPost.notiz);
@@ -81,6 +83,16 @@ export function PostEditor({
     return cities.find((c) => c.slug === slug)?.name ?? "";
   }
 
+  // Ort ist frei eingebbar. Ein bekannter Stadtname wird auf den exakten
+  // City-Slug gemappt (erhält die interne Verlinkung zur City-Page); freier
+  // Text wird slugifiziert, damit der Ort trotzdem gespeichert werden kann.
+  function slugForOrt(name: string): string {
+    const t = name.trim();
+    if (!t) return "";
+    const match = cities.find((c) => c.name.toLowerCase() === t.toLowerCase());
+    return match ? match.slug : slugify(t);
+  }
+
   async function handleFiles(list: FileList | null) {
     if (!list) return;
     const IMG_RE = /\.(jpe?g|png|webp|avif|heic|heif|gif|tiff?)$/i;
@@ -98,12 +110,16 @@ export function PostEditor({
     setError("");
     let addedTotal = 0;
     let rejectedTotal = all.length - files.length;
-    const BATCH = 6;
     try {
-      for (let i = 0; i < files.length; i += BATCH) {
-        const batch = files.slice(i, i + BATCH);
+      // Ein Bild pro Request und vorher clientseitig verkleinern. Rohfotos vom
+      // Handy sind mehrere MB; mehrere pro Request sprengen das 4,5-MB-Body-Limit
+      // der Vercel-Function (→ 413, keine JSON-Antwort → „Upload fehlgeschlagen").
+      // Verkleinert (2400px / q82, wie die Server-Pipeline) bleibt jedes Bild
+      // deutlich darunter; sharp normalisiert serverseitig weiterhin.
+      for (let i = 0; i < files.length; i++) {
+        const prepared = await compressImage(files[i]);
         const fd = new FormData();
-        for (const f of batch) fd.append("files", f);
+        fd.append("files", prepared);
         const res = await studioFetch(
           `/api/studio/posts/${initialPost.id}/upload`,
           { method: "POST", body: fd },
@@ -119,10 +135,15 @@ export function PostEditor({
           rejectedTotal += data.rejected ?? 0;
         } else {
           const d = (await res.json().catch(() => ({}))) as { error?: string };
-          setError(d.error ?? "Upload fehlgeschlagen.");
+          setError(
+            d.error ??
+              (res.status === 413
+                ? "Bild zu groß für den Upload. Bitte etwas kleiner fotografieren."
+                : "Upload fehlgeschlagen."),
+          );
           break;
         }
-        setUploadDone(Math.min(files.length, i + batch.length));
+        setUploadDone(i + 1);
       }
       if (rejectedTotal > 0) {
         setError(
@@ -157,8 +178,8 @@ export function PostEditor({
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          ort,
-          ortName: ortNameFor(ort),
+          ort: slugForOrt(ortName),
+          ortName: ortName.trim(),
           holzart,
           moebeltyp,
           notiz,
@@ -185,7 +206,7 @@ export function PostEditor({
     setError("");
     if (selectedCount === 0)
       return setError("Bitte zuerst mindestens ein Bild auswählen.");
-    if (!ort) return setError("Bitte einen Ort auswählen.");
+    if (!ortName.trim()) return setError("Bitte einen Ort angeben.");
     if (!moebeltyp.trim()) return setError("Bitte den Möbeltyp angeben.");
     if (!holzart.trim()) return setError("Bitte die Holzart angeben.");
     if (remaining <= 0)
@@ -257,7 +278,7 @@ export function PostEditor({
         <div className="rounded-[var(--radius-lg)] border border-primary/30 bg-primary/5 p-6">
           <p className="font-brand text-xs text-primary">Freigegeben</p>
           <h1 className="font-display mt-1 text-xl text-foreground">
-            {moebeltyp} · {ortNameFor(ort) || initialPost.ortName}
+            {moebeltyp} · {ortName || initialPost.ortName}
           </h1>
         </div>
         {draft && <DraftView draft={draft} />}
@@ -385,21 +406,21 @@ export function PostEditor({
         </h2>
         <div className="grid gap-4 sm:grid-cols-2">
           <Field label="Ort">
-            <select
-              value={ort}
+            <input
+              list="ort-options"
+              value={ortName}
               onChange={(e) => {
-                setOrt(e.target.value);
+                setOrtName(e.target.value);
                 markDirty();
               }}
+              placeholder="Stadt wählen oder frei eingeben …"
               className="h-11 w-full rounded-[var(--radius)] border border-input bg-background px-3 text-sm text-foreground outline-none focus:border-primary"
-            >
-              <option value="">Stadt wählen …</option>
+            />
+            <datalist id="ort-options">
               {cities.map((c) => (
-                <option key={c.slug} value={c.slug}>
-                  {c.name}
-                </option>
+                <option key={c.slug} value={c.name} />
               ))}
-            </select>
+            </datalist>
           </Field>
           <Field label="Möbeltyp">
             <input
@@ -583,6 +604,63 @@ function Field({
 
 function copy(text: string) {
   navigator.clipboard?.writeText(text).catch(() => {});
+}
+
+/** Slug aus freiem Text (deutsche Umlaute → ae/oe/ue, ß → ss). */
+function slugify(s: string): string {
+  return s
+    .toLowerCase()
+    .trim()
+    .replace(/ä/g, "ae")
+    .replace(/ö/g, "oe")
+    .replace(/ü/g, "ue")
+    .replace(/ß/g, "ss")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+/**
+ * Verkleinert ein Bild clientseitig auf dieselben Werte wie die Server-Pipeline
+ * (max. 2400px Kante, JPEG q82), damit ein Upload nicht am 4,5-MB-Body-Limit der
+ * Vercel-Function scheitert. Alles defensiv: kann der Browser die Datei nicht
+ * dekodieren (z. B. HEIC außerhalb von iOS) oder schlägt etwas fehl, wird die
+ * Originaldatei zurückgegeben — der Server (sharp/heic-convert) verarbeitet sie.
+ */
+async function compressImage(file: File): Promise<File> {
+  const MAX_EDGE = 2400;
+  try {
+    if (typeof createImageBitmap !== "function") return file;
+    const bitmap = await createImageBitmap(file, {
+      imageOrientation: "from-image", // EXIF-Rotation in die Pixel backen
+    }).catch(() => null);
+    if (!bitmap) return file;
+
+    const scale = Math.min(1, MAX_EDGE / Math.max(bitmap.width, bitmap.height));
+    const w = Math.max(1, Math.round(bitmap.width * scale));
+    const h = Math.max(1, Math.round(bitmap.height * scale));
+    const canvas = document.createElement("canvas");
+    canvas.width = w;
+    canvas.height = h;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) {
+      bitmap.close?.();
+      return file;
+    }
+    ctx.drawImage(bitmap, 0, 0, w, h);
+    bitmap.close?.();
+
+    const blob = await new Promise<Blob | null>((resolve) =>
+      canvas.toBlob((b) => resolve(b), "image/jpeg", 0.82),
+    );
+    if (!blob || blob.size >= file.size) return file;
+    const name = file.name.replace(/\.[^.]+$/, "") + ".jpg";
+    return new File([blob], name, {
+      type: "image/jpeg",
+      lastModified: file.lastModified,
+    });
+  } catch {
+    return file;
+  }
 }
 
 function DraftView({ draft }: { draft: PostDraft }) {
