@@ -26,20 +26,27 @@ nicht umgehbar). Anpassbar über `STUDIO_MONTHLY_LIMIT`.
 Alles außer diesen Schritten ist bereits im Code. Studio-Flächen sind additiv,
 `noindex` und ändern **nichts** am öffentlichen SEO-Frontend.
 
-1. **Vercel KV (Upstash Redis)** im Projekt hinzufügen
-   (Vercel → Storage → KV/Upstash → Connect). Setzt `UPSTASH_REDIS_REST_URL` +
-   `UPSTASH_REDIS_REST_TOKEN` automatisch. → Magic-Link-Tokens, Rate-Limits,
-   Post-Index. **Pflicht** (Tokens müssen instanzübergreifend geteilt werden).
-2. **Vercel Blob** hinzufügen (Storage → Blob → Connect). Setzt
-   `BLOB_READ_WRITE_TOKEN`. → hochgeladene Bilder. **Pflicht.**
-3. **`AUTH_SECRET`** erzeugen und als Env (Production) setzen:
-   `openssl rand -base64 32`
-4. **`NEXT_PUBLIC_SITE_URL`** = `https://alignum.de` setzen.
-5. **`ANTHROPIC_API_KEY`** setzen (console.anthropic.com → API Keys) — für die
-   Text-Generierung. Optional: `STUDIO_MONTHLY_LIMIT` (Default 8).
-6. (`RESEND_API_KEY`, `MAIL_FROM` sind bereits gesetzt — der Magic-Link nutzt
+1. **Vercel Blob** — ✅ **bereits per CLI angelegt** (`alignum-studio`, public,
+   `BLOB_READ_WRITE_TOKEN` auf Production/Preview/Development). Speichert die
+   Bilder **und** die KV-Daten (Magic-Link-Tokens, Rate-Limits, Post-Index,
+   Monatszähler). → **Kein Upstash/KV nötig.** `src/studio/kv.ts` betreibt die
+   KV-Schicht auf Blob (gesalzene/gehashte Pfade, cache-gebustete Reads).
+   Falls später echter Redis gewünscht: `UPSTASH_*`/`KV_*`-Env setzen, der Code
+   nimmt dann automatisch Redis.
+2. **`AUTH_SECRET`** erzeugen und als Env (Production) setzen:
+   `openssl rand -base64 32` — signiert Sessions **und** salzt die KV-Pfade.
+3. **`ANTHROPIC_API_KEY`** setzen (console.anthropic.com → API Keys) — für die
+   Text-Generierung. Optional: `STUDIO_MONTHLY_LIMIT` (Default 8),
+   `NEXT_PUBLIC_SITE_URL` (sonst aus dem Request abgeleitet).
+4. (`RESEND_API_KEY`, `MAIL_FROM` sind bereits gesetzt — der Magic-Link nutzt
    dieselbe Resend-Anbindung wie das Anfrageformular.)
-7. **Deploy:** `git push` (Vercel-GitHub-Integration).
+5. **Redeploy**, damit die neuen Env-Vars greifen (`git push` oder Vercel „Redeploy").
+
+Env per CLI setzen (Beispiel):
+```
+printf '%s' "$(openssl rand -base64 32)" | vercel env add AUTH_SECRET production
+vercel env add ANTHROPIC_API_KEY production   # fragt den Wert ab
+```
 
 > Die Generierung braucht bis zu ~40 s (Opus 4.8). Die Function ist auf
 > `maxDuration = 60` gesetzt — dafür wird der **Pro-Plan / Fluid Compute**
