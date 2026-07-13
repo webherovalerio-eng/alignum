@@ -83,7 +83,7 @@ export async function POST(req: NextRequest) {
         /\/$/,
         "",
       ) || req.nextUrl.origin;
-    const link = `${origin}/api/studio/auth/verify/?token=${token}`;
+    const link = `${origin}/login/verify/?token=${token}`;
     const tpl = magicLinkEmail(link, Math.round(MAGIC_TTL_S / 60));
     try {
       const res = await sendMail({ to: email, ...tpl });
