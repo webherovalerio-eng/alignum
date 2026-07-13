@@ -67,6 +67,7 @@ export function PostEditor({
   const [uploading, setUploading] = useState(false);
   const [uploadDone, setUploadDone] = useState(0);
   const [uploadTotal, setUploadTotal] = useState(0);
+  const [deleting, setDeleting] = useState<string | null>(null);
   const [generating, setGenerating] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
@@ -110,6 +111,8 @@ export function PostEditor({
     setError("");
     let addedTotal = 0;
     let rejectedTotal = all.length - files.length;
+    let failedTotal = 0;
+    let aborted = false;
     const collected: PostImage[] = [];
     try {
       // Jedes (clientseitig verkleinerte) Bild einzeln in den Blob laden. Rohfotos
@@ -118,35 +121,44 @@ export function PostEditor({
       // Server-Pipeline) bleibt jedes Bild deutlich darunter. Der /upload-Endpoint
       // schreibt den Post NICHT — persistiert wird am Ende in EINEM Request, sonst
       // überschreiben sich die Einzel-Uploads auf dem Blob-KV gegenseitig.
-      for (let i = 0; i < files.length; i++) {
+      for (let i = 0; i < files.length && !aborted; i++) {
         const prepared = await compressImage(files[i]);
-        const fd = new FormData();
-        fd.append("files", prepared);
-        const res = await studioFetch(
-          `/api/studio/posts/${initialPost.id}/upload`,
-          { method: "POST", body: fd },
-        );
-        if (res.ok) {
-          const data = (await res.json()) as {
-            images: PostImage[];
-            added?: number;
-            rejected?: number;
-          };
-          const fresh = data.images ?? [];
-          collected.push(...fresh);
-          if (fresh.length) setImages((prev) => [...prev, ...fresh]); // Live-Vorschau
-          addedTotal += data.added ?? 0;
-          rejectedTotal += data.rejected ?? 0;
-        } else {
-          const d = (await res.json().catch(() => ({}))) as { error?: string };
-          setError(
-            d.error ??
-              (res.status === 413
-                ? "Bild zu groß für den Upload. Bitte etwas kleiner fotografieren."
-                : "Upload fehlgeschlagen."),
-          );
-          break;
+        let ok = false;
+        // Ein einzelnes fehlgeschlagenes Bild darf NICHT die ganze Serie stoppen
+        // (früher: break → nur ein Teil der Bilder kam an). Ein Retry deckt
+        // transiente Blob-/Netzfehler ab; danach wird das Bild übersprungen.
+        for (let attempt = 0; attempt < 2 && !ok && !aborted; attempt++) {
+          let res: Response | null = null;
+          try {
+            const fd = new FormData();
+            fd.append("files", prepared);
+            res = await studioFetch(
+              `/api/studio/posts/${initialPost.id}/upload`,
+              { method: "POST", body: fd },
+            );
+          } catch {
+            res = null; // Netzwerkfehler → nächster Versuch
+          }
+          if (res && res.ok) {
+            const data = (await res.json()) as {
+              images: PostImage[];
+              added?: number;
+              rejected?: number;
+            };
+            const fresh = data.images ?? [];
+            collected.push(...fresh);
+            if (fresh.length) setImages((prev) => [...prev, ...fresh]); // Live-Vorschau
+            addedTotal += data.added ?? 0;
+            rejectedTotal += data.rejected ?? 0;
+            ok = true;
+          } else if (res && (res.status === 401 || res.status === 403)) {
+            const d = (await res.json().catch(() => ({}))) as { error?: string };
+            setError(d.error ?? "Sitzung abgelaufen – bitte neu anmelden.");
+            aborted = true; // Auth-Fehler → Retry sinnlos, ganze Serie stoppen
+          }
+          // sonst: transienter Fehler → nächster Versuch (oder überspringen)
         }
+        if (!ok && !aborted) failedTotal++;
         setUploadDone(i + 1);
       }
 
@@ -171,11 +183,12 @@ export function PostEditor({
         }
       }
 
-      if (rejectedTotal > 0) {
+      const skipped = rejectedTotal + failedTotal;
+      if (skipped > 0 && !aborted) {
         setError(
           addedTotal === 0
-            ? `Keines der ${rejectedTotal} Bilder konnte verarbeitet werden. Bitte als JPEG/PNG hochladen (iPhone: Einstellungen → Kamera → Formate → „Maximale Kompatibilität").`
-            : `${rejectedTotal} Datei(en) übersprungen (nicht unterstütztes Format oder zu groß).`,
+            ? `Keines der Bilder konnte hochgeladen werden. Bitte als JPEG/PNG versuchen (iPhone: Einstellungen → Kamera → Formate → „Maximale Kompatibilität").`
+            : `${skipped} von ${files.length} Bild(ern) übersprungen (Format/Größe oder Upload-Fehler). Die übrigen ${addedTotal} sind gespeichert – fehlende ggf. einzeln erneut hochladen.`,
         );
       }
     } finally {
@@ -189,6 +202,29 @@ export function PostEditor({
       imgs.map((i) => (i.key === key ? { ...i, selected: !i.selected } : i)),
     );
     markDirty();
+  }
+
+  async function deleteImage(key: string) {
+    if (deleting) return;
+    setDeleting(key);
+    setError("");
+    try {
+      const res = await studioFetch(
+        `/api/studio/posts/${initialPost.id}/images?key=${encodeURIComponent(key)}`,
+        { method: "DELETE" },
+      );
+      if (res.ok) {
+        const data = (await res.json()) as { images: PostImage[] };
+        setImages(data.images);
+      } else {
+        const d = (await res.json().catch(() => ({}))) as { error?: string };
+        setError(d.error ?? "Bild konnte nicht gelöscht werden.");
+      }
+    } catch {
+      setError("Netzwerkfehler beim Löschen.");
+    } finally {
+      setDeleting(null);
+    }
   }
 
   function patchDraft(p: Partial<PostDraft>) {
@@ -392,14 +428,13 @@ export function PostEditor({
           <>
             <p className="mb-2 text-xs text-muted-foreground">
               {images.length} Bild(er) · {selectedCount} ausgewählt. Tippe die
-              passenden an.
+              passenden an · <span className="text-foreground">×</span> löscht ein
+              Bild.
             </p>
             <div className="grid grid-cols-3 gap-2 sm:grid-cols-4 md:grid-cols-5">
               {images.map((img) => (
-                <button
+                <div
                   key={img.key}
-                  type="button"
-                  onClick={() => toggleSelect(img.key)}
                   className={cn(
                     "group relative aspect-square overflow-hidden rounded-[var(--radius)] border-2 transition-all",
                     img.selected
@@ -407,18 +442,35 @@ export function PostEditor({
                       : "border-transparent opacity-80 hover:opacity-100",
                   )}
                 >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={img.url}
-                    alt={img.filename}
-                    className="h-full w-full object-cover"
-                  />
+                  <button
+                    type="button"
+                    onClick={() => toggleSelect(img.key)}
+                    aria-label={img.selected ? "Auswahl aufheben" : "Auswählen"}
+                    className="absolute inset-0"
+                  >
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={img.url}
+                      alt={img.filename}
+                      className="h-full w-full object-cover"
+                    />
+                  </button>
                   {img.selected && (
-                    <span className="absolute right-1 top-1 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-xs text-primary-foreground">
+                    <span className="pointer-events-none absolute right-1 top-1 z-10 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-xs text-primary-foreground">
                       ✓
                     </span>
                   )}
-                </button>
+                  <button
+                    type="button"
+                    onClick={() => deleteImage(img.key)}
+                    disabled={deleting === img.key || uploading}
+                    aria-label="Bild löschen"
+                    title="Bild löschen"
+                    className="absolute left-1 top-1 z-10 flex h-6 w-6 items-center justify-center rounded-full bg-black/55 text-sm leading-none text-white opacity-80 transition-colors hover:bg-destructive hover:opacity-100 disabled:opacity-40"
+                  >
+                    {deleting === img.key ? "…" : "×"}
+                  </button>
+                </div>
               ))}
             </div>
           </>
@@ -653,6 +705,12 @@ function slugify(s: string): string {
  * Originaldatei zurückgegeben — der Server (sharp/heic-convert) verarbeitet sie.
  */
 async function compressImage(file: File): Promise<File> {
+  // HEIC/HEIF im Browser NICHT anfassen — Canvas-Dekodierung ist unzuverlässig
+  // (außer iOS). Roh an den Server geben, der es mit heic-convert zuverlässig
+  // nach JPEG wandelt. Roh-HEIC ist klein genug (< 4,5 MB) für einen Einzel-Request.
+  if (/\.(heic|heif)$/i.test(file.name) || /heic|heif/i.test(file.type)) {
+    return file;
+  }
   const MAX_EDGE = 2400;
   try {
     if (typeof createImageBitmap !== "function") return file;
