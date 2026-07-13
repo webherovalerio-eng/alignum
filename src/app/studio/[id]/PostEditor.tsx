@@ -110,12 +110,14 @@ export function PostEditor({
     setError("");
     let addedTotal = 0;
     let rejectedTotal = all.length - files.length;
+    const collected: PostImage[] = [];
     try {
-      // Ein Bild pro Request und vorher clientseitig verkleinern. Rohfotos vom
-      // Handy sind mehrere MB; mehrere pro Request sprengen das 4,5-MB-Body-Limit
-      // der Vercel-Function (→ 413, keine JSON-Antwort → „Upload fehlgeschlagen").
-      // Verkleinert (2400px / q82, wie die Server-Pipeline) bleibt jedes Bild
-      // deutlich darunter; sharp normalisiert serverseitig weiterhin.
+      // Jedes (clientseitig verkleinerte) Bild einzeln in den Blob laden. Rohfotos
+      // vom Handy sind mehrere MB; mehrere pro Request sprengen das 4,5-MB-Body-
+      // Limit der Vercel-Function (→ 413). Verkleinert (2400px / q82, wie die
+      // Server-Pipeline) bleibt jedes Bild deutlich darunter. Der /upload-Endpoint
+      // schreibt den Post NICHT — persistiert wird am Ende in EINEM Request, sonst
+      // überschreiben sich die Einzel-Uploads auf dem Blob-KV gegenseitig.
       for (let i = 0; i < files.length; i++) {
         const prepared = await compressImage(files[i]);
         const fd = new FormData();
@@ -130,7 +132,9 @@ export function PostEditor({
             added?: number;
             rejected?: number;
           };
-          setImages(data.images);
+          const fresh = data.images ?? [];
+          collected.push(...fresh);
+          if (fresh.length) setImages((prev) => [...prev, ...fresh]); // Live-Vorschau
           addedTotal += data.added ?? 0;
           rejectedTotal += data.rejected ?? 0;
         } else {
@@ -145,6 +149,28 @@ export function PostEditor({
         }
         setUploadDone(i + 1);
       }
+
+      // Alle neuen Bilder gebündelt persistieren und die autoritative Liste vom
+      // Server übernehmen (behebt das „Springen"/Verschwinden bei Mehrfach-Upload).
+      if (collected.length) {
+        const res = await studioFetch(
+          `/api/studio/posts/${initialPost.id}/images`,
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ images: collected }),
+          },
+        );
+        if (res.ok) {
+          const data = (await res.json()) as { images: PostImage[] };
+          setImages(data.images);
+        } else {
+          setError(
+            "Bilder konnten nicht gespeichert werden. Bitte erneut versuchen.",
+          );
+        }
+      }
+
       if (rejectedTotal > 0) {
         setError(
           addedTotal === 0

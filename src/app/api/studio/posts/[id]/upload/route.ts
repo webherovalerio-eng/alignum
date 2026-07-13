@@ -1,5 +1,5 @@
 import { guard } from "@/studio/api";
-import { getPost, addImages } from "@/studio/posts";
+import { getPost, processUpload } from "@/studio/posts";
 
 export const runtime = "nodejs";
 export const maxDuration = 60; // sharp-Re-Encode mehrerer Bilder kann dauern
@@ -33,6 +33,12 @@ export async function POST(
     return Response.json({ error: "Keine Dateien." }, { status: 400 });
   }
 
-  const { post: updated, added, rejected } = await addImages(post, files);
-  return Response.json({ images: updated.images, added, rejected });
+  // Blob-Ablage nur — der Post-Datensatz wird NICHT hier geschrieben, sondern
+  // gebündelt über die images-Route (verhindert Read-Modify-Write-Races).
+  const base = {
+    count: post.images.length,
+    bytes: post.images.reduce((s, i) => s + i.bytes, 0),
+  };
+  const { images, added, rejected } = await processUpload(post.id, base, files);
+  return Response.json({ images, added, rejected });
 }

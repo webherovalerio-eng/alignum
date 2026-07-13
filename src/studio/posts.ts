@@ -7,7 +7,7 @@ import { kvGetJSON, kvSetJSON, kvDel } from "./kv";
 import { putImage, delImage } from "./blob";
 import { randomTokenHex } from "./tokens";
 import { UPLOAD, FIELD } from "./config";
-import type { Post, PostDraft } from "./types";
+import type { Post, PostDraft, PostImage } from "./types";
 
 const INDEX_KEY = "studio:posts:index";
 const postKey = (id: string) => `studio:post:${id}`;
@@ -84,27 +84,34 @@ function sanitizeName(name: string): string {
 }
 
 /**
- * Nimmt hochgeladene Dateien an: Typ/Größe validieren, mit sharp neu kodieren
- * (auto-rotieren nach EXIF, dann Metadaten/EXIF strippen = Privacy + entfernt
- * evtl. eingebettete Payloads), herunterskalieren, als JPEG ablegen.
+ * Verarbeitet hochgeladene Dateien (Typ/Größe validieren, HEIC→JPEG, mit sharp
+ * neu kodieren + EXIF strippen = Privacy, herunterskalieren, als JPEG in den
+ * Blob-Store legen) und gibt die NEUEN Bild-Descriptoren zurück. Schreibt
+ * bewusst NICHT den Post-Datensatz: sonst löst jeder Einzel-Upload ein
+ * Read-Modify-Write auf dem (eventually-consistent) Blob-KV aus, und schnell
+ * aufeinanderfolgende Uploads überschreiben sich gegenseitig. Persistiert wird
+ * gebündelt und in EINEM Write via `appendImages`.
  */
-export interface AddImagesResult {
-  post: Post;
+export interface ProcessUploadResult {
+  images: PostImage[];
   added: number;
   rejected: number;
 }
 
-export async function addImages(
-  post: Post,
+export async function processUpload(
+  postId: string,
+  base: { count: number; bytes: number },
   files: File[],
-): Promise<AddImagesResult> {
+): Promise<ProcessUploadResult> {
   const { default: sharp } = await import("sharp");
-  let total = post.images.reduce((s, i) => s + i.bytes, 0);
+  let total = base.bytes;
+  let count = base.count;
+  const images: PostImage[] = [];
   let added = 0;
   let rejected = 0;
 
   for (const file of files) {
-    if (post.images.length >= UPLOAD.maxImagesPerPost) {
+    if (count >= UPLOAD.maxImagesPerPost) {
       rejected++;
       continue;
     }
@@ -162,9 +169,9 @@ export async function addImages(
       break;
     }
 
-    const key = `${post.id}/${randomTokenHex(6)}.jpg`;
+    const key = `${postId}/${randomTokenHex(6)}.jpg`;
     const stored = await putImage(key, out, "image/jpeg");
-    post.images.push({
+    images.push({
       key: stored.key,
       url: stored.url,
       filename: sanitizeName(file.name),
@@ -173,10 +180,44 @@ export async function addImages(
       height,
       selected: false,
     });
+    count++;
     added++;
   }
-  await savePost(post);
-  return { post, added, rejected };
+  return { images, added, rejected };
+}
+
+/**
+ * Hängt bereits im Blob abgelegte Bild-Descriptoren an den Post an — EIN Write,
+ * daher race-frei gegenüber dem stückweisen Upload. Nimmt nur Keys an, die zu
+ * diesem Post gehören, und dedupliziert (idempotent gegen Doppel-Sends).
+ */
+export async function appendImages(
+  post: Post,
+  incoming: unknown[],
+): Promise<Post> {
+  const prefix = `${post.id}/`;
+  const have = new Set(post.images.map((i) => i.key));
+  for (const raw of incoming) {
+    if (post.images.length >= UPLOAD.maxImagesPerPost) break;
+    const img = raw as Partial<PostImage>;
+    if (typeof img?.key !== "string" || !img.key.startsWith(prefix)) continue;
+    if (typeof img.url !== "string" || have.has(img.key)) continue;
+    post.images.push({
+      key: img.key,
+      url: img.url,
+      filename:
+        typeof img.filename === "string" ? sanitizeName(img.filename) : "bild",
+      bytes:
+        typeof img.bytes === "number" && Number.isFinite(img.bytes)
+          ? img.bytes
+          : 0,
+      width: typeof img.width === "number" ? img.width : undefined,
+      height: typeof img.height === "number" ? img.height : undefined,
+      selected: false,
+    });
+    have.add(img.key);
+  }
+  return savePost(post);
 }
 
 export interface PostPatch {
