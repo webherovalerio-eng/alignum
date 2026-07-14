@@ -47,6 +47,14 @@ AUFGABE: Aus dem Projekt-Brief einen deutschen Projekt-Referenz-Eintrag im FESTE
 Alignum-Format erzeugen (wie die bestehenden Projekt-Detailseiten), der die City-Page
 der Zielstadt für Local SEO stärkt, PLUS einen Instagram-Post.
 
+FOTOS: Sofern dem Brief Fotos des FERTIGEN Möbels beigefügt sind, sind sie die PRIMÄRE
+Faktenbasis für die Beschreibung. Beschreibe KONKRET, was tatsächlich sichtbar ist:
+Bauweise (z. B. wandhängend oder stehend), Farben & Oberflächen (z. B. Hochglanz-Weiß,
+Ölung), Fronten & Beschläge/Mechanik (z. B. grifflos, Push-to-Open), Materialkombination,
+Beleuchtung, Glas/Vitrine, Aufteilung der Fächer. Leite daraus spezifische, glaubwürdige
+Aussagen ab — wie ein Schreinermeister, der sein fertiges Stück zeigt. Erfinde NICHTS, das
+weder auf den Fotos sichtbar noch in Jans Notiz belegt ist (keine Maße/Preise/Namen raten).
+
 REGELN:
 - Anrede: „Sie" (formell). Deutsch. Ton: schreinermeister-stolz, fachlich präzise, für Laien verständlich. Keine Werbe-Phrasen, keine Superlative.
 - WICHTIG: Regionale Nähe korrekt — Alignum kommt AUS Edingen-Neckarhausen und liefert/montiert in {ORT}. NIEMALS eine Werkstatt/Filiale in {ORT} behaupten.
@@ -71,11 +79,15 @@ function userPrompt(input: {
   notiz: string;
 }): string {
   return [
-    "PROJEKT-BRIEF:",
+    "PROJEKT-BRIEF (die beigefügten Fotos zeigen das fertige Möbel):",
     `- Möbeltyp: ${input.moebeltyp}`,
     `- Zielstadt (Liefer-/Montageort): ${input.ortName}`,
     `- Holzart: ${input.holzart}`,
-    `- Notiz von Jan (Faktenbasis): ${input.notiz || "(keine)"}`,
+    `- Notiz von Jan (zusätzliche Faktenbasis): ${input.notiz || "(keine)"}`,
+    "",
+    "Beschreibe den body KONKRET anhand der Fotos + Notiz. Nutze sichtbare Details" +
+      " (Bauweise, Farben, Fronten/Mechanik, Materialkombination, Beleuchtung) für" +
+      " glaubwürdige, spezifische Aussagen — nichts erfinden.",
   ].join("\n");
 }
 
@@ -84,9 +96,19 @@ export async function generateDraft(input: {
   holzart: string;
   moebeltyp: string;
   notiz: string;
+  imageUrls?: string[];
 }): Promise<PostDraft> {
   const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) throw new Error("ANTHROPIC_API_KEY ist nicht gesetzt.");
+
+  // Ausgewählte Fotos als Bild-Blöcke voranstellen (max. 6, nur öffentliche
+  // http(s)-URLs — der lokale Dev-Blob liefert relative Pfade, die die API nicht
+  // erreichen kann, und wird daher übersprungen → Text-only-Fallback).
+  const imageBlocks = (input.imageUrls ?? [])
+    .filter((u) => typeof u === "string" && /^https?:\/\//i.test(u))
+    .slice(0, 6)
+    .map((url) => ({ type: "image", source: { type: "url", url } }));
+  const content: unknown[] = [...imageBlocks, { type: "text", text: userPrompt(input) }];
 
   const res = await fetch(ENDPOINT, {
     method: "POST",
@@ -100,7 +122,7 @@ export async function generateDraft(input: {
       max_tokens: 8000,
       system: SYSTEM_PROMPT.replace(/\{ORT\}/g, input.ortName),
       output_config: { format: { type: "json_schema", schema: OUTPUT_SCHEMA } },
-      messages: [{ role: "user", content: userPrompt(input) }],
+      messages: [{ role: "user", content }],
     }),
   });
 
