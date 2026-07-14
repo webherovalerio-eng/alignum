@@ -94,6 +94,20 @@ export function PostEditor({
     return match ? match.slug : slugify(t);
   }
 
+  // Der aktuelle Editor-Stand als Payload. Wird bei Speichern/Generieren/Freigeben
+  // MITGESCHICKT, damit der Server nicht auf einen veralteten KV-Read angewiesen
+  // ist (Blob ist eventually consistent).
+  function briefPayload() {
+    return {
+      ort: slugForOrt(ortName),
+      ortName: ortName.trim(),
+      holzart,
+      moebeltyp,
+      notiz,
+      images,
+    };
+  }
+
   // Zentrales, autoritatives Schreiben der Bildliste: der Client schickt IMMER
   // die vollständige gewünschte Liste, der Server speichert sie 1:1. Dadurch kann
   // kein veralteter KV-Read mehr Bilder verschwinden/wiederauftauchen lassen.
@@ -253,12 +267,7 @@ export function PostEditor({
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          ort: slugForOrt(ortName),
-          ortName: ortName.trim(),
-          holzart,
-          moebeltyp,
-          notiz,
-          images, // autoritative Bildliste inkl. Auswahl-Flags
+          ...briefPayload(),
           ...(draft ? { draft } : {}),
         }),
       });
@@ -287,15 +296,17 @@ export function PostEditor({
     if (remaining <= 0)
       return setError("Monatslimit erreicht. Nächsten Monat wieder verfügbar.");
 
-    // Aktuelle Angaben speichern, damit die Generierung sie nutzt.
-    const ok = await save();
-    if (!ok) return;
-
     setGenerating(true);
     try {
+      // Angaben direkt mitschicken — der Server persistiert + generiert in EINEM
+      // Schritt, ohne den gerade gespeicherten Stand erneut (stale) zu lesen.
       const res = await studioFetch(
         `/api/studio/posts/${initialPost.id}/generate`,
-        { method: "POST" },
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(briefPayload()),
+        },
       );
       const data = (await res.json()) as {
         draft?: PostDraft;
@@ -319,19 +330,24 @@ export function PostEditor({
   async function approve() {
     setError("");
     if (!draft) return setError("Bitte zuerst den Text generieren.");
-    const ok = await save();
-    if (!ok) return;
     setSubmitting(true);
     try {
+      // Angaben + Draft mitschicken → Server validiert/persistiert auf dem
+      // aktuellen Stand, kein Verlass auf einen stale KV-Read.
       const res = await studioFetch(
         `/api/studio/posts/${initialPost.id}/submit`,
-        { method: "POST" },
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ ...briefPayload(), draft }),
+        },
       );
       const data = (await res.json()) as { error?: string; status?: PostStatus };
       if (!res.ok) {
         setError(data.error ?? "Freigabe fehlgeschlagen.");
         return;
       }
+      setDirty(false);
       setStatus(data.status ?? "freigegeben");
     } finally {
       setSubmitting(false);

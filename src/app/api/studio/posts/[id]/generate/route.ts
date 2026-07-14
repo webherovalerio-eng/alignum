@@ -1,5 +1,5 @@
 import { guard } from "@/studio/api";
-import { getPost, savePost } from "@/studio/posts";
+import { getPost, savePost, applyBrief } from "@/studio/posts";
 import { generateDraft } from "@/studio/generate";
 import { reserveGeneration, releaseGeneration } from "@/studio/usage";
 
@@ -21,6 +21,16 @@ export async function POST(
       { status: 409 },
     );
   }
+
+  // Brief client-autoritativ übernehmen — NICHT auf den (evtl. stale) KV-Read
+  // verlassen. Die Angaben aus dem Editor kommen direkt mit im Request-Body.
+  let body: Record<string, unknown> = {};
+  try {
+    body = (await req.json()) as Record<string, unknown>;
+  } catch {
+    /* leerer Body ok — dann gilt der gespeicherte Stand */
+  }
+  applyBrief(post, body);
 
   // Voraussetzungen (ohne Draft — der entsteht ja gerade).
   if (!post.images.some((i) => i.selected)) {

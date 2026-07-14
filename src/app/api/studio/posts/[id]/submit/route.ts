@@ -1,5 +1,11 @@
 import { guard } from "@/studio/api";
-import { getPost, submissionError, submitPost } from "@/studio/posts";
+import {
+  getPost,
+  submissionError,
+  submitPost,
+  applyBrief,
+  sanitizeDraft,
+} from "@/studio/posts";
 import { sendMail, submissionNotifyEmail } from "@/studio/mail";
 
 export const runtime = "nodejs";
@@ -15,6 +21,20 @@ export async function POST(
   const { id } = await ctx.params;
   const post = await getPost(id);
   if (!post) return Response.json({ error: "Nicht gefunden." }, { status: 404 });
+
+  // Brief + Draft client-autoritativ übernehmen (kein Verlass auf stale KV-Read),
+  // dann auf DIESEM Stand validieren.
+  let body: Record<string, unknown> = {};
+  try {
+    body = (await req.json()) as Record<string, unknown>;
+  } catch {
+    /* leerer Body ok */
+  }
+  applyBrief(post, body);
+  if (body.draft !== undefined) {
+    const d = sanitizeDraft(body.draft, post.draft);
+    if (d) post.draft = d;
+  }
 
   const err = submissionError(post);
   if (err) return Response.json({ error: err }, { status: 400 });

@@ -1,28 +1,7 @@
 import { guard } from "@/studio/api";
-import { getPost, updatePost, deletePost } from "@/studio/posts";
-import type { PostDraft } from "@/studio/types";
+import { getPost, updatePost, deletePost, sanitizeDraft } from "@/studio/posts";
 
 export const runtime = "nodejs";
-
-/** Editierten Draft aus dem Request säubern (nur erlaubte Felder, längenbegrenzt). */
-function sanitizeDraft(v: unknown, existing?: PostDraft): PostDraft | undefined {
-  if (!v || typeof v !== "object") return undefined;
-  const d = v as Record<string, unknown>;
-  const s = (x: unknown, max: number) =>
-    typeof x === "string" ? x.slice(0, max) : "";
-  return {
-    metaTitle: s(d.metaTitle, 120),
-    metaDescription: s(d.metaDescription, 300),
-    intro: s(d.intro, 2000),
-    body: s(d.body, 20000),
-    socialCaption: s(d.socialCaption, 4000),
-    hashtags: Array.isArray(d.hashtags)
-      ? d.hashtags.map((h) => String(h).replace(/^#/, "").slice(0, 60)).slice(0, 15)
-      : [],
-    generatedAt: existing?.generatedAt ?? Date.now(),
-    model: existing?.model ?? "",
-  };
-}
 
 export async function PATCH(
   req: Request,

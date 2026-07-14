@@ -280,6 +280,50 @@ export async function updatePost(post: Post, patch: PostPatch): Promise<Post> {
   return savePost(post);
 }
 
+/**
+ * Übernimmt den vom Client gelieferten Brief (Ort/Holzart/Möbeltyp/Notiz +
+ * autoritative Bildliste) in das Post-Objekt — OHNE zu speichern. So hängen
+ * Generierung/Freigabe NICHT von einem stale KV-Re-Read ab: die Validierung und
+ * die spätere Speicherung laufen auf dem aktuellen Client-Stand.
+ */
+export function applyBrief(post: Post, body: Record<string, unknown>): void {
+  const s = (v: unknown) => (typeof v === "string" ? v : undefined);
+  if (s(body.ort) !== undefined) post.ort = (body.ort as string).slice(0, FIELD.ort);
+  if (s(body.ortName) !== undefined)
+    post.ortName = (body.ortName as string).slice(0, FIELD.ort);
+  if (s(body.holzart) !== undefined)
+    post.holzart = (body.holzart as string).slice(0, FIELD.holzart);
+  if (s(body.moebeltyp) !== undefined)
+    post.moebeltyp = (body.moebeltyp as string).slice(0, FIELD.moebeltyp);
+  if (s(body.notiz) !== undefined)
+    post.notiz = (body.notiz as string).slice(0, FIELD.notiz);
+  if (Array.isArray(body.images))
+    post.images = validateImages(post.id, body.images);
+}
+
+/** Editierten Draft aus dem Request säubern (nur erlaubte Felder, längenbegrenzt). */
+export function sanitizeDraft(
+  v: unknown,
+  existing?: PostDraft,
+): PostDraft | undefined {
+  if (!v || typeof v !== "object") return undefined;
+  const d = v as Record<string, unknown>;
+  const s = (x: unknown, max: number) =>
+    typeof x === "string" ? x.slice(0, max) : "";
+  return {
+    metaTitle: s(d.metaTitle, 120),
+    metaDescription: s(d.metaDescription, 300),
+    intro: s(d.intro, 2000),
+    body: s(d.body, 20000),
+    socialCaption: s(d.socialCaption, 4000),
+    hashtags: Array.isArray(d.hashtags)
+      ? d.hashtags.map((h) => String(h).replace(/^#/, "").slice(0, 60)).slice(0, 15)
+      : [],
+    generatedAt: existing?.generatedAt ?? Date.now(),
+    model: existing?.model ?? "",
+  };
+}
+
 /** Prüft, ob ein Beitrag freigebbar ist. Gibt Fehlermeldung oder null zurück. */
 export function submissionError(post: Post): string | null {
   if (!post.images.some((i) => i.selected))
