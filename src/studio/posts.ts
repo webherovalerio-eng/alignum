@@ -90,7 +90,7 @@ function sanitizeName(name: string): string {
  * bewusst NICHT den Post-Datensatz: sonst löst jeder Einzel-Upload ein
  * Read-Modify-Write auf dem (eventually-consistent) Blob-KV aus, und schnell
  * aufeinanderfolgende Uploads überschreiben sich gegenseitig. Persistiert wird
- * gebündelt und in EINEM Write via `appendImages`.
+ * gebündelt und in EINEM Write via `setImages` (autoritative Client-Liste).
  */
 export interface ProcessUploadResult {
   images: PostImage[];
@@ -187,22 +187,22 @@ export async function processUpload(
 }
 
 /**
- * Hängt bereits im Blob abgelegte Bild-Descriptoren an den Post an — EIN Write,
- * daher race-frei gegenüber dem stückweisen Upload. Nimmt nur Keys an, die zu
- * diesem Post gehören, und dedupliziert (idempotent gegen Doppel-Sends).
+ * Macht eine vom Client gelieferte, AUTORITATIVE Bildliste sicher: nur Keys, die
+ * zu diesem Post gehören, dedupliziert, auf das Maximum gedeckelt. Zentral für
+ * alle Bild-Schreibvorgänge — der Server baut die Liste NIE selbst aus einem
+ * (eventually-consistent) KV-Read zusammen, sonst überschreiben sich schnelle
+ * Upload-/Lösch-Aktionen gegenseitig.
  */
-export async function appendImages(
-  post: Post,
-  incoming: unknown[],
-): Promise<Post> {
-  const prefix = `${post.id}/`;
-  const have = new Set(post.images.map((i) => i.key));
-  for (const raw of incoming) {
-    if (post.images.length >= UPLOAD.maxImagesPerPost) break;
+export function validateImages(postId: string, desired: unknown[]): PostImage[] {
+  const prefix = `${postId}/`;
+  const seen = new Set<string>();
+  const out: PostImage[] = [];
+  for (const raw of desired) {
+    if (out.length >= UPLOAD.maxImagesPerPost) break;
     const img = raw as Partial<PostImage>;
     if (typeof img?.key !== "string" || !img.key.startsWith(prefix)) continue;
-    if (typeof img.url !== "string" || have.has(img.key)) continue;
-    post.images.push({
+    if (typeof img.url !== "string" || seen.has(img.key)) continue;
+    out.push({
       key: img.key,
       url: img.url,
       filename:
@@ -213,11 +213,46 @@ export async function appendImages(
           : 0,
       width: typeof img.width === "number" ? img.width : undefined,
       height: typeof img.height === "number" ? img.height : undefined,
-      selected: false,
+      selected: img.selected === true,
     });
-    have.add(img.key);
+    seen.add(img.key);
   }
-  return savePost(post);
+  return out;
+}
+
+/**
+ * Setzt die Bildliste des Posts auf den autoritativen Client-Stand — EIN Write,
+ * unabhängig davon, was der KV-Read gerade liefert. Dadurch können sich Upload-
+ * und Lösch-Vorgänge nicht mehr gegenseitig überschreiben (kein Read-Modify-Write
+ * auf der Liste). `remove` (key+url) wird zusätzlich best-effort aus dem Blob
+ * gelöscht; ein liegengebliebener Orphan ist unkritisch, die Liste stimmt.
+ */
+export async function setImages(
+  post: Post,
+  desired: unknown[],
+  remove: unknown[] = [],
+): Promise<Post> {
+  post.images = validateImages(post.id, desired);
+  await savePost(post);
+
+  const keep = new Set(post.images.map((i) => i.key));
+  const prefix = `${post.id}/`;
+  for (const raw of remove) {
+    const r = raw as Partial<PostImage>;
+    if (
+      typeof r?.key === "string" &&
+      r.key.startsWith(prefix) &&
+      !keep.has(r.key) &&
+      typeof r.url === "string"
+    ) {
+      try {
+        await delImage({ key: r.key, url: r.url });
+      } catch {
+        /* Orphan bleibt liegen — Liste ist bereits korrekt gespeichert. */
+      }
+    }
+  }
+  return post;
 }
 
 export interface PostPatch {
@@ -226,7 +261,8 @@ export interface PostPatch {
   holzart?: string;
   moebeltyp?: string;
   notiz?: string;
-  selectedKeys?: string[];
+  /** Autoritative Bildliste (inkl. Auswahl-Flags) — 1:1 vom Client. */
+  images?: unknown[];
   draft?: PostDraft;
 }
 
@@ -237,20 +273,10 @@ export async function updatePost(post: Post, patch: PostPatch): Promise<Post> {
   if (patch.moebeltyp !== undefined)
     post.moebeltyp = patch.moebeltyp.slice(0, FIELD.moebeltyp);
   if (patch.notiz !== undefined) post.notiz = patch.notiz.slice(0, FIELD.notiz);
-  if (patch.selectedKeys) {
-    const set = new Set(patch.selectedKeys);
-    post.images = post.images.map((i) => ({ ...i, selected: set.has(i.key) }));
-  }
+  // Bildliste ist client-autoritativ → 1:1 übernehmen (kein Read-Modify-Write).
+  if (patch.images !== undefined)
+    post.images = validateImages(post.id, patch.images);
   if (patch.draft !== undefined) post.draft = patch.draft;
-  return savePost(post);
-}
-
-export async function removeImage(post: Post, key: string): Promise<Post> {
-  const img = post.images.find((i) => i.key === key);
-  if (img) {
-    await delImage(img);
-    post.images = post.images.filter((i) => i.key !== key);
-  }
   return savePost(post);
 }
 

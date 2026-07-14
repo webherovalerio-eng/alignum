@@ -54,9 +54,7 @@ export async function PATCH(
     holzart: str(body.holzart),
     moebeltyp: str(body.moebeltyp),
     notiz: str(body.notiz),
-    selectedKeys: Array.isArray(body.selectedKeys)
-      ? body.selectedKeys.filter((x): x is string => typeof x === "string")
-      : undefined,
+    images: Array.isArray(body.images) ? body.images : undefined,
     draft:
       body.draft !== undefined
         ? sanitizeDraft(body.draft, post.draft)

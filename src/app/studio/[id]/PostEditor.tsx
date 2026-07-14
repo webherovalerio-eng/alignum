@@ -94,6 +94,31 @@ export function PostEditor({
     return match ? match.slug : slugify(t);
   }
 
+  // Zentrales, autoritatives Schreiben der Bildliste: der Client schickt IMMER
+  // die vollständige gewünschte Liste, der Server speichert sie 1:1. Dadurch kann
+  // kein veralteter KV-Read mehr Bilder verschwinden/wiederauftauchen lassen.
+  // Gibt die vom Server bestätigte Liste zurück oder null bei Fehler.
+  async function persistImages(
+    next: PostImage[],
+    remove: PostImage[] = [],
+  ): Promise<PostImage[] | null> {
+    try {
+      const res = await studioFetch(
+        `/api/studio/posts/${initialPost.id}/images`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ images: next, remove }),
+        },
+      );
+      if (!res.ok) return null;
+      const data = (await res.json()) as { images: PostImage[] };
+      return data.images;
+    } catch {
+      return null;
+    }
+  }
+
   async function handleFiles(list: FileList | null) {
     if (!list) return;
     const IMG_RE = /\.(jpe?g|png|webp|avif|heic|heif|gif|tiff?)$/i;
@@ -109,6 +134,8 @@ export function PostEditor({
     setUploadTotal(files.length);
     setUploadDone(0);
     setError("");
+    // Autoritativer Ausgangsstand im Client — die neue Liste = base + neue Bilder.
+    const base = images;
     let addedTotal = 0;
     let rejectedTotal = all.length - files.length;
     let failedTotal = 0;
@@ -162,25 +189,15 @@ export function PostEditor({
         setUploadDone(i + 1);
       }
 
-      // Alle neuen Bilder gebündelt persistieren und die autoritative Liste vom
-      // Server übernehmen (behebt das „Springen"/Verschwinden bei Mehrfach-Upload).
+      // Die vollständige neue Liste (bisherige + neue Bilder) autoritativ
+      // persistieren und die vom Server bestätigte Liste übernehmen.
       if (collected.length) {
-        const res = await studioFetch(
-          `/api/studio/posts/${initialPost.id}/images`,
-          {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ images: collected }),
-          },
-        );
-        if (res.ok) {
-          const data = (await res.json()) as { images: PostImage[] };
-          setImages(data.images);
-        } else {
+        const saved = await persistImages([...base, ...collected]);
+        if (saved) setImages(saved);
+        else
           setError(
             "Bilder konnten nicht gespeichert werden. Bitte erneut versuchen.",
           );
-        }
       }
 
       const skipped = rejectedTotal + failedTotal;
@@ -205,26 +222,22 @@ export function PostEditor({
   }
 
   async function deleteImage(key: string) {
-    if (deleting) return;
+    if (deleting || uploading) return;
+    const before = images;
+    const removed = before.find((i) => i.key === key);
+    const next = before.filter((i) => i.key !== key);
     setDeleting(key);
     setError("");
-    try {
-      const res = await studioFetch(
-        `/api/studio/posts/${initialPost.id}/images?key=${encodeURIComponent(key)}`,
-        { method: "DELETE" },
-      );
-      if (res.ok) {
-        const data = (await res.json()) as { images: PostImage[] };
-        setImages(data.images);
-      } else {
-        const d = (await res.json().catch(() => ({}))) as { error?: string };
-        setError(d.error ?? "Bild konnte nicht gelöscht werden.");
-      }
-    } catch {
-      setError("Netzwerkfehler beim Löschen.");
-    } finally {
-      setDeleting(null);
+    setImages(next); // optimistisch
+    // Volle Restliste schreiben (nicht „ein Bild entfernen") → das Ergebnis hängt
+    // NICHT von einem veralteten Server-Read ab; die Anzahl stimmt garantiert.
+    const saved = await persistImages(next, removed ? [removed] : []);
+    if (saved) setImages(saved);
+    else {
+      setImages(before); // Rollback auf den Stand vor dem Löschen
+      setError("Bild konnte nicht gelöscht werden. Bitte erneut versuchen.");
     }
+    setDeleting(null);
   }
 
   function patchDraft(p: Partial<PostDraft>) {
@@ -245,7 +258,7 @@ export function PostEditor({
           holzart,
           moebeltyp,
           notiz,
-          selectedKeys: images.filter((i) => i.selected).map((i) => i.key),
+          images, // autoritative Bildliste inkl. Auswahl-Flags
           ...(draft ? { draft } : {}),
         }),
       });
