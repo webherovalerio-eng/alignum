@@ -13,20 +13,24 @@ const ENDPOINT = "https://api.anthropic.com/v1/messages";
 const OUTPUT_SCHEMA = {
   type: "object",
   properties: {
+    title: { type: "string" },
     metaTitle: { type: "string" },
     metaDescription: { type: "string" },
     intro: { type: "string" },
     body: { type: "string" },
     socialCaption: { type: "string" },
     hashtags: { type: "array", items: { type: "string" } },
+    slides: { type: "array", items: { type: "string" } },
   },
   required: [
+    "title",
     "metaTitle",
     "metaDescription",
     "intro",
     "body",
     "socialCaption",
     "hashtags",
+    "slides",
   ],
   additionalProperties: false,
 } as const;
@@ -52,13 +56,15 @@ REGELN:
 - Keine Preise, keine erfundenen Kundennamen, keine Garantie-Versprechen.
 
 AUSGABE-FELDER (als JSON):
+- title: Sprechender Seitentitel (H1), OHNE SEO-Zusatz/Pipe, z. B. „Fernsehschrank mit Vitrine aus Ahorn". Enthält den Möbeltyp; Ort optional.
 - metaTitle: SEO-Title, ca. 55–60 Zeichen, enthält Möbeltyp + Ort.
 - metaDescription: ca. 140–155 Zeichen, konkret, mit sanftem CTA.
 - intro: 1 Absatz (2–3 Sätze), packender Einstieg zum konkreten Projekt.
 - body: Markdown, ca. 350–600 Wörter, mit 2–3 Zwischenüberschriften (##). Struktur z. B.:
   Ausgangslage/Wunsch → Material & Handwerk (Holzart hervorheben) → Umsetzung/Lieferung & Montage in {ORT} → dezenter Abschluss.
 - socialCaption: Instagram-Text (ca. 80–150 Wörter), Hook in Zeile 1, danach kurze Projektgeschichte, am Ende dezenter CTA.
-- hashtags: 6–10 relevante Hashtags (Mischung aus Handwerk + Holzart + Region/Ort), ohne das #-Zeichen.`;
+- hashtags: 6–10 relevante Hashtags (Mischung aus Handwerk + Holzart + Region/Ort), ohne das #-Zeichen.
+- slides: 5 sehr kurze Overlay-Zeilen für ein Instagram-Carousel (je ≤ 6 Wörter, KEINE Hashtags, KEINE Satzzeichen am Ende). Reihenfolge: (1) Hook mit Möbeltyp + Ort, (2)–(4) Highlights zu Material/Handwerk/Detail, (5) CTA (z. B. „Jetzt Projekt anfragen").`;
 
 function userPrompt(input: {
   ortName: string;
@@ -117,6 +123,7 @@ export async function generateDraft(input: {
   }
 
   return {
+    title: String(parsed.title ?? "").slice(0, 120),
     metaTitle: String(parsed.metaTitle ?? "").slice(0, 120),
     metaDescription: String(parsed.metaDescription ?? "").slice(0, 300),
     intro: String(parsed.intro ?? ""),
@@ -124,6 +131,9 @@ export async function generateDraft(input: {
     socialCaption: String(parsed.socialCaption ?? ""),
     hashtags: Array.isArray(parsed.hashtags)
       ? parsed.hashtags.map((h) => String(h).replace(/^#/, "")).slice(0, 15)
+      : [],
+    slides: Array.isArray(parsed.slides)
+      ? parsed.slides.map((s) => String(s).slice(0, 120)).slice(0, 10)
       : [],
     generatedAt: Date.now(),
     model: GEN_MODEL,

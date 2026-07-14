@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/Button";
 import { studioFetch } from "@/studio/client";
 import { cn } from "@/lib/cn";
+import { DraftPreview } from "./DraftPreview";
 import type { Post, PostImage, PostStatus, PostDraft } from "@/studio/types";
 
 const HOLZ_OPTIONS = [
@@ -71,6 +72,7 @@ export function PostEditor({
   const [generating, setGenerating] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
+  const [draftView, setDraftView] = useState<"vorschau" | "felder">("vorschau");
 
   const editable = status === "neu" || status === "entwurf";
   const selectedCount = images.filter((i) => i.selected).length;
@@ -609,60 +611,113 @@ export function PostEditor({
         </div>
 
         {draft && (
-          <div className="space-y-4 rounded-[var(--radius-lg)] border border-border bg-card/50 p-4">
-            <Field label="Meta-Title (SEO)">
-              <input
-                value={draft.metaTitle}
-                onChange={(e) => patchDraft({ metaTitle: e.target.value })}
-                className="h-11 w-full rounded-[var(--radius)] border border-input bg-background px-3 text-sm text-foreground outline-none focus:border-primary"
+          <div className="space-y-4">
+            {/* Umschalter: Live-Vorschau ↔ reine Felder */}
+            <div className="inline-flex rounded-full border border-border bg-card/50 p-0.5 text-sm">
+              {(["vorschau", "felder"] as const).map((v) => (
+                <button
+                  key={v}
+                  type="button"
+                  onClick={() => setDraftView(v)}
+                  className={cn(
+                    "rounded-full px-3.5 py-1 capitalize transition-colors",
+                    draftView === v
+                      ? "bg-primary text-primary-foreground"
+                      : "text-muted-foreground hover:text-foreground",
+                  )}
+                >
+                  {v === "vorschau" ? "Vorschau" : "Felder"}
+                </button>
+              ))}
+            </div>
+
+            {/* SEO-Felder — stehen nicht sichtbar auf der Seite, daher immer als Feld */}
+            <div className="grid gap-3 rounded-[var(--radius-lg)] border border-border bg-card/50 p-4 sm:grid-cols-2">
+              <Field label="Meta-Title (SEO)">
+                <input
+                  value={draft.metaTitle}
+                  onChange={(e) => patchDraft({ metaTitle: e.target.value })}
+                  className="h-11 w-full rounded-[var(--radius)] border border-input bg-background px-3 text-sm text-foreground outline-none focus:border-primary"
+                />
+              </Field>
+              <Field label="Meta-Description (SEO)">
+                <textarea
+                  value={draft.metaDescription}
+                  onChange={(e) => patchDraft({ metaDescription: e.target.value })}
+                  rows={2}
+                  className="w-full rounded-[var(--radius)] border border-input bg-background p-3 text-sm text-foreground outline-none focus:border-primary"
+                />
+              </Field>
+            </div>
+
+            {draftView === "vorschau" ? (
+              <DraftPreview
+                draft={draft}
+                patch={patchDraft}
+                images={images.filter((i) => i.selected)}
+                ortName={ortNameFor(slugForOrt(ortName)) || ortName}
+                holzart={holzart}
+                moebeltyp={moebeltyp}
               />
-            </Field>
-            <Field label="Meta-Description (SEO)">
-              <textarea
-                value={draft.metaDescription}
-                onChange={(e) => patchDraft({ metaDescription: e.target.value })}
-                rows={2}
-                className="w-full rounded-[var(--radius)] border border-input bg-background p-3 text-sm text-foreground outline-none focus:border-primary"
-              />
-            </Field>
-            <Field label="Einleitung">
-              <textarea
-                value={draft.intro}
-                onChange={(e) => patchDraft({ intro: e.target.value })}
-                rows={3}
-                className="w-full rounded-[var(--radius)] border border-input bg-background p-3 text-sm text-foreground outline-none focus:border-primary"
-              />
-            </Field>
-            <Field label="Projekt-Text (Markdown)">
-              <textarea
-                value={draft.body}
-                onChange={(e) => patchDraft({ body: e.target.value })}
-                rows={12}
-                className="w-full rounded-[var(--radius)] border border-input bg-background p-3 font-mono text-sm text-foreground outline-none focus:border-primary"
-              />
-            </Field>
-            <Field label="Social-Media-Post">
-              <textarea
-                value={draft.socialCaption}
-                onChange={(e) => patchDraft({ socialCaption: e.target.value })}
-                rows={6}
-                className="w-full rounded-[var(--radius)] border border-input bg-background p-3 text-sm text-foreground outline-none focus:border-primary"
-              />
-            </Field>
-            <Field label="Hashtags (mit Leerzeichen getrennt)">
-              <input
-                value={draft.hashtags.join(" ")}
-                onChange={(e) =>
-                  patchDraft({
-                    hashtags: e.target.value
-                      .split(/[\s,]+/)
-                      .map((h) => h.replace(/^#/, ""))
-                      .filter(Boolean),
-                  })
-                }
-                className="h-11 w-full rounded-[var(--radius)] border border-input bg-background px-3 text-sm text-foreground outline-none focus:border-primary"
-              />
-            </Field>
+            ) : (
+              <div className="space-y-4 rounded-[var(--radius-lg)] border border-border bg-card/50 p-4">
+                <Field label="Seitentitel (H1)">
+                  <input
+                    value={draft.title ?? ""}
+                    onChange={(e) => patchDraft({ title: e.target.value })}
+                    className="h-11 w-full rounded-[var(--radius)] border border-input bg-background px-3 text-sm text-foreground outline-none focus:border-primary"
+                  />
+                </Field>
+                <Field label="Einleitung">
+                  <textarea
+                    value={draft.intro}
+                    onChange={(e) => patchDraft({ intro: e.target.value })}
+                    rows={3}
+                    className="w-full rounded-[var(--radius)] border border-input bg-background p-3 text-sm text-foreground outline-none focus:border-primary"
+                  />
+                </Field>
+                <Field label="Projekt-Text (Markdown)">
+                  <textarea
+                    value={draft.body}
+                    onChange={(e) => patchDraft({ body: e.target.value })}
+                    rows={12}
+                    className="w-full rounded-[var(--radius)] border border-input bg-background p-3 font-mono text-sm text-foreground outline-none focus:border-primary"
+                  />
+                </Field>
+                <Field label="Carousel-Slides (eine Zeile pro Slide)">
+                  <textarea
+                    value={(draft.slides ?? []).join("\n")}
+                    onChange={(e) =>
+                      patchDraft({ slides: e.target.value.split("\n") })
+                    }
+                    rows={5}
+                    className="w-full rounded-[var(--radius)] border border-input bg-background p-3 text-sm text-foreground outline-none focus:border-primary"
+                  />
+                </Field>
+                <Field label="Social-Media-Post">
+                  <textarea
+                    value={draft.socialCaption}
+                    onChange={(e) => patchDraft({ socialCaption: e.target.value })}
+                    rows={6}
+                    className="w-full rounded-[var(--radius)] border border-input bg-background p-3 text-sm text-foreground outline-none focus:border-primary"
+                  />
+                </Field>
+                <Field label="Hashtags (mit Leerzeichen getrennt)">
+                  <input
+                    value={draft.hashtags.join(" ")}
+                    onChange={(e) =>
+                      patchDraft({
+                        hashtags: e.target.value
+                          .split(/[\s,]+/)
+                          .map((h) => h.replace(/^#/, ""))
+                          .filter(Boolean),
+                      })
+                    }
+                    className="h-11 w-full rounded-[var(--radius)] border border-input bg-background px-3 text-sm text-foreground outline-none focus:border-primary"
+                  />
+                </Field>
+              </div>
+            )}
           </div>
         )}
       </section>

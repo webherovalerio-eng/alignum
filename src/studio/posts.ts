@@ -311,6 +311,7 @@ export function sanitizeDraft(
   const s = (x: unknown, max: number) =>
     typeof x === "string" ? x.slice(0, max) : "";
   return {
+    title: s(d.title, 120),
     metaTitle: s(d.metaTitle, 120),
     metaDescription: s(d.metaDescription, 300),
     intro: s(d.intro, 2000),
@@ -319,6 +320,9 @@ export function sanitizeDraft(
     hashtags: Array.isArray(d.hashtags)
       ? d.hashtags.map((h) => String(h).replace(/^#/, "").slice(0, 60)).slice(0, 15)
       : [],
+    slides: Array.isArray(d.slides)
+      ? d.slides.map((x) => String(x).slice(0, 120)).slice(0, 10)
+      : (existing?.slides ?? []),
     generatedAt: existing?.generatedAt ?? Date.now(),
     model: existing?.model ?? "",
   };

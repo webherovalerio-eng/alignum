@@ -20,12 +20,16 @@ export interface PostImage {
 
 /** KI-generierter Entwurf (Projekt-/Supporting-Content + Social-Post). */
 export interface PostDraft {
+  /** Sprechender Seitentitel (H1), ohne SEO-Zusatz. */
+  title?: string;
   metaTitle: string;
   metaDescription: string;
   intro: string;
   body: string; // Markdown
   socialCaption: string;
   hashtags: string[];
+  /** Kurze Overlay-Texte für die Carousel-Slides (je 1 Zeile). */
+  slides?: string[];
   generatedAt: number;
   model: string;
 }
