@@ -314,15 +314,16 @@ export function sanitizeDraft(
     title: s(d.title, 120),
     metaTitle: s(d.metaTitle, 120),
     metaDescription: s(d.metaDescription, 300),
-    intro: s(d.intro, 2000),
+    // Fallback auf altes `intro`-Feld, damit Alt-Entwürfe beim Speichern nicht ihren Lead verlieren.
+    summary: s(d.summary, 2000) || s(d.intro, 2000),
     body: s(d.body, 20000),
+    features: Array.isArray(d.features)
+      ? d.features.map((x) => String(x).slice(0, 120)).slice(0, 8)
+      : (existing?.features ?? []),
     socialCaption: s(d.socialCaption, 4000),
     hashtags: Array.isArray(d.hashtags)
       ? d.hashtags.map((h) => String(h).replace(/^#/, "").slice(0, 60)).slice(0, 15)
       : [],
-    slides: Array.isArray(d.slides)
-      ? d.slides.map((x) => String(x).slice(0, 120)).slice(0, 10)
-      : (existing?.slides ?? []),
     generatedAt: existing?.generatedAt ?? Date.now(),
     model: existing?.model ?? "",
   };

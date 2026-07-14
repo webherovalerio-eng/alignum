@@ -18,18 +18,29 @@ export interface PostImage {
   selected: boolean; // von Jan als „passend" markiert
 }
 
-/** KI-generierter Entwurf (Projekt-/Supporting-Content + Social-Post). */
+/**
+ * KI-generierter Entwurf (Projekt-Referenz + Social-Post). Struktur folgt dem
+ * `alignum-projects`-Skill / dem echten `Project`-Datensatz:
+ *  – `summary` = Card-/Lead-Text, `body` = 4 saubere Absätze (Kontext → Lösung →
+ *    Holz → Prozess, durch Leerzeile getrennt, KEINE Überschriften),
+ *  – `features` = 4–6 Bullets „Was wir gebaut haben".
+ * Das Carousel wird daraus datengetrieben abgeleitet (feste 6 Slides).
+ */
 export interface PostDraft {
   /** Sprechender Seitentitel (H1), ohne SEO-Zusatz. */
   title?: string;
   metaTitle: string;
   metaDescription: string;
-  intro: string;
-  body: string; // Markdown
+  /** Card-/Lead-Text unter der H1. */
+  summary?: string;
+  /** @deprecated alte Entwürfe — durch `summary` ersetzt. */
+  intro?: string;
+  /** 4 Absätze, durch Leerzeile getrennt (Kontext/Lösung/Holz/Prozess). */
+  body: string;
+  /** 4–6 Bullets „Was wir gebaut haben". */
+  features?: string[];
   socialCaption: string;
   hashtags: string[];
-  /** Kurze Overlay-Texte für die Carousel-Slides (je 1 Zeile). */
-  slides?: string[];
   generatedAt: number;
   model: string;
 }

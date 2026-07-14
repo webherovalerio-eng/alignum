@@ -16,21 +16,21 @@ const OUTPUT_SCHEMA = {
     title: { type: "string" },
     metaTitle: { type: "string" },
     metaDescription: { type: "string" },
-    intro: { type: "string" },
+    summary: { type: "string" },
     body: { type: "string" },
+    features: { type: "array", items: { type: "string" } },
     socialCaption: { type: "string" },
     hashtags: { type: "array", items: { type: "string" } },
-    slides: { type: "array", items: { type: "string" } },
   },
   required: [
     "title",
     "metaTitle",
     "metaDescription",
-    "intro",
+    "summary",
     "body",
+    "features",
     "socialCaption",
     "hashtags",
-    "slides",
   ],
   additionalProperties: false,
 } as const;
@@ -43,28 +43,26 @@ FAKTEN ÜBER ALIGNUM (nur diese verwenden, nichts erfinden):
 - Handwerkliche Premium-Möbel nach Maß: Küchen, Einbauschränke, Büromöbel, Badmöbel, Treppen, Türen, Betten, Shoji.
 - Positionierung: hochwertig, ehrlich, präzise, zeitlos. Kein Marktschreier-Ton, keine Superlativ-Flut.
 
-AUFGABE: Aus dem Projekt-Brief einen deutschen Supporting-Content-Text (Projekt-Referenz) erzeugen,
-der die City-Page der Zielstadt für Local SEO stärkt, PLUS einen Instagram-Post.
+AUFGABE: Aus dem Projekt-Brief einen deutschen Projekt-Referenz-Eintrag im FESTEN
+Alignum-Format erzeugen (wie die bestehenden Projekt-Detailseiten), der die City-Page
+der Zielstadt für Local SEO stärkt, PLUS einen Instagram-Post.
 
 REGELN:
-- Anrede: „Sie" (formell). Deutsch.
-- WICHTIG: Formuliere die regionale Nähe korrekt — Alignum kommt AUS Edingen-Neckarhausen und
-  liefert/montiert in {ORT}. NIEMALS behaupten, es gäbe eine Werkstatt/Filiale in {ORT}.
-- Local-SEO: die Kombinationen „{MÖBELTYP} {ORT}", „Schreinerei {ORT}", „{MÖBELTYP} nach Maß"
-  natürlich einbauen — kein Keyword-Stuffing.
-- Nur belegbare Aussagen. Der Brief (Notiz) ist die Faktenbasis; nichts dazuerfinden.
-- Keine Preise, keine erfundenen Kundennamen, keine Garantie-Versprechen.
+- Anrede: „Sie" (formell). Deutsch. Ton: schreinermeister-stolz, fachlich präzise, für Laien verständlich. Keine Werbe-Phrasen, keine Superlative.
+- WICHTIG: Regionale Nähe korrekt — Alignum kommt AUS Edingen-Neckarhausen und liefert/montiert in {ORT}. NIEMALS eine Werkstatt/Filiale in {ORT} behaupten.
+- Local-SEO: „{MÖBELTYP} {ORT}", „Schreinerei {ORT}", „{MÖBELTYP} nach Maß" natürlich einbauen — kein Keyword-Stuffing.
+- Nur belegbare Aussagen. Der Brief (Notiz) ist die Faktenbasis; nichts dazuerfinden. Keine Preise, keine erfundenen Kundennamen, keine Garantie-Versprechen.
 
 AUSGABE-FELDER (als JSON):
-- title: Sprechender Seitentitel (H1), OHNE SEO-Zusatz/Pipe, z. B. „Fernsehschrank mit Vitrine aus Ahorn". Enthält den Möbeltyp; Ort optional.
-- metaTitle: SEO-Title, ca. 55–60 Zeichen, enthält Möbeltyp + Ort.
-- metaDescription: ca. 140–155 Zeichen, konkret, mit sanftem CTA.
-- intro: 1 Absatz (2–3 Sätze), packender Einstieg zum konkreten Projekt.
-- body: Markdown, ca. 350–600 Wörter, mit 2–3 Zwischenüberschriften (##). Struktur z. B.:
-  Ausgangslage/Wunsch → Material & Handwerk (Holzart hervorheben) → Umsetzung/Lieferung & Montage in {ORT} → dezenter Abschluss.
+- title: Sprechender Seitentitel (H1), OHNE SEO-Zusatz/Pipe, z. B. „Fernsehschrank mit Vitrine aus Ahorn". Enthält den Möbeltyp.
+- metaTitle: max 60 Zeichen, Reihenfolge Möbeltyp + Ort + Holzart + Marke „Alignum".
+- metaDescription: max 155 Zeichen, konkret, sinngemäß „… nach Maß gefertigt für einen Kunden in {ORT}." mit sanftem CTA.
+- summary: 1–2 Sätze Card-/Lead-Text unter der H1 — packend, nennt Möbeltyp + {ORT}.
+- body: GENAU 4 Absätze, durch EINE Leerzeile getrennt, KEINE Überschriften, KEIN Markdown. Reihenfolge fix:
+  (1) Kontext: Kunde/Raum/Stadt, Ausgangslage. (2) Lösung: was gebaut, Aussehen, Materialien. (3) Holz-Story: warum {HOLZART}, Eigenschaften/Charakter. (4) Prozess: Aufmaß → Fertigung in Edingen-Neckarhausen → Lieferung & Montage in {ORT}, realistische Zeitangabe.
+- features: 4–6 sehr kurze Bullets „Was wir gebaut haben" (konkrete Bauteile/Eigenschaften, je ≤ 8 Wörter, KEINE Satzzeichen am Ende).
 - socialCaption: Instagram-Text (ca. 80–150 Wörter), Hook in Zeile 1, danach kurze Projektgeschichte, am Ende dezenter CTA.
-- hashtags: 6–10 relevante Hashtags (Mischung aus Handwerk + Holzart + Region/Ort), ohne das #-Zeichen.
-- slides: 5 sehr kurze Overlay-Zeilen für ein Instagram-Carousel (je ≤ 6 Wörter, KEINE Hashtags, KEINE Satzzeichen am Ende). Reihenfolge: (1) Hook mit Möbeltyp + Ort, (2)–(4) Highlights zu Material/Handwerk/Detail, (5) CTA (z. B. „Jetzt Projekt anfragen").`;
+- hashtags: 6–10 relevante Hashtags (Handwerk + Holzart + Region/Ort), ohne das #-Zeichen.`;
 
 function userPrompt(input: {
   ortName: string;
@@ -126,14 +124,14 @@ export async function generateDraft(input: {
     title: String(parsed.title ?? "").slice(0, 120),
     metaTitle: String(parsed.metaTitle ?? "").slice(0, 120),
     metaDescription: String(parsed.metaDescription ?? "").slice(0, 300),
-    intro: String(parsed.intro ?? ""),
+    summary: String(parsed.summary ?? ""),
     body: String(parsed.body ?? ""),
+    features: Array.isArray(parsed.features)
+      ? parsed.features.map((f) => String(f).slice(0, 120)).slice(0, 8)
+      : [],
     socialCaption: String(parsed.socialCaption ?? ""),
     hashtags: Array.isArray(parsed.hashtags)
       ? parsed.hashtags.map((h) => String(h).replace(/^#/, "")).slice(0, 15)
-      : [],
-    slides: Array.isArray(parsed.slides)
-      ? parsed.slides.map((s) => String(s).slice(0, 120)).slice(0, 10)
       : [],
     generatedAt: Date.now(),
     model: GEN_MODEL,

@@ -668,27 +668,32 @@ export function PostEditor({
                     className="h-11 w-full rounded-[var(--radius)] border border-input bg-background px-3 text-sm text-foreground outline-none focus:border-primary"
                   />
                 </Field>
-                <Field label="Einleitung">
+                <Field label="Lead / Kurzbeschreibung">
                   <textarea
-                    value={draft.intro}
-                    onChange={(e) => patchDraft({ intro: e.target.value })}
+                    value={draft.summary ?? draft.intro ?? ""}
+                    onChange={(e) => patchDraft({ summary: e.target.value })}
                     rows={3}
                     className="w-full rounded-[var(--radius)] border border-input bg-background p-3 text-sm text-foreground outline-none focus:border-primary"
                   />
                 </Field>
-                <Field label="Projekt-Text (Markdown)">
+                <Field label="Projekt-Text (4 Absätze, durch Leerzeile getrennt)">
                   <textarea
                     value={draft.body}
                     onChange={(e) => patchDraft({ body: e.target.value })}
                     rows={12}
-                    className="w-full rounded-[var(--radius)] border border-input bg-background p-3 font-mono text-sm text-foreground outline-none focus:border-primary"
+                    className="w-full rounded-[var(--radius)] border border-input bg-background p-3 text-sm text-foreground outline-none focus:border-primary"
                   />
                 </Field>
-                <Field label="Carousel-Slides (eine Zeile pro Slide)">
+                <Field label="Was wir gebaut haben (ein Punkt pro Zeile)">
                   <textarea
-                    value={(draft.slides ?? []).join("\n")}
+                    value={(draft.features ?? []).join("\n")}
                     onChange={(e) =>
-                      patchDraft({ slides: e.target.value.split("\n") })
+                      patchDraft({
+                        features: e.target.value
+                          .split("\n")
+                          .map((f) => f.trim())
+                          .filter(Boolean),
+                      })
                     }
                     rows={5}
                     className="w-full rounded-[var(--radius)] border border-input bg-background p-3 text-sm text-foreground outline-none focus:border-primary"
@@ -846,7 +851,9 @@ function DraftView({ draft }: { draft: PostDraft }) {
             Kopieren
           </button>
         </div>
-        <p className="text-sm font-medium text-foreground">{draft.intro}</p>
+        <p className="text-sm font-medium text-foreground">
+          {draft.summary ?? draft.intro}
+        </p>
         <pre className="mt-3 whitespace-pre-wrap font-sans text-sm text-muted-foreground">
           {draft.body}
         </pre>
