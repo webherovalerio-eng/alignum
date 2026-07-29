@@ -2,6 +2,7 @@ import Link from "next/link";
 import { listPosts } from "@/studio/posts";
 import { NewPostButton } from "./NewPostButton";
 import { StatusBadge } from "./StatusBadge";
+import { DeletePostButton } from "./DeletePostButton";
 
 export const dynamic = "force-dynamic";
 
@@ -33,10 +34,13 @@ export default async function StudioHome() {
             const cover = p.images.find((i) => i.selected) ?? p.images[0];
             const selectedCount = p.images.filter((i) => i.selected).length;
             return (
-              <li key={p.id}>
+              <li
+                key={p.id}
+                className="flex items-center gap-2 rounded-[var(--radius-lg)] border border-border bg-card transition-colors hover:border-primary"
+              >
                 <Link
                   href={`/studio/${p.id}`}
-                  className="flex items-center gap-4 rounded-[var(--radius-lg)] border border-border bg-card p-3 transition-colors hover:border-primary"
+                  className="flex min-w-0 flex-1 items-center gap-4 p-3"
                 >
                   <div className="h-16 w-16 shrink-0 overflow-hidden rounded-[var(--radius)] bg-muted">
                     {cover ? (
@@ -59,8 +63,14 @@ export default async function StudioHome() {
                       {new Date(p.createdAt).toLocaleDateString("de-DE")}
                     </p>
                   </div>
-                  <StatusBadge status={p.status} />
                 </Link>
+                <div className="flex shrink-0 items-center gap-1 pr-3">
+                  <StatusBadge status={p.status} />
+                  <DeletePostButton
+                    id={p.id}
+                    label={`${p.moebeltyp || "Ohne Titel"}${p.ortName ? ` · ${p.ortName}` : ""}`}
+                  />
+                </div>
               </li>
             );
           })}

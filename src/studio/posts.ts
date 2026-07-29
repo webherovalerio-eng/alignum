@@ -56,6 +56,7 @@ export async function createPost(email: string): Promise<Post> {
     holzart: "",
     moebeltyp: "",
     notiz: "",
+    regie: "",
     images: [],
   };
   await kvSetJSON(postKey(id), post);
@@ -261,6 +262,7 @@ export interface PostPatch {
   holzart?: string;
   moebeltyp?: string;
   notiz?: string;
+  regie?: string;
   /** Autoritative Bildliste (inkl. Auswahl-Flags) — 1:1 vom Client. */
   images?: unknown[];
   draft?: PostDraft;
@@ -273,6 +275,7 @@ export async function updatePost(post: Post, patch: PostPatch): Promise<Post> {
   if (patch.moebeltyp !== undefined)
     post.moebeltyp = patch.moebeltyp.slice(0, FIELD.moebeltyp);
   if (patch.notiz !== undefined) post.notiz = patch.notiz.slice(0, FIELD.notiz);
+  if (patch.regie !== undefined) post.regie = patch.regie.slice(0, FIELD.regie);
   // Bildliste ist client-autoritativ → 1:1 übernehmen (kein Read-Modify-Write).
   if (patch.images !== undefined)
     post.images = validateImages(post.id, patch.images);
@@ -297,6 +300,8 @@ export function applyBrief(post: Post, body: Record<string, unknown>): void {
     post.moebeltyp = (body.moebeltyp as string).slice(0, FIELD.moebeltyp);
   if (s(body.notiz) !== undefined)
     post.notiz = (body.notiz as string).slice(0, FIELD.notiz);
+  if (s(body.regie) !== undefined)
+    post.regie = (body.regie as string).slice(0, FIELD.regie);
   if (Array.isArray(body.images))
     post.images = validateImages(post.id, body.images);
 }

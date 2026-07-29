@@ -103,6 +103,7 @@ export const UPLOAD = {
 // --- Textfeld-Limits (Injection/DoS) --------------------------------------
 export const FIELD = {
   notiz: 4000,
+  regie: 2000,
   holzart: 80,
   moebeltyp: 80,
   ort: 120,

@@ -59,6 +59,7 @@ export function PostEditor({
   const [holzart, setHolzart] = useState(initialPost.holzart);
   const [moebeltyp, setMoebeltyp] = useState(initialPost.moebeltyp);
   const [notiz, setNotiz] = useState(initialPost.notiz);
+  const [regie, setRegie] = useState(initialPost.regie ?? "");
   const [status, setStatus] = useState<PostStatus>(initialPost.status);
   const [draft, setDraft] = useState<PostDraft | null>(initialPost.draft ?? null);
   const [remaining, setRemaining] = useState(initialUsage.remaining);
@@ -106,6 +107,7 @@ export function PostEditor({
       holzart,
       moebeltyp,
       notiz,
+      regie,
       images,
     };
   }
@@ -373,9 +375,37 @@ export function PostEditor({
           <h1 className="font-display mt-1 text-xl text-foreground">
             {moebeltyp} · {ortName || initialPost.ortName}
           </h1>
+          <p className="mt-2 text-sm text-muted-foreground">
+            So sieht das Endresultat aus – Projektseite und das Instagram-Carousel.
+          </p>
         </div>
+
+        {/* Endresultat: visuelle Vorschau (Projektseite + 6-Slide-Carousel) */}
+        {draft && (
+          <DraftPreview
+            draft={draft}
+            patch={() => {}}
+            images={images.filter((i) => i.selected)}
+            ortName={ortName || initialPost.ortName}
+            holzart={holzart}
+            moebeltyp={moebeltyp}
+            readOnly
+          />
+        )}
+
+        {/* Text zum Kopieren (Caption + Hashtags fürs Posten) */}
         {draft && <DraftView draft={draft} />}
+
         <ImageGallery images={images.filter((i) => i.selected)} />
+
+        <div className="flex justify-end border-t border-border pt-6">
+          <button
+            onClick={remove}
+            className="text-sm text-muted-foreground transition-colors hover:text-destructive"
+          >
+            Beitrag löschen
+          </button>
+        </div>
       </div>
     );
   }
@@ -577,6 +607,22 @@ export function PostEditor({
             placeholder="Ein paar Sätze zum Projekt – Kontext, Besonderheiten, Kundenwunsch …"
             className="w-full rounded-[var(--radius)] border border-input bg-background p-3 text-sm text-foreground outline-none focus:border-primary"
           />
+        </Field>
+        <Field label="Anweisungen an die Redaktion (Bilder & Aufbereitung)">
+          <textarea
+            value={regie}
+            onChange={(e) => {
+              setRegie(e.target.value);
+              markDirty();
+            }}
+            rows={3}
+            placeholder="z. B. „Bild 2 größer zeigen · Bild 3 austauschen · das Detail vom Griff als Cover“"
+            className="w-full rounded-[var(--radius)] border border-input bg-background p-3 text-sm text-foreground outline-none focus:border-primary"
+          />
+          <p className="mt-1.5 text-xs text-muted-foreground">
+            Konkrete Wünsche zu Bildern, Reihenfolge oder Layout. Landet im Brief
+            an die Generierung – nicht im veröffentlichten Text.
+          </p>
         </Field>
       </section>
 

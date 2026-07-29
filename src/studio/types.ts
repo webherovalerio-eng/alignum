@@ -56,7 +56,14 @@ export interface Post {
   ortName: string; // Anzeigename, z. B. "Mannheim"
   holzart: string; // z. B. "Eiche"
   moebeltyp: string; // z. B. "Einbauschrank"
-  notiz: string; // Freitext von Jan
+  notiz: string; // Freitext von Jan — Kontext/Besonderheiten des Projekts
+  /**
+   * Regie-Anweisungen an die Redaktion/Generierung, z. B. „Bild 2 größer,
+   * Bild 3 austauschen". Getrennt von `notiz` (Projektkontext), weil es die
+   * Aufbereitung steuert, nicht den Inhalt. Fließt über studio-pull in den
+   * Brief, den der alignum-projects-Skill liest. Optional für Alt-Posts aus KV.
+   */
+  regie?: string;
   images: PostImage[];
   /** Liegt vor, sobald generiert wurde. Von Jan editierbar. */
   draft?: PostDraft;

@@ -20,6 +20,7 @@ export function DraftPreview({
   ortName,
   holzart,
   moebeltyp,
+  readOnly = false,
 }: {
   draft: PostDraft;
   patch: (p: Partial<PostDraft>) => void;
@@ -27,6 +28,8 @@ export function DraftPreview({
   ortName: string;
   holzart: string;
   moebeltyp: string;
+  /** Freigegebene Ansicht: Slides/Projektseite nur anzeigen, nicht editieren. */
+  readOnly?: boolean;
 }) {
   const title = draft.title?.trim() || moebeltyp || draft.metaTitle;
   const lead = draft.summary ?? draft.intro ?? "";
@@ -54,7 +57,9 @@ export function DraftPreview({
       {/* ─────────────── Projektseite (Vorschau) ─────────────── */}
       <section className="overflow-hidden rounded-[var(--radius-lg)] border border-border bg-background">
         <div className="border-b border-border bg-card/60 px-4 py-2 text-xs text-muted-foreground">
-          Vorschau · so erscheint das Projekt auf der Website · Texte anklicken zum Bearbeiten
+          {readOnly
+            ? "Vorschau · so erscheint das Projekt auf der Website"
+            : "Vorschau · so erscheint das Projekt auf der Website · Texte anklicken zum Bearbeiten"}
         </div>
 
         <div className="mx-auto max-w-2xl px-5 py-8 sm:px-8 sm:py-10">
@@ -66,6 +71,7 @@ export function DraftPreview({
           <AutoTextarea
             value={title}
             onChange={(v) => patch({ title: v })}
+            readOnly={readOnly}
             placeholder="Projekttitel …"
             className="font-display text-[clamp(1.8rem,4vw,2.75rem)] font-semibold leading-[1.1] tracking-tight text-foreground"
           />
@@ -74,6 +80,7 @@ export function DraftPreview({
             <AutoTextarea
               value={lead}
               onChange={(v) => patch({ summary: v })}
+              readOnly={readOnly}
               placeholder="Lead / Kurzbeschreibung …"
               className="text-lg leading-relaxed text-muted-foreground"
             />
@@ -116,6 +123,7 @@ export function DraftPreview({
                 key={i}
                 value={p}
                 onChange={(v) => setPara(i, v)}
+                readOnly={readOnly}
                 placeholder={i === 0 ? "Erster Absatz …" : "Absatz …"}
                 className={
                   i === 0
@@ -140,27 +148,32 @@ export function DraftPreview({
                   <AutoTextarea
                     value={f}
                     onChange={(v) => setFeature(i, v)}
+                    readOnly={readOnly}
                     placeholder="Bauteil / Eigenschaft …"
                     className="text-foreground/90"
                   />
-                  <button
-                    type="button"
-                    onClick={() => removeFeature(i)}
-                    aria-label="Punkt entfernen"
-                    className="mt-1 text-muted-foreground transition-colors hover:text-destructive"
-                  >
-                    ×
-                  </button>
+                  {!readOnly && (
+                    <button
+                      type="button"
+                      onClick={() => removeFeature(i)}
+                      aria-label="Punkt entfernen"
+                      className="mt-1 text-muted-foreground transition-colors hover:text-destructive"
+                    >
+                      ×
+                    </button>
+                  )}
                 </li>
               ))}
             </ul>
-            <button
-              type="button"
-              onClick={addFeature}
-              className="mt-2 text-xs text-primary hover:underline"
-            >
-              + Punkt hinzufügen
-            </button>
+            {!readOnly && (
+              <button
+                type="button"
+                onClick={addFeature}
+                className="mt-2 text-xs text-primary hover:underline"
+              >
+                + Punkt hinzufügen
+              </button>
+            )}
           </div>
 
           {/* Galerie */}
@@ -204,7 +217,8 @@ export function DraftPreview({
           <SlideCta n={6} />
         </div>
 
-        {/* Editier-Box: Slide-Texte + Caption + Hashtags */}
+        {/* Editier-Box: Slide-Texte + Caption + Hashtags — nur im Bearbeiten-Modus */}
+        {!readOnly && (
         <div className="space-y-4 rounded-[var(--radius-lg)] border border-border bg-card/50 p-4">
           <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
             Texte auf den Slides
@@ -264,6 +278,7 @@ export function DraftPreview({
             )}
           </label>
         </div>
+        )}
       </section>
     </div>
   );
@@ -412,11 +427,13 @@ function AutoTextarea({
   onChange,
   className,
   placeholder,
+  readOnly = false,
 }: {
   value: string;
   onChange: (v: string) => void;
   className?: string;
   placeholder?: string;
+  readOnly?: boolean;
 }) {
   const ref = useRef<HTMLTextAreaElement>(null);
   useEffect(() => {
@@ -432,8 +449,10 @@ function AutoTextarea({
       onChange={(e) => onChange(e.target.value)}
       placeholder={placeholder}
       rows={1}
+      readOnly={readOnly}
       className={cn(
         "block w-full resize-none overflow-hidden bg-transparent outline-none placeholder:text-muted-foreground/50",
+        readOnly && "cursor-default select-text",
         className,
       )}
     />

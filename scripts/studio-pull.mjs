@@ -42,6 +42,9 @@ function briefText(post) {
     `## Notiz von Jan`,
     post.notiz || "(keine)",
     ``,
+    `## Regie-Anweisungen an die Redaktion`,
+    post.regie || "(keine)",
+    ``,
     `## Ausgewählte Bilder`,
     ...post.images.filter((i) => i.selected).map((i) => `- ${i.filename}`),
   ].join("\n");
