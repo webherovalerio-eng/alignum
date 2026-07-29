@@ -6,7 +6,6 @@ import { CitySecretSauce } from "@/components/sections/CitySecretSauce";
 import { ReferenceProjects } from "@/components/sections/ReferenceProjects";
 import { ProjectsByCity } from "@/components/sections/ProjectsByCity";
 import { MeetJan } from "@/components/sections/MeetJan";
-import { ServicesGrid } from "@/components/sections/ServicesGrid";
 import { Materials } from "@/components/sections/Materials";
 import { Reviews } from "@/components/sections/Reviews";
 import { FAQ } from "@/components/sections/FAQ";
@@ -88,8 +87,11 @@ export default async function CityPage({ params }: { params: Promise<{ citySlug:
       {/* 4. Was Kunden sagen — Social Proof */}
       <Reviews />
 
-      {/* 5. Unser Handwerk — Services */}
-      <ServicesGrid />
+      {/* 5. (ServicesGrid bewusst entfernt) — die 12 generischen Service-Links
+             lagen identisch auf allen 89 City-Pages und haben zusammen mit den
+             kuratierten Chips am Seitenende 20 Service-Links pro Stadt erzeugt.
+             Die Chips unten sind stadtspezifisch formuliert und ersetzen den
+             Grid navigatorisch vollständig. */}
 
       {/* 6. Vier Schritte — wie wir arbeiten */}
       <WerkstattZuIhnen city={city} />

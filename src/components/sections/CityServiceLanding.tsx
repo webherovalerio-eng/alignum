@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ChevronRight, Check, MapPin, ArrowRight, ArrowUpRight } from "lucide-react";
+import { Check, MapPin, ArrowRight, ArrowUpRight } from "lucide-react";
 import { Reveal, MaskWords } from "@/components/ui/Reveal";
 import { Badge } from "@/components/ui/Badge";
 import { LinkButton } from "@/components/ui/Button";
@@ -69,18 +69,6 @@ export function CityServiceLanding({ city, combo }: { city: City; combo: CitySer
         <div aria-hidden className="absolute inset-x-0 bottom-0 -z-10 h-1/2 scrim-bottom" />
 
         <div className="relative z-10 container-prose pt-36 pb-16 min-h-[78svh] flex flex-col justify-end text-white">
-          {/* Breadcrumb */}
-          <nav
-            aria-label="Breadcrumb"
-            className="mb-6 text-sm text-white/80 flex flex-wrap items-center gap-1.5"
-          >
-            <Link href="/" className="hover:text-primary">Start</Link>
-            <ChevronRight className="size-3.5" />
-            <Link href={`/${city.slug}/`} className="hover:text-primary">Schreinerei {city.name}</Link>
-            <ChevronRight className="size-3.5" />
-            <span className="text-white">{combo.h1}</span>
-          </nav>
-
           <Badge variant="outline" className="self-start mb-5 border-white/30 bg-black/30 text-white backdrop-blur-sm">
             <span className="size-1.5 rounded-full bg-primary" />
             Werkstatt in {SITE.address.city} · für {city.name}
@@ -133,6 +121,25 @@ export function CityServiceLanding({ city, combo }: { city: City; combo: CitySer
                 </p>
               </Reveal>
             )}
+
+            {/* Kontextueller Aufwärts-Link zur City-Page (statt Breadcrumb).
+                Die City-Page ist das Zentrum des Silos — jede Unterseite muss
+                sichtbar im Fließtext dorthin zurückverlinken, sonst trägt die
+                Hierarchie keine Link-Equity nach oben. */}
+            <Reveal delay={0.15}>
+              <p className="text-base sm:text-lg leading-relaxed text-foreground/85">
+                {combo.h1} ist eine von mehreren Leistungen, die wir für {city.name}{" "}
+                fertigen. Einen Überblick über unsere Arbeit vor Ort – Referenzen,
+                Ablauf und Anfahrt – finden Sie auf{" "}
+                <Link
+                  href={`/${city.slug}/`}
+                  className="text-primary underline-grain font-medium"
+                >
+                  unserer Seite zur Schreinerei {city.name}
+                </Link>
+                .
+              </p>
+            </Reveal>
           </div>
 
           {/* Features */}

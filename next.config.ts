@@ -46,6 +46,21 @@ const nextConfig: NextConfig = {
   async headers() {
     return [{ source: "/(.*)", headers: securityHeaders }];
   },
+  /**
+   * Legacy-URLs der alten WordPress-Seite (aus dem Export vom 2026-04-29).
+   * Die City-URLs `/schreinerei-{stadt}/` wurden 1:1 übernommen, diese fünf
+   * nicht — sie liefen seit dem Relaunch auf 404 und verlieren damit ihre
+   * Historie. 308 (permanent), damit Index und Bestandslinks übergehen.
+   */
+  async redirects() {
+    return [
+      { source: "/treppenbau", destination: "/schreinerei-in-meiner-naehe/treppenbau-in-der-nahe/", permanent: true },
+      { source: "/alignum-art", destination: "/schreinerei-in-meiner-naehe/alignum-art/", permanent: true },
+      { source: "/services", destination: "/schreinerei-in-meiner-naehe/", permanent: true },
+      { source: "/contact", destination: "/kontakt/", permanent: true },
+      { source: "/home", destination: "/", permanent: true },
+    ];
+  },
 };
 
 export default nextConfig;

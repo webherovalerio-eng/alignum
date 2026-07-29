@@ -23,8 +23,9 @@ export function generateStaticParams() {
   return SERVICES.map((s) => ({ slug: s.slug }));
 }
 
-export function generateMetadata({ params }: { params: { slug: string } }) {
-  const s = SERVICES.find((x) => x.slug === params.slug);
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const s = SERVICES.find((x) => x.slug === slug);
   if (!s) return {};
   const photoCat = s.imageCategory;
   const cover = s.cover ?? PHOTOS[photoCat]?.[0];

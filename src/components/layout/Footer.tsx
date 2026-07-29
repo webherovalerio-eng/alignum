@@ -6,7 +6,6 @@ import { SERVICES, SERVICE_HUB } from "@/data/services";
 import { CITIES } from "@/data/cities";
 
 export function Footer() {
-  const featuredCities = CITIES.slice(0, 16);
   return (
     <footer className="relative mt-32 border-t border-border bg-card/40">
       <div className="container-prose pt-20 pb-10">
@@ -54,24 +53,24 @@ export function Footer() {
             </ul>
           </div>
 
+          {/* Bewusst KEINE Städteliste im Footer: ein auf ~170 Seiten
+              identischer Block ist ein Near-Duplicate-Signal und verteilt
+              Link-Equity gleichmäßig statt nach Relevanz. Die Städte werden
+              kontextuell von den City-Pages aus verlinkt, hier nur der
+              Einstieg in die Übersicht. */}
           <div className="lg:col-span-3 space-y-4">
-            <p className="font-medium">Projekte in</p>
-            <ul className="grid grid-cols-2 gap-x-3 gap-y-2 text-sm">
-              {featuredCities.map((c) => (
-                <li key={c.slug}>
-                  <Link
-                    href={`/${c.slug}/`}
-                    className="text-muted-foreground hover:text-foreground transition-colors"
-                  >
-                    {c.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+            <p className="font-medium">Einsatzgebiet</p>
+            <p className="text-sm text-muted-foreground">
+              Aus unserer Werkstatt in {SITE.address.city} fertigen, liefern und
+              montieren wir im gesamten Rhein-Neckar-Raum.
+            </p>
+            <Link href="/standorte/" className="inline-block text-sm text-primary hover:underline">
+              Alle {CITIES.length} Orte ansehen →
+            </Link>
           </div>
 
           <div className="lg:col-span-2 space-y-4">
-            <p className="font-medium">Kanzlei</p>
+            <p className="font-medium">Unternehmen</p>
             <ul className="space-y-2 text-sm">
               <li><Link href="/about-us/" className="text-muted-foreground hover:text-foreground">Über uns</Link></li>
               <li><Link href="/garantie/" className="text-muted-foreground hover:text-foreground">Garantie</Link></li>
