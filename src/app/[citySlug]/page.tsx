@@ -3,7 +3,7 @@ import { CityHero } from "@/components/sections/CityHero";
 import { WerkstattZuIhnen } from "@/components/sections/WerkstattZuIhnen";
 import { CityIntent } from "@/components/sections/CityIntent";
 import { CitySecretSauce } from "@/components/sections/CitySecretSauce";
-import { ReferenceProjects } from "@/components/sections/ReferenceProjects";
+import { RegionProjects } from "@/components/sections/RegionProjects";
 import { ProjectsByCity } from "@/components/sections/ProjectsByCity";
 import { MeetJan } from "@/components/sections/MeetJan";
 import { Materials } from "@/components/sections/Materials";
@@ -99,8 +99,9 @@ export default async function CityPage({ params }: { params: Promise<{ citySlug:
       {/* 7. Schreinerei {Stadt} — Body + Spintax-Content */}
       <CityIntent city={city} />
 
-      {/* 8. Referenz-Projekte */}
-      <ReferenceProjects />
+      {/* 8. Referenz-Projekte — echte, verlinkte Projekte statt generischer
+             Kategoriefotos; pro Stadt ein anderer, aber stabiler Ausschnitt */}
+      <RegionProjects city={city} />
 
       {/* 9. Holzarten */}
       <Materials />

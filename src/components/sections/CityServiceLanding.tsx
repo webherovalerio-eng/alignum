@@ -7,6 +7,7 @@ import { LinkButton } from "@/components/ui/Button";
 import { Stars } from "@/components/ui/Stars";
 import { FAQ } from "@/components/sections/FAQ";
 import { CTA } from "@/components/sections/CTA";
+import { ProjectCard } from "@/components/sections/ProjectCard";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { type City } from "@/data/cities";
 import { type CityService, CITY_SERVICES, cityServicePath } from "@/data/cityServices";
@@ -15,7 +16,9 @@ import { SERVICE_FAQS } from "@/data/faqs";
 import { PHOTOS } from "@/data/photos";
 import { REVIEW_SUMMARY } from "@/data/reviews";
 import { SITE } from "@/data/site";
+import { getProjectsByService } from "@/data/projects";
 import { buildCityServiceCopy } from "@/lib/cityServiceContent";
+import { cityOffset } from "@/lib/cityRotation";
 
 /**
  * Service×Stadt-Landingpage, z.B. „Schreinerküche Mannheim".
@@ -36,6 +39,18 @@ export function CityServiceLanding({ city, combo }: { city: City; combo: CitySer
 
   // Andere Leistungen für dieselbe Stadt (Querverlinkung)
   const otherServices = CITY_SERVICES.filter((c) => c.slug !== combo.slug);
+
+  // Echte Projekte zu dieser Leistung: erst die aus dieser Stadt, dann ein
+  // pro Stadt verschobener (aber stabiler) Ausschnitt der übrigen.
+  const serviceProjects = getProjectsByService(combo.serviceSlug);
+  const localProjects = serviceProjects.filter((p) => p.city === city.slug);
+  const hasLocalProjects = localProjects.length > 0;
+  const restProjects = serviceProjects.filter((p) => p.city !== city.slug);
+  const shift = cityOffset(city.slug, restProjects.length);
+  const comboProjects = [
+    ...localProjects,
+    ...restProjects.map((_, i) => restProjects[(shift + i) % restProjects.length]),
+  ].slice(0, 3);
 
   const ld = {
     "@context": "https://schema.org",
@@ -184,6 +199,37 @@ export function CityServiceLanding({ city, combo }: { city: City; combo: CitySer
                 <Reveal key={src} delay={(i % 4) * 0.05} className="relative aspect-[4/5] overflow-hidden rounded-xl border border-border bg-card">
                   <Image src={src} alt={`${combo.h1} ${city.name} – Beispiel ${i + 1}`} fill sizes="(max-width: 1024px) 50vw, 25vw" className="object-cover" />
                 </Reveal>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* ECHTE PROJEKTE zu dieser Leistung.
+          Gemessen waren zwei City-Service-Seiten derselben Leistung zu 79,5 %
+          textgleich (Stadtname neutralisiert) — Beschreibung, Features, FAQ und
+          Galerie sind über alle Städte identisch, nur zwei Spintax-Absätze
+          variierten. Echte Projekte sind der einzige Baustein, der pro Stadt
+          wirklich unterschiedlich ist: Projekte AUS der Stadt zuerst, danach
+          ein pro Stadt verschobener, aber stabiler Ausschnitt der übrigen. */}
+      {comboProjects.length > 0 && (
+        <section className="relative pb-16">
+          <div className="container-prose">
+            <Reveal className="max-w-3xl mb-8">
+              <h2 className="font-display text-[clamp(1.75rem,3.5vw,3rem)] leading-[1.1] tracking-tight">
+                {hasLocalProjects
+                  ? `${combo.h1} – gebaut in ${city.name}`
+                  : `${combo.h1} – gebaut in der Region`}
+              </h2>
+              <p className="mt-5 text-base sm:text-lg text-muted-foreground leading-relaxed">
+                {hasLocalProjects
+                  ? `Diese Arbeiten haben wir in ${city.name} aufgemessen, gefertigt und montiert.`
+                  : `Aus unserer Werkstatt in ${SITE.address.city} – vergleichbare Arbeiten, die wir im Rhein-Neckar-Raum ausgeführt haben.`}
+              </p>
+            </Reveal>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+              {comboProjects.map((p, i) => (
+                <ProjectCard key={p.slug} project={p} index={i} />
               ))}
             </div>
           </div>
