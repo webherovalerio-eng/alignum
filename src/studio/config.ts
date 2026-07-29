@@ -126,6 +126,8 @@ export function siteUrl(): string {
   return (
     process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ||
     process.env.SITE_URL?.replace(/\/$/, "") ||
-    "https://alignum.de"
+    // www, damit der Magic-Link nicht über einen Host-Wechsel läuft — sonst
+    // wird das Session-Cookie auf dem apex gesetzt und auf www nicht gelesen.
+    "https://www.alignum.de"
   );
 }

@@ -2,7 +2,13 @@ export const SITE = {
   name: "Alignum",
   tagline: "Schreiner aus Leidenschaft",
   domain: "alignum.de",
-  url: "https://alignum.de",
+  // Muss exakt der Host sein, der auch ausgeliefert wird: alignum.de leitet
+  // per 308 auf www.alignum.de. Stand vorher "https://alignum.de", wodurch
+  // JEDES Canonical, jeder sitemap-<loc> und jede JSON-LD-@id auf eine
+  // weiterleitende URL zeigten — Google meldete daraufhin 57 Seiten als
+  // "Alternative Seite mit richtigem kanonischen Tag" und hat die Startseite
+  // auf zwei Hosts aufgeteilt (www Pos 6,1 / apex Pos 35,0).
+  url: "https://www.alignum.de",
   description:
     "Alignum – Schreinerei in Mannheim. Massivholzmöbel, Küchen, Treppen, Türen, Shoji und Maßmöbel aus traditionellem Handwerk und moderner Technik. Seit über 30 Jahren.",
   // public-facing email shown on site & impressum
