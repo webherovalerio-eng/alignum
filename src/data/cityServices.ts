@@ -141,3 +141,19 @@ export function cityServicePairs(): { citySlug: string; slug: string }[] {
 export function cityServicePath(citySlug: string, comboSlug: string): string {
   return `/${citySlug}/${comboSlug}/`;
 }
+
+/**
+ * Die City-Service-Seite, die ein Referenzprojekt als nächsthöhere Silo-Ebene
+ * hat — oder undefined, wenn es keine gibt. Ein Projekt verlinkt darüber nach
+ * oben (Projekt → City-Service → City → Home), aber nur wenn die Seite auch
+ * wirklich gebaut wird: die Kombis existieren ausschließlich für die
+ * TOP_CITY_SLUGS und nur für Leistungen, die als CityService gemappt sind.
+ * `serviceSlug` ist der Service-Slug des Projekts (projects.ts → service).
+ */
+export function cityServiceForProject(
+  citySlug: string,
+  serviceSlug: string,
+): CityService | undefined {
+  if (!isTopCity(citySlug)) return undefined;
+  return CITY_SERVICES.find((c) => c.serviceSlug === serviceSlug);
+}

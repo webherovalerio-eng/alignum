@@ -9,6 +9,7 @@ import { JsonLd } from "@/components/seo/JsonLd";
 import { PROJECTS, projectPath, type Project } from "@/data/projects";
 import { CITIES } from "@/data/cities";
 import { SERVICES, SERVICE_HUB } from "@/data/services";
+import { cityServiceForProject, cityServicePath } from "@/data/cityServices";
 import { MATERIALS } from "@/data/materials";
 import { SITE } from "@/data/site";
 
@@ -20,6 +21,11 @@ export function ProjectDetail({ project }: { project: Project }) {
   const city = CITIES.find((c) => c.slug === project.city);
   const service = SERVICES.find((s) => s.slug === project.service);
   const material = MATERIALS.find((m) => m.slug === project.material);
+
+  // Nächsthöhere Silo-Ebene: die City-Service-Seite dieser Leistung in dieser
+  // Stadt — nur vorhanden, wenn die Stadt eine Top-City ist (sonst undefined,
+  // dann bleibt die Kette Projekt → City → Home ohne Zwischenstufe).
+  const cityService = cityServiceForProject(project.city, project.service);
 
   const related = PROJECTS.filter(
     (p) =>
@@ -63,6 +69,17 @@ export function ProjectDetail({ project }: { project: Project }) {
               <>
                 <ChevronRight className="size-3.5" />
                 <Link href={`/${city.slug}/`} className="hover:text-primary">{city.name}</Link>
+              </>
+            )}
+            {city && cityService && (
+              <>
+                <ChevronRight className="size-3.5" />
+                <Link
+                  href={cityServicePath(city.slug, cityService.slug)}
+                  className="hover:text-primary"
+                >
+                  {cityService.h1}
+                </Link>
               </>
             )}
             <ChevronRight className="size-3.5" />
@@ -149,6 +166,11 @@ export function ProjectDetail({ project }: { project: Project }) {
                 <Link href="/projekte/" className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-4 py-2 text-sm hover:border-primary/50 transition-colors">
                   Weitere Projekte <ArrowUpRight className="size-4 text-primary" />
                 </Link>
+                {city && cityService && (
+                  <Link href={cityServicePath(city.slug, cityService.slug)} className="inline-flex items-center gap-1.5 rounded-full border border-primary/40 bg-card px-4 py-2 text-sm hover:border-primary transition-colors">
+                    <Hammer className="size-4 text-primary" /> {cityService.h1} {city.name}
+                  </Link>
+                )}
                 {city && (
                   <Link href={`/${city.slug}/`} className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-4 py-2 text-sm hover:border-primary/50 transition-colors">
                     <MapPin className="size-4 text-primary" /> Schreinerei {city.name}
