@@ -197,7 +197,10 @@ export function DraftPreview({
         </div>
       </section>
 
-      {/* ─────────────── Social-Carousel (feste 6 Slides) ─────────────── */}
+      {/* Social-Carousel (feste 6 Slides): nur im Bearbeiten-Modus. In der
+          freigegebenen Ansicht ersetzen die echten 1080×1350-PNGs (vom
+          carousel-Endpoint, weiter unten im PostEditor) diese grobe Vorschau. */}
+      {!readOnly && (
       <section className="space-y-4">
         <h3 className="font-label text-sm font-semibold text-foreground">
           Instagram-Carousel · 6 Slides
@@ -217,8 +220,7 @@ export function DraftPreview({
           <SlideCta n={6} />
         </div>
 
-        {/* Editier-Box: Slide-Texte + Caption + Hashtags — nur im Bearbeiten-Modus */}
-        {!readOnly && (
+        {/* Editier-Box: Slide-Texte + Caption + Hashtags */}
         <div className="space-y-4 rounded-[var(--radius-lg)] border border-border bg-card/50 p-4">
           <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
             Texte auf den Slides
@@ -278,8 +280,8 @@ export function DraftPreview({
             )}
           </label>
         </div>
-        )}
       </section>
+      )}
     </div>
   );
 }
