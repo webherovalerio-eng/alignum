@@ -62,6 +62,10 @@ export function PostEditor({
   const [regie, setRegie] = useState(initialPost.regie ?? "");
   const [status, setStatus] = useState<PostStatus>(initialPost.status);
   const [draft, setDraft] = useState<PostDraft | null>(initialPost.draft ?? null);
+  // Cache-Buster für die server-gerenderten Slide-PNGs: die Route liefert
+  // no-store, aber vor diesem Fix gecachte immutable-Antworten lädt der Browser
+  // sonst nie neu. Nach jedem Freigeben/Speichern bumpen → frische URL.
+  const [slidesRev, setSlidesRev] = useState(initialPost.updatedAt);
   const [remaining, setRemaining] = useState(initialUsage.remaining);
 
   const [dirty, setDirty] = useState(false);
@@ -353,6 +357,7 @@ export function PostEditor({
       }
       setDirty(false);
       setStatus(data.status ?? "freigegeben");
+      setSlidesRev(Date.now()); // Slides mit dem neuen Draft neu laden
     } finally {
       setSubmitting(false);
     }
@@ -434,13 +439,13 @@ export function PostEditor({
               {[1, 2, 3, 4, 5, 6].map((n) => (
                 <a
                   key={n}
-                  href={`/api/studio/posts/${initialPost.id}/carousel/?n=${n}&dl=1`}
+                  href={`/api/studio/posts/${initialPost.id}/carousel/?n=${n}&dl=1&v=${slidesRev}`}
                   download
                   className="group relative block overflow-hidden rounded-[var(--radius)] border border-border bg-muted"
                 >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
-                    src={`/api/studio/posts/${initialPost.id}/carousel/?n=${n}`}
+                    src={`/api/studio/posts/${initialPost.id}/carousel/?n=${n}&v=${slidesRev}`}
                     alt={`Slide ${n}`}
                     loading="lazy"
                     className="aspect-[4/5] w-full object-cover"

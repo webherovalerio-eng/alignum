@@ -33,13 +33,20 @@ export function DraftPreview({
 }) {
   const title = draft.title?.trim() || moebeltyp || draft.metaTitle;
   const lead = draft.summary ?? draft.intro ?? "";
-  const paras = draft.body ? draft.body.split(/\n{2,}/) : [];
+  // Exakt an "\n\n" splitten (passend zum join in setPara) — erhält leere
+  // Zwischen-Absätze, damit die Slide-Zuordnung Idee/Lösung/Holz nicht
+  // verrutscht, wenn ein Feld leer bleibt.
+  const paras = draft.body ? draft.body.split("\n\n") : [];
   const features = draft.features ?? [];
   const cover = images[0];
   const gallery = images.slice(1);
 
   const setPara = (i: number, value: string) => {
-    const arr = paras.length ? [...paras] : [""];
+    const arr = [...paras];
+    // Lücken bis zum Zielindex mit "" auffüllen — sonst entstehen undefined-
+    // Löcher, die beim join/split die Slide-Zuordnung verschieben (der Grund,
+    // warum vorher ein Leerzeichen ins Lösungs-Feld nötig war).
+    while (arr.length <= i) arr.push("");
     arr[i] = value;
     patch({ body: arr.join("\n\n") });
   };

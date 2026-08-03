@@ -68,7 +68,11 @@ export function postToSlideData(post: Post): SlideData {
   return {
     coverTitle: (d?.title || post.moebeltyp || "Projekt").trim(),
     place: post.ortName || "",
-    body: d?.body ? d.body.split(/\n{2,}/).map((p) => p.trim()).filter(Boolean) : [],
+    // Exakt an "\n\n" splitten (nicht /\n{2,}/) und NICHT filtern: so bleiben
+    // leere Zwischen-Absätze als "" erhalten und die feste Zuordnung
+    // Idee=body[0] / Lösung=body[1] / Holz=body[2] verrutscht nicht, wenn ein
+    // Feld leer gelassen wird.
+    body: d?.body ? d.body.split("\n\n").map((p) => p.trim()) : [],
     features: d?.features ?? [],
     builtLabel: post.moebeltyp || "Maßmöbel",
     woodLabel: post.holzart || "Massivholz",
@@ -292,7 +296,7 @@ export function renderSlide(
                 color: FG_DARK,
               }}
             >
-              {data.body[1] ?? data.body[0] ?? ""}
+              {data.body[1] ?? ""}
             </div>
           </div>
           <PagePill n={n} />
@@ -337,7 +341,7 @@ export function renderSlide(
                 maxWidth: 620,
               }}
             >
-              {data.body[2] ?? data.body[0] ?? ""}
+              {data.body[2] ?? ""}
             </div>
           </CenterWrap>
           <PagePill n={n} light={!light} />
