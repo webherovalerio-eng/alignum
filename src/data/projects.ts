@@ -65,6 +65,41 @@ export type Project = {
 
 export const PROJECTS: Project[] = [
   {
+    slug: "kommode-edingen-eiche",
+    city: "schreinerei-edingen-neckarhausen",
+    service: "kommoden",
+    material: "stiel-eiche",
+    title: "Massivholz-Kommode aus Eiche — Projekt Edingen-Neckarhausen",
+    metaTitle: "Massivholz-Kommode aus Eiche | Edingen-Neckarhausen",
+    metaDescription:
+      "Massive Eiche-Kommode mit neun Schubladen, integrierter Griffräsung und Schweizer Kante — von Alignum gefertigt für einen Kunden in Edingen-Neckarhausen.",
+    summary:
+      "Massive Eiche-Kommode mit neun Schubladen und eingefrästen Griffmulden — gefertigt für einen Kunden in Edingen-Neckarhausen.",
+    body: [
+      "Für einen Kunden in Edingen-Neckarhausen — dem Ort, in dem auch unsere Werkstatt steht — haben wir eine freistehende Kommode für den Wohnflur gebaut. Gesucht war ein Stück mit viel Stauraum, das im eher schmalen Flur nicht aufträgt und sich ruhig in die vorhandene Einrichtung einfügt, statt sie zu dominieren.",
+      "Entstanden ist eine massive Kommode aus Eiche mit neun Schubkästen: drei schmale in der oberen Reihe, darunter sechs großzügige Auszüge in zwei Spalten. Statt aufgesetzter Griffe haben wir in jede Front eine durchgehende Griffmulde gefräst — diese integrierte Griffräsung lässt die Front vollkommen ruhig und grifflos wirken. Die Deckplatte ist an der Vorderkante auf Gehrung gearbeitet, eine sogenannte Schweizer Kante, und wirkt dadurch schlanker, als sie tatsächlich ist. Der zurückgesetzte Sockel mit leicht konischen Füßen hebt den schweren Korpus optisch vom Boden ab.",
+      "Für die Kommode haben wir massive Eiche gewählt — das robusteste unter den heimischen Möbelhölzern. Ihre kräftige, lebendige Maserung gibt jedem Schubkasten ein eigenes Gesicht, und die offenporige Struktur nimmt das natürliche Öl auf, mit dem wir das Holz behandelt haben. So bleibt die Oberfläche fühlbar Holz statt Lackschicht und lässt sich über Jahrzehnte immer wieder nachölen. Die Fronten haben wir so aus dem Stamm aufgetrennt, dass die Maserung über die Schubkästen hinweg ruhig weiterläuft.",
+      "Die Schubkästen sind aus Massivholz gezinkt — eine Verbindung, die hält, solange das Möbel steht. Nach dem Aufmaß vor Ort in Edingen-Neckarhausen haben wir die Kommode in unserer Werkstatt gefertigt, vom Korpus bis zur letzten Griffmulde in Handarbeit. Weil Werkstatt und Kunde hier am selben Ort liegen, waren Lieferung und Aufstellung eine Sache von Minuten.",
+    ],
+    features: [
+      "Neun Schubkästen — drei schmale oben, sechs großzügige Auszüge darunter",
+      "Integrierte Griffräsung: durchgehende Griffmulden statt aufgesetzter Beschläge",
+      "Deckplatte mit Schweizer Kante — massiv, aber optisch schlank",
+      "Gezinkte Schubkästen aus Massivholz",
+      "Zurückgesetzter Sockel mit konischen Füßen",
+      "Massive Eiche, natur geölt — nachölbar statt lackiert",
+    ],
+    year: 2026,
+    images: [
+      "/images/projects/kommode-edingen-eiche/kommode-edingen-eiche-01.jpg",
+      "/images/projects/kommode-edingen-eiche/kommode-edingen-eiche-02.jpg",
+      "/images/projects/kommode-edingen-eiche/kommode-edingen-eiche-03.jpg",
+      "/images/projects/kommode-edingen-eiche/kommode-edingen-eiche-04.jpg",
+    ],
+    cover:
+      "/images/projects/kommode-edingen-eiche/kommode-edingen-eiche-01.jpg",
+  },
+  {
     slug: "fernsehschrank-mannheim-ahorn",
     city: "schreinerei-mannheim",
     service: "moebelbauer",
