@@ -366,17 +366,41 @@ export function PostEditor({
     if (res.ok) router.push("/studio");
   }
 
+  // Freigegebenen Beitrag zurück in den Bearbeiten-Modus holen, um Slide-Texte
+  // o. Ä. anzupassen. Danach wird er wie gewohnt neu freigegeben.
+  async function reopen() {
+    setSubmitting(true);
+    try {
+      const res = await studioFetch(
+        `/api/studio/posts/${initialPost.id}/reopen`,
+        { method: "POST" },
+      );
+      const data = (await res.json()) as { status?: PostStatus };
+      if (res.ok) setStatus(data.status ?? "entwurf");
+    } finally {
+      setSubmitting(false);
+    }
+  }
+
   // ── Freigegeben: schreibgeschützte Ansicht mit generiertem Text ──────────
   if (!editable) {
     return (
       <div className="space-y-6">
         <div className="rounded-[var(--radius-lg)] border border-primary/30 bg-primary/5 p-6">
-          <p className="font-brand text-xs text-primary">Freigegeben</p>
-          <h1 className="font-display mt-1 text-xl text-foreground">
-            {moebeltyp} · {ortName || initialPost.ortName}
-          </h1>
+          <div className="flex items-start justify-between gap-4">
+            <div>
+              <p className="font-brand text-xs text-primary">Freigegeben</p>
+              <h1 className="font-display mt-1 text-xl text-foreground">
+                {moebeltyp} · {ortName || initialPost.ortName}
+              </h1>
+            </div>
+            <Button variant="outline" size="sm" onClick={reopen} disabled={submitting}>
+              {submitting ? "Öffne …" : "Texte bearbeiten"}
+            </Button>
+          </div>
           <p className="mt-2 text-sm text-muted-foreground">
             So sieht das Endresultat aus – Projektseite und das Instagram-Carousel.
+            Zum Ändern der Slide-Texte auf „Texte bearbeiten“.
           </p>
         </div>
 

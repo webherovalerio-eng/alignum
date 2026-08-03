@@ -349,3 +349,13 @@ export async function submitPost(post: Post): Promise<Post> {
   post.status = "freigegeben";
   return savePost(post);
 }
+
+/**
+ * Holt einen freigegebenen Beitrag zurück in den Bearbeiten-Modus („entwurf"),
+ * damit Slide-Texte, Bilder o. Ä. nachträglich angepasst werden können. Der
+ * Draft bleibt erhalten; nach erneutem Freigeben regenerieren sich die Slides.
+ */
+export async function reopenPost(post: Post): Promise<Post> {
+  post.status = "entwurf";
+  return savePost(post);
+}

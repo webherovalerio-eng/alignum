@@ -65,11 +65,18 @@ export async function GET(req: Request, ctx: { params: Promise<{ id: string }> }
         { name: "Montserrat", data: mont, weight: 500, style: "normal" },
         { name: "Inter", data: inter, weight: 400, style: "normal" },
       ],
-      headers: download
-        ? {
-            "Content-Disposition": `attachment; filename="${fileBase}-slide-${String(n).padStart(2, "0")}.png"`,
-          }
-        : undefined,
+      headers: {
+        // Nicht cachen: die Slides werden aus dem Post-Draft gerendert und
+        // ändern sich, sobald Texte bearbeitet + neu freigegeben werden.
+        // ImageResponse würde sonst bis zu 1 Jahr immutable cachen → der
+        // Nutzer sähe nach einer Textänderung weiter die alten Slides.
+        "Cache-Control": "no-store, must-revalidate",
+        ...(download
+          ? {
+              "Content-Disposition": `attachment; filename="${fileBase}-slide-${String(n).padStart(2, "0")}.png"`,
+            }
+          : {}),
+      },
     });
   } catch (e) {
     console.error(`[studio] carousel slide ${n} für ${id} fehlgeschlagen:`, e);
