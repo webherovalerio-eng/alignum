@@ -1,34 +1,58 @@
 /**
  * studio-pull — CLI-Bridge zwischen dem Studio und dem alignum-projects-Skill.
  *
- * Lädt alle EINGEREICHTEN Beiträge herunter: Metadaten aus KV, die von Jan
- * ausgewählten Bilder aus Vercel Blob → in die Ordnerstruktur, die der
- * alignum-projects-Skill erwartet:  <OUT>/<Holzart>/<Möbeltyp Stadt>/
+ * Lädt alle FREIGEGEBENEN Beiträge herunter: Metadaten + die von Jan
+ * ausgewählten Bilder → in die Ordnerstruktur, die der alignum-projects-Skill
+ * erwartet:  <OUT>/<Holzart>/<Möbeltyp Stadt>/
  *
- * Danach die Generierung mit DEINEM Claude-Abo über die CLI:
- *   → alignum-projects-Skill auf den erzeugten Ordner laufen lassen.
+ * Backend: das Studio persistiert seinen KV auf VERCEL BLOB (nicht Upstash —
+ * das braucht eine Browser-Freigabe, die headless nicht ging; siehe
+ * src/studio/kv.ts). Die Post-JSONs liegen also als Blob-Objekte unter `kv/…`.
+ * Der Objekt-INHALT ist Klartext-JSON, nur der Pfadname ist mit AUTH_SECRET
+ * gehasht. AUTH_SECRET ist in Vercel als „sensitive" markiert und via
+ * `vercel env pull` NICHT abrufbar — deshalb finden wir die Posts NICHT über
+ * den gehashten Key, sondern per `list({prefix:"kv/"})` und identifizieren die
+ * Post-Objekte am Schema. Das braucht nur den BLOB_READ_WRITE_TOKEN, der per
+ * `vercel env pull` kommt.
  *
- * Voraussetzung: dieselben Env-Vars wie die Produktion (KV + Blob).
+ * Voraussetzung: BLOB_READ_WRITE_TOKEN (z. B. via `vercel env pull .env.local`).
  * Aufruf:  node scripts/studio-pull.mjs ["Projekte Holzsorten"]
+ *
+ * Hinweis Idempotenz: filtert auf Status "freigegeben" und ändert ihn NICHT.
+ * Jeder Lauf zieht alle aktuell freigegebenen Beiträge erneut (Ordner werden
+ * überschrieben). Verarbeitete Beiträge in Jans Studio löschen oder den
+ * OUT-Ordner vor einem erneuten Lauf leeren.
  */
-import { Redis } from "@upstash/redis";
+import { list } from "@vercel/blob";
+import { readFileSync, existsSync } from "node:fs";
 import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 
-const url = process.env.UPSTASH_REDIS_REST_URL || process.env.KV_REST_API_URL;
-const token =
-  process.env.UPSTASH_REDIS_REST_TOKEN || process.env.KV_REST_API_TOKEN;
+// .env.local laden, falls die Variablen nicht schon im Prozess gesetzt sind.
+for (const file of [".env.local", ".env"]) {
+  if (process.env.BLOB_READ_WRITE_TOKEN) break;
+  if (!existsSync(file)) continue;
+  for (const line of readFileSync(file, "utf8").split("\n")) {
+    const i = line.indexOf("=");
+    if (i < 1 || line.trimStart().startsWith("#")) continue;
+    const k = line.slice(0, i).trim();
+    let v = line.slice(i + 1).trim();
+    if (v.startsWith('"') && v.endsWith('"')) v = v.slice(1, -1);
+    if (!(k in process.env)) process.env[k] = v;
+  }
+}
 
-if (!url || !token) {
+const TOKEN = process.env.BLOB_READ_WRITE_TOKEN;
+if (!TOKEN) {
   console.error(
-    "✗ KV-Env fehlt. Setze UPSTASH_REDIS_REST_URL + UPSTASH_REDIS_REST_TOKEN\n" +
-      "  (z. B. via `vercel env pull .env.local`).",
+    "✗ BLOB_READ_WRITE_TOKEN fehlt. Hol dir die Env-Vars mit\n" +
+      "  `vercel env pull .env.local` (im web/-Verzeichnis).",
   );
   process.exit(1);
 }
 
-const redis = new Redis({ url, token, automaticDeserialization: false });
 const OUT = process.argv[2] || "Projekte Holzsorten";
+const STATUS = "freigegeben";
 
 function briefText(post) {
   return [
@@ -37,7 +61,7 @@ function briefText(post) {
     `Möbeltyp: ${post.moebeltyp}`,
     `Ort: ${post.ortName} (${post.ort})`,
     `Holzart: ${post.holzart}`,
-    `Eingereicht: ${new Date(post.updatedAt).toISOString()}`,
+    `Freigegeben: ${new Date(post.updatedAt).toISOString()}`,
     ``,
     `## Notiz von Jan`,
     post.notiz || "(keine)",
@@ -50,16 +74,39 @@ function briefText(post) {
   ].join("\n");
 }
 
+/** Ist das geparste Blob-Objekt ein Studio-Post? (am Schema erkannt) */
+function isPost(v) {
+  return (
+    v &&
+    typeof v === "object" &&
+    typeof v.id === "string" &&
+    typeof v.status === "string" &&
+    v.moebeltyp !== undefined &&
+    Array.isArray(v.images)
+  );
+}
+
 async function main() {
-  const idsRaw = await redis.get("studio:posts:index");
-  const ids = idsRaw ? JSON.parse(idsRaw) : [];
+  const { blobs } = await list({ prefix: "kv/", token: TOKEN, limit: 1000 });
   let pulled = 0;
 
-  for (const id of ids) {
-    const raw = await redis.get(`studio:post:${id}`);
-    if (!raw) continue;
-    const post = JSON.parse(raw);
-    if (post.status !== "eingereicht") continue;
+  for (const b of blobs) {
+    // Cache-Bust: Blob-URLs sind CDN-gecacht (min. 60s).
+    const res = await fetch(`${b.url}?_=${Date.now()}`, { cache: "no-store" });
+    if (!res.ok) continue;
+    let entry;
+    try {
+      entry = await res.json();
+    } catch {
+      continue;
+    }
+    let post;
+    try {
+      post = JSON.parse(entry.v);
+    } catch {
+      continue;
+    }
+    if (!isPost(post) || post.status !== STATUS) continue;
 
     const selected = post.images.filter((i) => i.selected);
     if (!selected.length) continue;
@@ -74,14 +121,15 @@ async function main() {
 
     let n = 1;
     for (const img of selected) {
-      const res = await fetch(img.url);
-      if (!res.ok) {
-        console.warn(`  ⚠ Bild übersprungen (${res.status}): ${img.url}`);
+      const r = await fetch(img.url);
+      if (!r.ok) {
+        console.warn(`  ⚠ Bild übersprungen (${r.status}): ${img.filename}`);
         continue;
       }
-      const buf = Buffer.from(await res.arrayBuffer());
+      const buf = Buffer.from(await r.arrayBuffer());
+      const ext = (img.filename.split(".").pop() || "jpg").toLowerCase();
       await writeFile(
-        path.join(folder, `${String(n).padStart(2, "0")}.jpg`),
+        path.join(folder, `${String(n).padStart(2, "0")}.${ext}`),
         buf,
       );
       n++;
@@ -91,7 +139,7 @@ async function main() {
   }
 
   if (!pulled) {
-    console.log("Keine eingereichten Beiträge gefunden.");
+    console.log(`Keine ${STATUS}en Beiträge gefunden.`);
   } else {
     console.log(
       `\n${pulled} Beitrag/Beiträge nach "${OUT}" geladen.\n` +
