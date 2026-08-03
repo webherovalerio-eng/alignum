@@ -393,6 +393,46 @@ export function PostEditor({
           />
         )}
 
+        {/* Instagram-Slides — serverseitig gerendert (Satori), Self-Service:
+            Jan lädt die 6 fertigen 1080×1350-PNGs direkt herunter. */}
+        {draft && (
+          <section className="space-y-3">
+            <div>
+              <h3 className="font-label text-sm font-semibold text-foreground">
+                Instagram-Slides
+              </h3>
+              <p className="text-xs text-muted-foreground">
+                Fertige Slides (1080×1350) — antippen zum Herunterladen, dann als
+                Carousel posten.
+              </p>
+            </div>
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+              {[1, 2, 3, 4, 5, 6].map((n) => (
+                <a
+                  key={n}
+                  href={`/api/studio/posts/${initialPost.id}/carousel/?n=${n}&dl=1`}
+                  download
+                  className="group relative block overflow-hidden rounded-[var(--radius)] border border-border bg-muted"
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={`/api/studio/posts/${initialPost.id}/carousel/?n=${n}`}
+                    alt={`Slide ${n}`}
+                    loading="lazy"
+                    className="aspect-[4/5] w-full object-cover"
+                  />
+                  <span className="absolute inset-x-0 bottom-0 flex items-center justify-between bg-background/85 px-2.5 py-1.5 text-xs font-medium text-foreground backdrop-blur-sm">
+                    Slide {n}
+                    <span className="text-primary transition-transform group-hover:translate-y-0.5">
+                      ↓
+                    </span>
+                  </span>
+                </a>
+              ))}
+            </div>
+          </section>
+        )}
+
         {/* Text zum Kopieren (Caption + Hashtags fürs Posten) */}
         {draft && <DraftView draft={draft} />}
 
