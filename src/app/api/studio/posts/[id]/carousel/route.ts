@@ -30,7 +30,11 @@ export async function GET(req: Request, ctx: { params: Promise<{ id: string }> }
   const url = new URL(req.url);
   const n = Math.min(Math.max(parseInt(url.searchParams.get("n") || "1", 10) || 1, 1), SLIDE_COUNT);
   const download = url.searchParams.get("dl") === "1";
-  const origin = url.origin;
+  // Auf Vercel ist url.origin oft die interne Function-URL — die same-origin
+  // Asset/Font-Fetches müssen aber die öffentliche Domain treffen.
+  const fwdHost = req.headers.get("x-forwarded-host") ?? req.headers.get("host");
+  const fwdProto = req.headers.get("x-forwarded-proto") ?? "https";
+  const origin = fwdHost ? `${fwdProto}://${fwdHost}` : url.origin;
 
   const data = postToSlideData(post);
   const assets = {
@@ -39,31 +43,39 @@ export async function GET(req: Request, ctx: { params: Promise<{ id: string }> }
     woodImg: `${origin}/images/woods/${data.materialSlug}.jpg`,
   };
 
-  // Fonts same-origin laden (liegen in public/fonts/). Variable-TTFs: pro
-  // genutztem Gewicht ein Eintrag auf dieselben Bytes.
-  const [cinzel, mont, inter] = await Promise.all([
-    fetch(`${origin}/fonts/cinzel.ttf`).then((r) => r.arrayBuffer()),
-    fetch(`${origin}/fonts/montserrat.ttf`).then((r) => r.arrayBuffer()),
-    fetch(`${origin}/fonts/inter.ttf`).then((r) => r.arrayBuffer()),
-  ]);
-
   const fileBase = (post.moebeltyp || "slide")
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-|-$/g, "");
 
-  return new ImageResponse(renderSlide(data, n, assets), {
-    width: SLIDE_W,
-    height: SLIDE_H,
-    fonts: [
-      { name: "Cinzel", data: cinzel, weight: 600, style: "normal" },
-      { name: "Montserrat", data: mont, weight: 500, style: "normal" },
-      { name: "Inter", data: inter, weight: 400, style: "normal" },
-    ],
-    headers: download
-      ? {
-          "Content-Disposition": `attachment; filename="${fileBase}-slide-${String(n).padStart(2, "0")}.png"`,
-        }
-      : undefined,
-  });
+  try {
+    // Fonts same-origin laden (public/fonts/). Statische Instanzen; ein Eintrag
+    // pro Familie (Satori matcht die Gewichte).
+    const [cinzel, mont, inter] = await Promise.all([
+      fetch(`${origin}/fonts/cinzel.ttf`).then((r) => r.arrayBuffer()),
+      fetch(`${origin}/fonts/montserrat.ttf`).then((r) => r.arrayBuffer()),
+      fetch(`${origin}/fonts/inter.ttf`).then((r) => r.arrayBuffer()),
+    ]);
+
+    return new ImageResponse(renderSlide(data, n, assets), {
+      width: SLIDE_W,
+      height: SLIDE_H,
+      fonts: [
+        { name: "Cinzel", data: cinzel, weight: 600, style: "normal" },
+        { name: "Montserrat", data: mont, weight: 500, style: "normal" },
+        { name: "Inter", data: inter, weight: 400, style: "normal" },
+      ],
+      headers: download
+        ? {
+            "Content-Disposition": `attachment; filename="${fileBase}-slide-${String(n).padStart(2, "0")}.png"`,
+          }
+        : undefined,
+    });
+  } catch (e) {
+    console.error(`[studio] carousel slide ${n} für ${id} fehlgeschlagen:`, e);
+    return Response.json(
+      { error: "Slide-Rendering fehlgeschlagen.", detail: String(e) },
+      { status: 500 },
+    );
+  }
 }
