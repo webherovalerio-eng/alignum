@@ -204,29 +204,11 @@ export function DraftPreview({
         </div>
       </section>
 
-      {/* Social-Carousel (feste 6 Slides): nur im Bearbeiten-Modus. In der
-          freigegebenen Ansicht ersetzen die echten 1080×1350-PNGs (vom
-          carousel-Endpoint, weiter unten im PostEditor) diese grobe Vorschau. */}
+      {/* Slide-Texte bearbeiten. Die grobe HTML-Vorschau wurde bewusst
+          entfernt — die echten 1080×1350-Slides zeigt der PostEditor darunter
+          (nach jedem Speichern aktualisiert). */}
       {!readOnly && (
       <section className="space-y-4">
-        <h3 className="font-label text-sm font-semibold text-foreground">
-          Instagram-Carousel · 6 Slides
-        </h3>
-
-        <div className="flex snap-x gap-3 overflow-x-auto pb-2">
-          <SlideCover img={cover} title={title} sub={lead} ortName={ortName} />
-          <SlideText n={2} eyebrow="Die Idee" text={paras[0] ?? ""} />
-          <SlideText n={3} eyebrow="Die Lösung" text={paras[1] ?? ""} img={images[1]} />
-          <SlideText
-            n={4}
-            eyebrow={holzart ? `Das Holz · ${holzart}` : "Das Holz"}
-            text={paras[2] ?? ""}
-            img={images[2]}
-          />
-          <SlideFeatures n={5} features={features} />
-          <SlideCta n={6} />
-        </div>
-
         {/* Editier-Box: Slide-Texte + Caption + Hashtags */}
         <div className="space-y-4 rounded-[var(--radius-lg)] border border-border bg-card/50 p-4">
           <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
@@ -290,120 +272,6 @@ export function DraftPreview({
       </section>
       )}
     </div>
-  );
-}
-
-/* ───────────────────────── Carousel-Slides ───────────────────────── */
-
-const SLIDE = "relative aspect-[4/5] w-48 shrink-0 snap-center overflow-hidden rounded-xl border border-border";
-
-function SlideBadge({ n }: { n: number }) {
-  return (
-    <span className="absolute right-2 top-2 z-10 rounded bg-black/40 px-1.5 py-0.5 text-[10px] text-white/80">
-      {n}/6
-    </span>
-  );
-}
-
-function SlideCover({
-  img,
-  title,
-  sub,
-  ortName,
-}: {
-  img?: PostImage;
-  title: string;
-  sub: string;
-  ortName: string;
-}) {
-  return (
-    <figure className={cn(SLIDE, "bg-black")}>
-      <SlideBadge n={1} />
-      {img && (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img src={img.url} alt="" className="absolute inset-0 h-full w-full object-cover" />
-      )}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/35 to-black/10" />
-      <figcaption className="absolute inset-x-0 bottom-0 p-3">
-        <p className="text-[10px] uppercase tracking-[0.2em] text-primary">
-          Referenz{ortName ? ` · ${ortName}` : ""}
-        </p>
-        <p className="font-display text-base font-semibold leading-tight text-white [text-wrap:balance]">
-          {title}
-        </p>
-        {sub && <p className="mt-1 line-clamp-2 text-[11px] text-white/80">{sub}</p>}
-      </figcaption>
-    </figure>
-  );
-}
-
-function SlideText({
-  n,
-  eyebrow,
-  text,
-  img,
-}: {
-  n: number;
-  eyebrow: string;
-  text: string;
-  img?: PostImage;
-}) {
-  return (
-    <figure className={cn(SLIDE, "bg-surface-deep")}>
-      <SlideBadge n={n} />
-      {img && (
-        <div className="relative h-1/2 w-full">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={img.url} alt="" className="h-full w-full object-cover" />
-        </div>
-      )}
-      <div className={cn("flex flex-col p-3", img ? "h-1/2" : "h-full justify-center")}>
-        <p className="text-[10px] uppercase tracking-[0.2em] text-primary">{eyebrow}</p>
-        <p className="mt-1 line-clamp-6 text-[13px] leading-snug text-white/90">
-          {text || "…"}
-        </p>
-      </div>
-    </figure>
-  );
-}
-
-function SlideFeatures({ n, features }: { n: number; features: string[] }) {
-  return (
-    <figure className={cn(SLIDE, "bg-card")}>
-      <SlideBadge n={n} />
-      <div className="flex h-full flex-col p-3">
-        <p className="text-[10px] uppercase tracking-[0.2em] text-primary">
-          Was wir gebaut haben
-        </p>
-        <ul className="mt-2 space-y-1.5">
-          {features.slice(0, 6).map((f, i) => (
-            <li key={i} className="flex items-start gap-1.5 text-[12px] text-foreground/90">
-              <span className="mt-1 size-1.5 shrink-0 rounded-full bg-primary" />
-              {f}
-            </li>
-          ))}
-          {features.length === 0 && (
-            <li className="text-[12px] text-muted-foreground">…</li>
-          )}
-        </ul>
-      </div>
-    </figure>
-  );
-}
-
-function SlideCta({ n }: { n: number }) {
-  return (
-    <figure className={cn(SLIDE, "bg-primary")}>
-      <SlideBadge n={n} />
-      <div className="flex h-full flex-col items-center justify-center gap-2 p-4 text-center">
-        <p className="font-display text-lg font-semibold leading-tight text-primary-foreground">
-          Aufmaß bei Ihnen. Fertigung bei uns.
-        </p>
-        <p className="rounded-full bg-primary-foreground/15 px-3 py-1 text-[11px] text-primary-foreground">
-          alignum.de/anfrage
-        </p>
-      </div>
-    </figure>
   );
 }
 
