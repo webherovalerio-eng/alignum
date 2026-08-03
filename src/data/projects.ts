@@ -65,6 +65,41 @@ export type Project = {
 
 export const PROJECTS: Project[] = [
   {
+    slug: "bank-weinheim-nussbaum",
+    city: "schreinerei-weinheim",
+    service: "tische-und-stuehle",
+    material: "nussbaum",
+    builtLabel: "Sitzbank nach Maß",
+    title: "Sitzbank aus Nussbaum — Projekt Weinheim",
+    metaTitle: "Sitzbank aus Nussbaum nach Maß | Projekt Weinheim",
+    metaDescription:
+      "Massive Sitzbank aus Nussbaum mit gedrechselten, konischen Beinen — von Alignum als Sonderanfertigung für einen Kunden in Weinheim gefertigt.",
+    summary:
+      "Massive Nussbaum-Sitzbank mit gedrechselten, konisch zulaufenden Beinen — als Sonderanfertigung gefertigt für einen Kunden in Weinheim.",
+    body: [
+      "Für einen Kunden in Weinheim haben wir eine schlichte, massive Sitzbank gefertigt — ein Solitär, der im Raum für sich steht und trotzdem nicht aufträgt. Gewünscht war eine Bank aus einem warmen, edlen Holz, die als ruhiger Blickfang funktioniert und zugleich alltagstauglich bleibt.",
+      "Entstanden ist eine Sitzbank aus massivem Nussbaum. Die Sitzplatte haben wir aus einer durchgehenden Bohle gearbeitet, sodass die lebendige Maserung über die ganze Länge läuft; die vordere Kante folgt dem natürlichen Verlauf des Holzes und bleibt bewusst leicht geschwungen. Getragen wird die Platte von vier gedrechselten, konisch zulaufenden Beinen — an der Drechselbank von Hand in Form gebracht und leicht nach außen gestellt, was der Bank einen festen, ruhigen Stand gibt.",
+      "Nussbaum ist unter den heimischen Hölzern das edelste — tief schokoladenbraun mit warmen, rötlichen Strähnen und einer Maserung, die je nach Lichteinfall changiert. Kein anderes einheimisches Holz wirkt so hochwertig ohne exotische Herkunft. Wir haben die Bank mehrfach geölt statt lackiert: So bleibt die Oberfläche fühlbar und seidig, die Farbe vertieft sich mit den Jahren, und Gebrauchsspuren lassen sich jederzeit nachölen.",
+      "Nach dem Aufmaß in Weinheim haben wir Platte und Beine in unserer Werkstatt gefertigt — das Drechseln der vier Beine ist Millimeterarbeit, damit alle exakt gleich zulaufen. Bei einem solchen Einzelstück vergehen von der Auswahl der Bohle bis zur fertig geölten Bank einige Wochen; geliefert und aufgestellt war sie an einem Nachmittag.",
+    ],
+    features: [
+      "Massive Sitzplatte aus europäischem Nussbaum, aus einer Bohle gearbeitet",
+      "Vier gedrechselte, konisch zulaufende Beine — von Hand an der Drechselbank",
+      "Lebendige, durchgehende Maserung mit natürlich geschwungener Vorderkante",
+      "Leicht nach außen gestellte Beine für einen sicheren, ruhigen Stand",
+      "Mehrfach natur geölt statt lackiert — jederzeit nachölbar",
+      "Aufmaß, Lieferung und Aufstellung in Weinheim",
+    ],
+    year: 2026,
+    images: [
+      "/images/projects/bank-weinheim-nussbaum/bank-weinheim-nussbaum-01.jpg",
+      "/images/projects/bank-weinheim-nussbaum/bank-weinheim-nussbaum-02.jpg",
+      "/images/projects/bank-weinheim-nussbaum/bank-weinheim-nussbaum-03.jpg",
+    ],
+    cover:
+      "/images/projects/bank-weinheim-nussbaum/bank-weinheim-nussbaum-01.jpg",
+  },
+  {
     slug: "kommode-edingen-eiche",
     city: "schreinerei-edingen-neckarhausen",
     service: "kommoden",
