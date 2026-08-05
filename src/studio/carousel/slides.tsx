@@ -40,6 +40,9 @@ export interface SlideData {
   features: string[];
   builtLabel: string;
   woodLabel: string;
+  /** Standard-Beschreibung des Holzes (aus materials.ts) — Fallback für Slide 4,
+   *  damit „Das Holz" nie ohne Text bleibt, auch ohne eigenen Holz-Absatz. */
+  woodDescription: string;
   woodIsLight: boolean;
   coverImg?: string;
   ideaImg?: string;
@@ -65,6 +68,7 @@ export function postToSlideData(post: Post): SlideData {
   const d = post.draft;
   const selected = post.images.filter((i) => i.selected);
   const materialSlug = materialSlugFor(post.holzart);
+  const material = MATERIALS.find((m) => m.slug === materialSlug);
   return {
     coverTitle: (d?.title || post.moebeltyp || "Projekt").trim(),
     place: post.ortName || "",
@@ -76,6 +80,7 @@ export function postToSlideData(post: Post): SlideData {
     features: d?.features ?? [],
     builtLabel: post.moebeltyp || "Maßmöbel",
     woodLabel: post.holzart || "Massivholz",
+    woodDescription: material?.description ?? "",
     woodIsLight: LIGHT_WOODS.has(materialSlug),
     coverImg: selected[0]?.url,
     solutionImg: selected[1]?.url ?? selected[0]?.url,
@@ -341,7 +346,7 @@ export function renderSlide(
                 maxWidth: 620,
               }}
             >
-              {data.body[2] ?? ""}
+              {data.body[2] || data.woodDescription}
             </div>
           </CenterWrap>
           <PagePill n={n} light={!light} />
