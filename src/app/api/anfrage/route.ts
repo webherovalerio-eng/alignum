@@ -1,5 +1,6 @@
 import type { NextRequest } from "next/server";
 import { buildAnfrageEmails, type AnfrageData } from "@/lib/anfrageEmail";
+import { kvIncr } from "@/studio/kv";
 
 // Node-Runtime: brauchen Buffer für Base64-Anhänge + FormData mit Dateien.
 export const runtime = "nodejs";
@@ -153,6 +154,15 @@ export async function POST(req: NextRequest) {
       html: confirm.html,
       text: confirm.text,
     });
+    // Anfrage zählen (für den Monatsreport). Best-effort — darf den Versand
+    // nie stören; die Search Console kennt keine Formular-Anfragen.
+    try {
+      const now = new Date();
+      const key = `report:anfragen:${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}`;
+      await kvIncr(key, 60 * 60 * 24 * 400); // ~13 Monate TTL, alte Monate räumen sich auf
+    } catch (e) {
+      console.error("[anfrage] Anfrage-Zähler fehlgeschlagen:", e);
+    }
     return Response.json({ ok: true });
   } catch (err) {
     console.error("[anfrage] Mailversand fehlgeschlagen:", err);
