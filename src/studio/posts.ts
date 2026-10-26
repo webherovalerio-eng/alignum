@@ -4,7 +4,7 @@
  * Handwerker, gelegentliche Projekte) ist Read-Modify-Write ausreichend.
  */
 import { kvGetJSON, kvSetJSON, kvDel } from "./kv";
-import { putImage, delImage } from "./blob";
+import { putImage, delImage, isImageKeyFor, isOwnImageUrl } from "./blob";
 import { randomTokenHex } from "./tokens";
 import { UPLOAD, FIELD } from "./config";
 import type { Post, PostDraft, PostImage } from "./types";
@@ -73,10 +73,39 @@ export async function savePost(post: Post): Promise<Post> {
 export async function deletePost(id: string): Promise<void> {
   const post = await getPost(id);
   if (post) {
-    for (const img of post.images) await delImage(img);
+    for (const img of post.images) {
+      if (isImageKeyFor(post.id, img.key)) await delImage(img.key);
+    }
   }
   await kvDel(postKey(id));
   await removeFromIndex(id);
+}
+
+type ImageKind = "jpeg" | "png" | "webp" | "heic" | "avif";
+
+const HEIC_BRANDS = new Set(["heic", "heix", "hevc", "hevx", "heim", "heis", "hevm", "hevs"]);
+const AVIF_BRANDS = new Set(["avif", "avis"]);
+
+/** Erkennt das Bildformat an den Magic Bytes; null = nicht erlaubt. */
+function sniffImage(b: Buffer): ImageKind | null {
+  if (b.length < 12) return null;
+  if (b[0] === 0xff && b[1] === 0xd8 && b[2] === 0xff) return "jpeg";
+  if (
+    b.subarray(0, 8).equals(Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]))
+  )
+    return "png";
+  if (b.toString("ascii", 0, 4) === "RIFF" && b.toString("ascii", 8, 12) === "WEBP")
+    return "webp";
+  // ISO-BMFF (HEIF/AVIF): [size]["ftyp"][major brand][minor][compatible brands…]
+  if (b.toString("ascii", 4, 8) === "ftyp") {
+    const boxSize = Math.min(b.readUInt32BE(0), b.length, 256);
+    const brands = [b.toString("ascii", 8, 12)];
+    for (let i = 16; i + 4 <= boxSize; i += 4) brands.push(b.toString("ascii", i, i + 4));
+    if (brands.some((x) => AVIF_BRANDS.has(x))) return "avif";
+    if (brands.some((x) => HEIC_BRANDS.has(x) || x === "mif1" || x === "msf1"))
+      return "heic";
+  }
+  return null;
 }
 
 function sanitizeName(name: string): string {
@@ -116,11 +145,12 @@ export async function processUpload(
       rejected++;
       continue;
     }
-    const nameHeic = /\.(heic|heif)$/i.test(file.name);
-    const isHeic = nameHeic || /heic|heif/i.test(file.type);
-    // Permissiv: echtes Bild (image/*), leerer MIME-Typ (HEIC von iPhone liefert
-    // oft "") oder HEIC/HEIF-Endung. Alles andere wird abgelehnt.
-    const typeOk = file.type.startsWith("image/") || file.type === "" || nameHeic;
+    // Deklarierter Typ muss in der Allowlist sein. Leerer/generischer MIME-Typ
+    // (HEIC vom iPhone liefert oft "") nur mit passender Bild-Endung.
+    const nameOk = /\.(jpe?g|png|webp|heic|heif|avif)$/i.test(file.name);
+    const typeOk =
+      UPLOAD.allowedTypes.has(file.type.toLowerCase()) ||
+      ((file.type === "" || file.type === "application/octet-stream") && nameOk);
     if (!typeOk || file.size > UPLOAD.maxImageBytes) {
       rejected++;
       continue;
@@ -128,8 +158,16 @@ export async function processUpload(
 
     let input = Buffer.from(await file.arrayBuffer());
 
+    // Der tatsächliche Typ zählt (Magic Bytes), nicht Name/MIME des Clients.
+    // SVG, GIF, TIFF, PDF … erreichen die Decoder damit gar nicht erst.
+    const kind = sniffImage(input);
+    if (!kind) {
+      rejected++;
+      continue;
+    }
+
     // sharp kann HEIC/HEIF nicht dekodieren (Patent-Lizenz) → vorher nach JPEG.
-    if (isHeic) {
+    if (kind === "heic") {
       try {
         const heicConvert = (await import("heic-convert")).default;
         const jpeg = await heicConvert({
@@ -194,18 +232,31 @@ export async function processUpload(
  * (eventually-consistent) KV-Read zusammen, sonst überschreiben sich schnelle
  * Upload-/Lösch-Aktionen gegenseitig.
  */
-export function validateImages(postId: string, desired: unknown[]): PostImage[] {
-  const prefix = `${postId}/`;
+export function validateImages(
+  postId: string,
+  desired: unknown[],
+  known: PostImage[] = [],
+): PostImage[] {
+  // Bereits gespeicherte Bilder behalten ihre (serverseitig bekannte) URL.
+  const knownUrl = new Map(known.map((i) => [i.key, i.url]));
   const seen = new Set<string>();
   const out: PostImage[] = [];
   for (const raw of desired) {
     if (out.length >= UPLOAD.maxImagesPerPost) break;
     const img = raw as Partial<PostImage>;
-    if (typeof img?.key !== "string" || !img.key.startsWith(prefix)) continue;
-    if (typeof img.url !== "string" || seen.has(img.key)) continue;
+    if (!isImageKeyFor(postId, img?.key) || seen.has(img.key)) continue;
+    // URL muss exakt zum Key im eigenen Blob-Store passen (kein SSRF über
+    // Satori/KI-Vision mit fremden URLs).
+    const url =
+      knownUrl.get(img.key) === img.url
+        ? img.url
+        : isOwnImageUrl(img.key, img.url)
+          ? img.url
+          : undefined;
+    if (!url) continue;
     out.push({
       key: img.key,
-      url: img.url,
+      url,
       filename:
         typeof img.filename === "string" ? sanitizeName(img.filename) : "bild",
       bytes:
@@ -233,21 +284,17 @@ export async function setImages(
   desired: unknown[],
   remove: unknown[] = [],
 ): Promise<Post> {
-  post.images = validateImages(post.id, desired);
+  post.images = validateImages(post.id, desired, post.images);
   await savePost(post);
 
   const keep = new Set(post.images.map((i) => i.key));
-  const prefix = `${post.id}/`;
   for (const raw of remove) {
     const r = raw as Partial<PostImage>;
-    if (
-      typeof r?.key === "string" &&
-      r.key.startsWith(prefix) &&
-      !keep.has(r.key) &&
-      typeof r.url === "string"
-    ) {
+    // Löschziel NUR aus dem validierten Key ableiten — die Client-URL wird
+    // ignoriert (sonst wäre jeder Blob im Store löschbar, inkl. KV-Daten).
+    if (isImageKeyFor(post.id, r?.key) && !keep.has(r.key)) {
       try {
-        await delImage({ key: r.key, url: r.url });
+        await delImage(r.key);
       } catch {
         /* Orphan bleibt liegen — Liste ist bereits korrekt gespeichert. */
       }
@@ -278,7 +325,7 @@ export async function updatePost(post: Post, patch: PostPatch): Promise<Post> {
   if (patch.regie !== undefined) post.regie = patch.regie.slice(0, FIELD.regie);
   // Bildliste ist client-autoritativ → 1:1 übernehmen (kein Read-Modify-Write).
   if (patch.images !== undefined)
-    post.images = validateImages(post.id, patch.images);
+    post.images = validateImages(post.id, patch.images, post.images);
   if (patch.draft !== undefined) post.draft = patch.draft;
   return savePost(post);
 }
@@ -303,7 +350,7 @@ export function applyBrief(post: Post, body: Record<string, unknown>): void {
   if (s(body.regie) !== undefined)
     post.regie = (body.regie as string).slice(0, FIELD.regie);
   if (Array.isArray(body.images))
-    post.images = validateImages(post.id, body.images);
+    post.images = validateImages(post.id, body.images, post.images);
 }
 
 /** Editierten Draft aus dem Request säubern (nur erlaubte Felder, längenbegrenzt). */

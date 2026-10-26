@@ -72,6 +72,8 @@ export interface Post {
 export interface SessionPayload {
   sub: string; // E-Mail (Subject)
   role: StudioRole;
+  /** Session-Version zum Ausstellungszeitpunkt (Widerruf per Logout). */
+  ver?: number;
   [key: string]: unknown; // jose JWTPayload-Kompatibilität (iat/exp etc.)
 }
 

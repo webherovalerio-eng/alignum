@@ -8,7 +8,7 @@ import {
   sessionCookieOptions,
   csrfCookieOptions,
 } from "@/studio/config";
-import { encodeSession } from "@/studio/session";
+import { encodeSession, currentSessionVersion } from "@/studio/session";
 import { randomTokenHex } from "@/studio/tokens";
 
 export const runtime = "nodejs";
@@ -27,6 +27,8 @@ export async function POST(req: NextRequest) {
 
   const email = await consumeMagicToken(token);
   if (!email) {
+    // A09: fehlgeschlagene Einlösung protokollieren (ohne Token/PII).
+    console.warn("[studio] Magic-Link ungültig oder abgelaufen");
     return NextResponse.redirect(new URL("/login/?e=link", req.url), 303);
   }
   const role = roleFor(email);
@@ -34,7 +36,8 @@ export async function POST(req: NextRequest) {
     return NextResponse.redirect(new URL("/login/?e=denied", req.url), 303);
   }
 
-  const jwt = await encodeSession({ sub: email, role });
+  const ver = await currentSessionVersion(email);
+  const jwt = await encodeSession({ sub: email, role, ver });
   const csrf = randomTokenHex(32);
 
   // 303 → Browser folgt per GET nach /studio/ und sendet dabei die neuen Cookies.

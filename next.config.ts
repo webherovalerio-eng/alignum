@@ -6,7 +6,12 @@ import type { NextConfig } from "next";
  * ist für Next-Hydration + next-themes + Framer/Tailwind nötig; da keine fremden
  * Skripte geladen werden und keine UGC-Ausgabe existiert, ist das Rest-XSS-Risiko
  * minimal. frame-src erlaubt nur die Google-Maps-Einbettung auf /kontakt.
+ * Cloudflare Turnstile wird NUR freigegeben, wenn der Site-Key gesetzt ist.
  */
+const turnstile = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY
+  ? " https://challenges.cloudflare.com"
+  : "";
+
 const csp = [
   "default-src 'self'",
   "base-uri 'self'",
@@ -16,9 +21,9 @@ const csp = [
   "img-src 'self' data: https:",
   "font-src 'self'",
   "style-src 'self' 'unsafe-inline'",
-  "script-src 'self' 'unsafe-inline'",
+  `script-src 'self' 'unsafe-inline'${turnstile}`,
   "connect-src 'self'",
-  "frame-src https://www.google.com https://maps.google.com",
+  `frame-src https://www.google.com https://maps.google.com${turnstile}`,
   "upgrade-insecure-requests",
 ].join("; ");
 

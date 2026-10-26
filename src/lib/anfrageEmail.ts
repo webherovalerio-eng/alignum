@@ -9,6 +9,9 @@
  * und einen Dark-Mode-Swap als Progressive Enhancement.
  */
 
+import { SERVICES } from "@/data/services";
+import { SCOPES, BUDGETS, TIMELINES } from "@/lib/anfrageOptions";
+
 export type AnfrageData = {
   serviceNames?: string[];
   scope?: string;
@@ -38,7 +41,10 @@ function esc(s: string) {
   return (s ?? "")
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;");
+    .replace(/>/g, "&gt;")
+    // Auch Quotes: Werte landen teils in Attributen (href="mailto:…").
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
 }
 
 function rowsToHtml(rows: [string, string][]) {
@@ -190,17 +196,32 @@ export function buildAnfrageEmails(
       .join("\n"),
   };
 
+  // Bestätigung geht an eine FREI eingebbare Adresse → sie darf keinen
+  // Freitext des Absenders enthalten (Name, Beschreibung, …), sonst lässt sich
+  // das Formular als Spam-Relay über alignum.de missbrauchen. Nur feste
+  // Auswahlwerte (Allowlist) werden gespiegelt.
+  const knownServices = new Set(SERVICES.map((s) => s.name));
+  const confirmServices = (data.serviceNames ?? []).filter((s) => knownServices.has(s));
+  const pick = (v: string | undefined, allowed: string[]) =>
+    v && allowed.includes(v) ? v : "—";
+  const confirmRows: [string, string][] = [
+    ["Leistung", confirmServices.length ? confirmServices.join(", ") : "—"],
+    ["Umfang", pick(data.scope, SCOPES)],
+    ["Budget", pick(data.budget, BUDGETS)],
+    ["Zeitrahmen", pick(data.timeline, TIMELINES)],
+  ];
+
   const confirm = {
     subject: "Ihre Anfrage bei Alignum",
     html: shell({
       preheader: "Ihre Anfrage bei Alignum ist eingegangen – wir melden uns persönlich bei Ihnen.",
       kicker: "Ihre Anfrage",
-      heading: name ? `Vielen Dank, ${name}.` : "Vielen Dank für Ihre Anfrage.",
+      heading: "Vielen Dank für Ihre Anfrage.",
       intro: "Wir haben Ihre Anfrage erhalten und melden uns persönlich bei Ihnen. Hier Ihre Angaben noch einmal im Überblick:",
-      rowsHtml,
+      rowsHtml: rowsToHtml(confirmRows),
       footerHtml: confirmFooter(),
     }),
-    text: `Hallo ${name || ""},\n\nvielen Dank für Ihre Anfrage bei Alignum. Wir haben Ihre Angaben erhalten und melden uns persönlich bei Ihnen.\n\nHerzliche Grüße\nIhr Alignum-Team\n${PHONE_DISPLAY} · ${EMAIL}`,
+    text: `Guten Tag,\n\nvielen Dank für Ihre Anfrage bei Alignum. Wir haben Ihre Angaben erhalten und melden uns persönlich bei Ihnen.\n\nHerzliche Grüße\nIhr Alignum-Team\n${PHONE_DISPLAY} · ${EMAIL}`,
   };
 
   return { notify, confirm };

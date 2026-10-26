@@ -79,9 +79,10 @@ export async function GET(req: Request, ctx: { params: Promise<{ id: string }> }
       },
     });
   } catch (e) {
+    // Details nur ins Server-Log, nicht an den Client (OWASP A10).
     console.error(`[studio] carousel slide ${n} für ${id} fehlgeschlagen:`, e);
     return Response.json(
-      { error: "Slide-Rendering fehlgeschlagen.", detail: String(e) },
+      { error: "Slide-Rendering fehlgeschlagen." },
       { status: 500 },
     );
   }

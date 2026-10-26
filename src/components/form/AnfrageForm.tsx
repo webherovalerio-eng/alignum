@@ -7,6 +7,8 @@ import { Button } from "@/components/ui/Button";
 import { SERVICES } from "@/data/services";
 import { SITE } from "@/data/site";
 import { cn } from "@/lib/cn";
+import { SCOPES, BUDGETS, TIMELINES } from "@/lib/anfrageOptions";
+import { Turnstile } from "./Turnstile";
 
 type FormState = {
   services: string[];
@@ -22,10 +24,6 @@ type FormState = {
   contactPref: "email" | "phone" | "either";
 };
 
-const SCOPES = ["Komplett-Projekt", "Einzelmöbel", "Sanierung / Umbau", "Beratung & Planung"];
-const BUDGETS = ["bis 3.000 €", "3.000 – 8.000 €", "8.000 – 20.000 €", "20.000 – 50.000 €", "über 50.000 €", "Weiß ich noch nicht"];
-const TIMELINES = ["in 1–3 Monaten", "in 3–6 Monaten", "Flexibel"];
-
 const STEPS = ["Leistung", "Projekt", "Kontakt", "Übersicht"];
 
 const MAX_FILES = 5;
@@ -38,6 +36,7 @@ export function AnfrageForm({ initialService }: { initialService?: string }) {
   const [error, setError] = useState<string | null>(null);
   const [files, setFiles] = useState<File[]>([]);
   const [company, setCompany] = useState(""); // Honeypot – bleibt bei echten Nutzern leer
+  const [captcha, setCaptcha] = useState(""); // Turnstile-Token (nur falls aktiviert)
 
   const [form, setForm] = useState<FormState>({
     services: initialService ? [initialService] : [],
@@ -120,6 +119,7 @@ export function AnfrageForm({ initialService }: { initialService?: string }) {
       const fd = new FormData();
       fd.append("payload", JSON.stringify({ ...form, serviceNames }));
       fd.append("company", company); // Honeypot
+      if (captcha) fd.append("cf-turnstile-response", captcha);
       files.forEach((f) => fd.append("files", f));
       // Trailing Slash wichtig: trailingSlash:true würde "/api/anfrage" sonst
       // per 308 umleiten — bei POST fragil. Direkt auf den Slash-Pfad posten.
@@ -218,6 +218,7 @@ export function AnfrageForm({ initialService }: { initialService?: string }) {
                 onRemoveFile={removeFile}
               />
             )}
+            {step === 3 && <Turnstile onToken={setCaptcha} />}
 
             {/* Nav */}
             <div className="mt-10 flex items-center justify-between border-t border-border pt-6">

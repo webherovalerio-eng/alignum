@@ -8,6 +8,8 @@
 
 export type StudioRole = "jan" | "reviewer" | "admin";
 
+const VALID_ROLES: ReadonlySet<string> = new Set<StudioRole>(["jan", "reviewer", "admin"]);
+
 export const isProd = process.env.NODE_ENV === "production";
 
 /**
@@ -28,7 +30,15 @@ export function studioUsers(): Record<string, StudioRole> {
   for (const part of raw.split(",")) {
     const [email, role] = part.split(":").map((s) => s.trim().toLowerCase());
     if (!email) continue;
-    map[email] = (role as StudioRole) || "jan";
+    if (!role) {
+      map[email] = "jan";
+    } else if (VALID_ROLES.has(role)) {
+      map[email] = role as StudioRole;
+    } else {
+      // Unbekannte Rolle (Tippfehler/Manipulation) → Eintrag verwerfen statt
+      // ungeprüft übernehmen (fail closed).
+      console.warn("[studio] STUDIO_ALLOWED_EMAILS: Eintrag mit unbekannter Rolle ignoriert");
+    }
   }
   return Object.keys(map).length ? map : DEFAULT_USERS;
 }
