@@ -53,6 +53,17 @@ export function roleFor(email: string): StudioRole | null {
   return studioUsers()[normalizeEmail(email)] ?? null;
 }
 
+// --- Blob-Store ------------------------------------------------------------
+/**
+ * Read-Write-Token des PRIVATEN Blob-Stores (alignum-private, fra1) — der
+ * EINZIGE Store, den die App nutzt (Bilder + KV). `BLOB_READ_WRITE_TOKEN`
+ * zeigt auf den alten ÖFFENTLICHEN Store und wird von der App bewusst nicht
+ * mehr gelesen (nur noch vom Migrationsskript). Ohne Token → Dev-Fallback.
+ */
+export function privateBlobToken(): string | undefined {
+  return process.env.PRIVATE_READ_WRITE_TOKEN || undefined;
+}
+
 // --- Cookies ---------------------------------------------------------------
 // `__Host-`-Prefix erzwingt Secure + Path=/ + kein Domain-Attribut (OWASP
 // Session-Mgmt Cheat Sheet). Über http-localhost lehnt der Browser `__Host-`

@@ -1,18 +1,21 @@
 /**
  * Geteilter Key-Value-Speicher mit drei Backends (in dieser Priorität):
  *   1. Upstash Redis (falls UPSTASH/KV-Env gesetzt) — echter Redis, atomar.
- *   2. Vercel Blob (falls BLOB_READ_WRITE_TOKEN gesetzt) — KV auf Objekt-Storage.
+ *   2. PRIVATER Vercel-Blob-Store (falls PRIVATE_READ_WRITE_TOKEN gesetzt) —
+ *      KV auf Objekt-Storage.
  *   3. In-Memory (Dev-Fallback, an globalThis gehängt).
  *
  * WARUM Blob als KV: Upstash braucht eine Browser-Freigabe (nicht headless
  * provisionierbar). Der Blob-Store ist per CLI angelegt → wir betreiben KV
- * darauf. Keys werden mit AUTH_SECRET gesalzen und SHA-256-gehasht → die
- * Blob-Pfade sind unratbar (Store ist zwar public, aber ohne List-Zugriff und
- * ohne verlinkte URLs). Reads werden per Query-String cache-gebustet, weil
- * Blob-URLs CDN-gecacht sind (min. 60s) — sonst gäbe es stale Read-after-Write.
+ * darauf. Keys werden mit AUTH_SECRET gesalzen und SHA-256-gehasht
+ * (`kv/<hash>.json`). Der Store ist PRIVAT: Einträge (Posts, Session-Versionen,
+ * Magic-Links, Rate-Limits) haben keine öffentliche URL und sind nur mit dem
+ * Token lesbar. Reads gehen mit `useCache: false` direkt an den Origin —
+ * sonst gäbe es stale Read-after-Write.
  */
 import { Redis } from "@upstash/redis";
 import { sha256Hex } from "./tokens";
+import { privateBlobToken } from "./config";
 
 // --- Backend-Detection -----------------------------------------------------
 let cachedRedis: Redis | null | undefined;
@@ -29,7 +32,9 @@ function getRedis(): Redis | null {
 }
 
 function blobToken(): string | undefined {
-  return process.env.BLOB_READ_WRITE_TOKEN;
+  // Immer explizit der PRIVATE Store — nie SDK-Defaults (BLOB_READ_WRITE_TOKEN
+  // = alter öffentlicher Store, BLOB_STORE_ID/OIDC).
+  return privateBlobToken();
 }
 
 export function isKvConfigured(): boolean {
@@ -52,20 +57,18 @@ async function blobPath(key: string): Promise<string> {
 
 /** Rohes Entry lesen (ohne Expiry-Nebenwirkung). null wenn nicht vorhanden. */
 async function blobReadEntry(key: string): Promise<Entry | null> {
-  const { head } = await import("@vercel/blob");
+  const { get } = await import("@vercel/blob");
   const path = await blobPath(key);
-  let url: string;
+  let res;
   try {
-    const meta = await head(path, { token: blobToken() });
-    url = meta.url;
+    // useCache:false → frischer Origin-Read (kein CDN-Cache, kein stale RaW).
+    res = await get(path, { access: "private", token: blobToken(), useCache: false });
   } catch {
-    return null; // BlobNotFoundError
+    return null;
   }
-  // Cache-Bust: eindeutiger Query-String → CDN-Miss → frischer Origin-Read.
-  const res = await fetch(`${url}?_=${Date.now()}`, { cache: "no-store" });
-  if (!res.ok) return null;
+  if (!res || res.statusCode !== 200) return null;
   try {
-    return (await res.json()) as Entry;
+    return JSON.parse(await new Response(res.stream).text()) as Entry;
   } catch {
     return null;
   }
@@ -75,11 +78,11 @@ async function blobWriteEntry(key: string, entry: Entry): Promise<void> {
   const { put } = await import("@vercel/blob");
   const path = await blobPath(key);
   await put(path, JSON.stringify(entry), {
-    access: "public",
+    access: "private",
     addRandomSuffix: false,
     allowOverwrite: true,
     contentType: "application/json",
-    cacheControlMaxAge: 60, // Minimum; Reads busten den Cache ohnehin
+    cacheControlMaxAge: 60, // Minimum; Reads umgehen den Cache ohnehin
     token: blobToken(),
   });
 }

@@ -44,6 +44,12 @@ export interface SlideData {
    *  damit „Das Holz" nie ohne Text bleibt, auch ohne eigenen Holz-Absatz. */
   woodDescription: string;
   woodIsLight: boolean;
+  /** Bild-Keys im privaten Store (Cover / Lösung / Idee). */
+  coverKey?: string;
+  solutionKey?: string;
+  ideaKey?: string;
+  /** Renderfertige Bildquellen (Data-URIs) — vom Aufrufer aus den Keys
+   *  aufgelöst (`get()` aus dem privaten Store), nie eine Remote-URL. */
   coverImg?: string;
   ideaImg?: string;
   solutionImg?: string;
@@ -82,9 +88,9 @@ export function postToSlideData(post: Post): SlideData {
     woodLabel: post.holzart || "Massivholz",
     woodDescription: material?.description ?? "",
     woodIsLight: LIGHT_WOODS.has(materialSlug),
-    coverImg: selected[0]?.url,
-    solutionImg: selected[1]?.url ?? selected[0]?.url,
-    ideaImg: selected[2]?.url ?? selected[0]?.url,
+    coverKey: selected[0]?.key,
+    solutionKey: selected[1]?.key ?? selected[0]?.key,
+    ideaKey: selected[2]?.key ?? selected[0]?.key,
     materialSlug,
   };
 }

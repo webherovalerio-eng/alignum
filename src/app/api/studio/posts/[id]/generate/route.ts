@@ -66,7 +66,7 @@ export async function POST(
       notiz: post.notiz,
       // Ausgewählte Fotos mitgeben → das Modell beschreibt das Möbel konkret,
       // statt zu raten (Vision). Nur ausgewählte, in Original-Reihenfolge.
-      imageUrls: post.images.filter((i) => i.selected).map((i) => i.url),
+      imageKeys: post.images.filter((i) => i.selected).map((i) => i.key),
     });
     post.draft = draft;
     await savePost(post);

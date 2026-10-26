@@ -8,7 +8,8 @@ import { SESSION_COOKIE, roleFor } from "@/studio/config";
  * DAL/Route-Handler (Defense in Depth); hier nur schnelle Redirects + noindex.
  *
  * Läuft NICHT auf /api/studio/* (die Auth-Routen sichern sich selbst) und nicht
- * auf /studio-media/* (Dev-Bildauslieferung).
+ * auf /studio-media/* (Bildauslieferung aus dem privaten Store; die Route prüft
+ * die Session selbst via guard() und setzt noindex).
  */
 export async function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl;
