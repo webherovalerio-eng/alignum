@@ -4,6 +4,7 @@
  * Resend-Mailversand) und erzwingt strukturiertes JSON via output_config.format.
  */
 import { GEN_MODEL } from "./config";
+import { readImageJpeg } from "./blob";
 import type { PostDraft } from "./types";
 
 const ENDPOINT = "https://api.anthropic.com/v1/messages";
@@ -96,18 +97,26 @@ export async function generateDraft(input: {
   holzart: string;
   moebeltyp: string;
   notiz: string;
-  imageUrls?: string[];
+  /** Bild-Keys (privater Store) der ausgewählten Fotos, in Reihenfolge. */
+  imageKeys?: string[];
 }): Promise<PostDraft> {
   const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) throw new Error("ANTHROPIC_API_KEY ist nicht gesetzt.");
 
-  // Ausgewählte Fotos als Bild-Blöcke voranstellen (max. 6, nur öffentliche
-  // http(s)-URLs — der lokale Dev-Blob liefert relative Pfade, die die API nicht
-  // erreichen kann, und wird daher übersprungen → Text-only-Fallback).
-  const imageBlocks = (input.imageUrls ?? [])
-    .filter((u) => typeof u === "string" && /^https?:\/\//i.test(u))
-    .slice(0, 6)
-    .map((url) => ({ type: "image", source: { type: "url", url } }));
+  // Ausgewählte Fotos als Bild-Blöcke voranstellen (max. 6). Die Fotos liegen
+  // im PRIVATEN Store (keine öffentliche URL) → Bytes per Key holen, auf
+  // 1568 px verkleinern und base64 mitschicken. Fehlende Bilder werden
+  // übersprungen (Text-only-Fallback).
+  const imageBlocks = (
+    await Promise.all(
+      (input.imageKeys ?? []).slice(0, 6).map((k) => readImageJpeg(k, 1568).catch(() => null)),
+    )
+  )
+    .filter((b): b is Buffer => b !== null)
+    .map((b) => ({
+      type: "image",
+      source: { type: "base64", media_type: "image/jpeg", data: b.toString("base64") },
+    }));
   const content: unknown[] = [...imageBlocks, { type: "text", text: userPrompt(input) }];
 
   const res = await fetch(ENDPOINT, {

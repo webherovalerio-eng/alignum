@@ -4,7 +4,13 @@
  * Handwerker, gelegentliche Projekte) ist Read-Modify-Write ausreichend.
  */
 import { kvGetJSON, kvSetJSON, kvDel } from "./kv";
-import { putImage, delImage, isImageKeyFor, isOwnImageUrl } from "./blob";
+import {
+  putImage,
+  delImage,
+  isImageKeyFor,
+  isOwnImageUrl,
+  mediaUrl,
+} from "./blob";
 import { randomTokenHex } from "./tokens";
 import { UPLOAD, FIELD } from "./config";
 import type { Post, PostDraft, PostImage } from "./types";
@@ -15,7 +21,23 @@ const ID_RE = /^[a-z0-9]{4,32}$/;
 
 export async function getPost(id: string): Promise<Post | null> {
   if (!ID_RE.test(id)) return null;
-  return kvGetJSON<Post>(postKey(id));
+  const post = await kvGetJSON<Post>(postKey(id));
+  return post ? normalizePost(post) : null;
+}
+
+/**
+ * Übergang alt → privat: Bild-Referenzen IMMER aus dem Key ableiten. Alt-Posts
+ * tragen noch die volle URL des öffentlichen Stores; der Key (= Pathname) ist
+ * identisch mit dem Pathname im privaten Store (Migration kopiert 1:1). So
+ * zeigt jede Referenz nach dem Deploy auf die eigene Route — egal, ob das
+ * Migrationsskript die gespeicherten URLs schon umgeschrieben hat.
+ */
+function normalizePost(post: Post): Post {
+  if (!Array.isArray(post.images)) post.images = [];
+  post.images = post.images
+    .filter((img) => isImageKeyFor(post.id, img?.key))
+    .map((img) => ({ ...img, url: mediaUrl(img.key) }));
+  return post;
 }
 
 export async function listPosts(): Promise<Post[]> {
@@ -237,23 +259,20 @@ export function validateImages(
   desired: unknown[],
   known: PostImage[] = [],
 ): PostImage[] {
-  // Bereits gespeicherte Bilder behalten ihre (serverseitig bekannte) URL.
-  const knownUrl = new Map(known.map((i) => [i.key, i.url]));
+  const knownKeys = new Set(known.map((i) => i.key));
   const seen = new Set<string>();
   const out: PostImage[] = [];
   for (const raw of desired) {
     if (out.length >= UPLOAD.maxImagesPerPost) break;
     const img = raw as Partial<PostImage>;
     if (!isImageKeyFor(postId, img?.key) || seen.has(img.key)) continue;
-    // URL muss exakt zum Key im eigenen Blob-Store passen (kein SSRF über
-    // Satori/KI-Vision mit fremden URLs).
-    const url =
-      knownUrl.get(img.key) === img.url
-        ? img.url
-        : isOwnImageUrl(img.key, img.url)
-          ? img.url
-          : undefined;
-    if (!url) continue;
+    // Referenz muss zum Key passen: bereits bekanntes Bild, kanonische
+    // Proxy-URL `/studio-media/{key}` oder (Übergang) Alt-URL des öffentlichen
+    // Stores mit genau diesem Pathname. Gespeichert wird IMMER die aus dem Key
+    // abgeleitete Proxy-URL — die Client-URL wird nie übernommen oder gefetcht
+    // (kein SSRF über Satori/KI-Vision; Bytes kommen per Key aus dem Store).
+    if (!knownKeys.has(img.key) && !isOwnImageUrl(img.key, img.url)) continue;
+    const url = mediaUrl(img.key);
     out.push({
       key: img.key,
       url,

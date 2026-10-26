@@ -18,7 +18,9 @@ const csp = [
   "object-src 'none'",
   "frame-ancestors 'self'",
   "form-action 'self'",
-  "img-src 'self' data: https:",
+  // Studio-Bilder kommen seit dem Umzug auf den PRIVATEN Blob-Store über die
+  // eigene Route /studio-media/ (same-origin) — kein externer Bild-Host nötig.
+  "img-src 'self' data:",
   "font-src 'self'",
   "style-src 'self' 'unsafe-inline'",
   `script-src 'self' 'unsafe-inline'${turnstile}`,

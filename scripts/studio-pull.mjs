@@ -5,17 +5,19 @@
  * ausgewählten Bilder → in die Ordnerstruktur, die der alignum-projects-Skill
  * erwartet:  <OUT>/<Holzart>/<Möbeltyp Stadt>/
  *
- * Backend: das Studio persistiert seinen KV auf VERCEL BLOB (nicht Upstash —
- * das braucht eine Browser-Freigabe, die headless nicht ging; siehe
- * src/studio/kv.ts). Die Post-JSONs liegen also als Blob-Objekte unter `kv/…`.
- * Der Objekt-INHALT ist Klartext-JSON, nur der Pfadname ist mit AUTH_SECRET
- * gehasht. AUTH_SECRET ist in Vercel als „sensitive" markiert und via
- * `vercel env pull` NICHT abrufbar — deshalb finden wir die Posts NICHT über
- * den gehashten Key, sondern per `list({prefix:"kv/"})` und identifizieren die
- * Post-Objekte am Schema. Das braucht nur den BLOB_READ_WRITE_TOKEN, der per
- * `vercel env pull` kommt.
+ * Backend: das Studio persistiert seinen KV auf dem PRIVATEN Vercel-Blob-Store
+ * (alignum-private, fra1; nicht Upstash — das braucht eine Browser-Freigabe,
+ * die headless nicht ging; siehe src/studio/kv.ts). Die Post-JSONs liegen also
+ * als Blob-Objekte unter `kv/…`. Der Objekt-INHALT ist Klartext-JSON, nur der
+ * Pfadname ist mit AUTH_SECRET gehasht. AUTH_SECRET ist in Vercel als
+ * „sensitive" markiert und via `vercel env pull` NICHT abrufbar — deshalb finden
+ * wir die Posts NICHT über den gehashten Key, sondern per `list({prefix:"kv/"})`
+ * und identifizieren die Post-Objekte am Schema. Das braucht nur den
+ * PRIVATE_READ_WRITE_TOKEN, der per `vercel env pull` kommt. Private Blobs haben
+ * keine öffentliche URL → Inhalte und Bilder werden per
+ * `get(pathname, { access: "private", token })` gelesen. Rein lesend.
  *
- * Voraussetzung: BLOB_READ_WRITE_TOKEN (z. B. via `vercel env pull .env.local`).
+ * Voraussetzung: PRIVATE_READ_WRITE_TOKEN (z. B. via `vercel env pull .env.local`).
  * Aufruf:  node scripts/studio-pull.mjs ["Projekte Holzsorten"]
  *
  * Hinweis Idempotenz: filtert auf Status "freigegeben" und ändert ihn NICHT.
@@ -23,14 +25,14 @@
  * überschrieben). Verarbeitete Beiträge in Jans Studio löschen oder den
  * OUT-Ordner vor einem erneuten Lauf leeren.
  */
-import { list } from "@vercel/blob";
+import { get, list } from "@vercel/blob";
 import { readFileSync, existsSync } from "node:fs";
 import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 
 // .env.local laden, falls die Variablen nicht schon im Prozess gesetzt sind.
 for (const file of [".env.local", ".env"]) {
-  if (process.env.BLOB_READ_WRITE_TOKEN) break;
+  if (process.env.PRIVATE_READ_WRITE_TOKEN) break;
   if (!existsSync(file)) continue;
   for (const line of readFileSync(file, "utf8").split("\n")) {
     const i = line.indexOf("=");
@@ -42,17 +44,18 @@ for (const file of [".env.local", ".env"]) {
   }
 }
 
-const TOKEN = process.env.BLOB_READ_WRITE_TOKEN;
+const TOKEN = process.env.PRIVATE_READ_WRITE_TOKEN;
 if (!TOKEN) {
   console.error(
-    "✗ BLOB_READ_WRITE_TOKEN fehlt. Hol dir die Env-Vars mit\n" +
-      "  `vercel env pull .env.local` (im web/-Verzeichnis).",
+    "✗ PRIVATE_READ_WRITE_TOKEN fehlt. Hol dir die Env-Vars mit\n" +
+      "  `vercel env pull .env.local`.",
   );
   process.exit(1);
 }
 
 const OUT = process.argv[2] || "Projekte Holzsorten";
 const STATUS = "freigegeben";
+const IMAGE_KEY_RE = /^[a-z0-9]{4,32}\/[a-f0-9]{12}\.jpg$/;
 
 function briefText(post) {
   return [
@@ -74,6 +77,24 @@ function briefText(post) {
   ].join("\n");
 }
 
+/** Blob aus dem privaten Store lesen (frisch vom Origin). null = fehlt. */
+async function readPrivate(pathname) {
+  const res = await get(pathname, { access: "private", token: TOKEN, useCache: false });
+  if (!res || res.statusCode !== 200) return null;
+  return Buffer.from(await new Response(res.stream).arrayBuffer());
+}
+
+/** Bild-Pathname = Key. Alt-Posts (vor der Migration) ggf. aus der Alt-URL. */
+function imagePathname(img) {
+  if (typeof img.key === "string" && IMAGE_KEY_RE.test(img.key)) return img.key;
+  try {
+    const p = new URL(img.url).pathname.replace(/^\//, "");
+    return IMAGE_KEY_RE.test(p) ? p : null;
+  } catch {
+    return null;
+  }
+}
+
 /** Ist das geparste Blob-Objekt ein Studio-Post? (am Schema erkannt) */
 function isPost(v) {
   return (
@@ -87,16 +108,21 @@ function isPost(v) {
 }
 
 async function main() {
-  const { blobs } = await list({ prefix: "kv/", token: TOKEN, limit: 1000 });
+  const blobs = [];
+  let cursor;
+  do {
+    const page = await list({ prefix: "kv/", token: TOKEN, limit: 1000, cursor });
+    blobs.push(...page.blobs);
+    cursor = page.hasMore ? page.cursor : undefined;
+  } while (cursor);
   let pulled = 0;
 
   for (const b of blobs) {
-    // Cache-Bust: Blob-URLs sind CDN-gecacht (min. 60s).
-    const res = await fetch(`${b.url}?_=${Date.now()}`, { cache: "no-store" });
-    if (!res.ok) continue;
+    const raw = await readPrivate(b.pathname);
+    if (!raw) continue;
     let entry;
     try {
-      entry = await res.json();
+      entry = JSON.parse(raw.toString("utf8"));
     } catch {
       continue;
     }
@@ -121,17 +147,14 @@ async function main() {
 
     let n = 1;
     for (const img of selected) {
-      const r = await fetch(img.url);
-      if (!r.ok) {
-        console.warn(`  ⚠ Bild übersprungen (${r.status}): ${img.filename}`);
+      const pathname = imagePathname(img);
+      const buf = pathname ? await readPrivate(pathname) : null;
+      if (!buf) {
+        console.warn(`  ⚠ Bild übersprungen (nicht im privaten Store): ${img.filename}`);
         continue;
       }
-      const buf = Buffer.from(await r.arrayBuffer());
-      const ext = (img.filename.split(".").pop() || "jpg").toLowerCase();
-      await writeFile(
-        path.join(folder, `${String(n).padStart(2, "0")}.${ext}`),
-        buf,
-      );
+      // Das Studio speichert jedes Bild als JPEG (Re-Encode beim Upload).
+      await writeFile(path.join(folder, `${String(n).padStart(2, "0")}.jpg`), buf);
       n++;
     }
     console.log(`✓ ${folder}  (${selected.length} Bilder)`);

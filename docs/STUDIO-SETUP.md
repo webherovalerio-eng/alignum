@@ -26,11 +26,15 @@ nicht umgehbar). Anpassbar über `STUDIO_MONTHLY_LIMIT`.
 Alles außer diesen Schritten ist bereits im Code. Studio-Flächen sind additiv,
 `noindex` und ändern **nichts** am öffentlichen SEO-Frontend.
 
-1. **Vercel Blob** — ✅ **bereits per CLI angelegt** (`alignum-studio`, public,
-   `BLOB_READ_WRITE_TOKEN` auf Production/Preview/Development). Speichert die
+1. **Vercel Blob** — ✅ **privater Store** `alignum-private` (fra1,
+   `PRIVATE_READ_WRITE_TOKEN` auf Production/Preview/Development). Speichert die
    Bilder **und** die KV-Daten (Magic-Link-Tokens, Rate-Limits, Post-Index,
-   Monatszähler). → **Kein Upstash/KV nötig.** `src/studio/kv.ts` betreibt die
-   KV-Schicht auf Blob (gesalzene/gehashte Pfade, cache-gebustete Reads).
+   Monatszähler). Keine öffentlichen URLs: Bilder liefert nur die
+   session-geschützte Route `/studio-media/{key}` aus; Carousel/KI lesen per
+   `get()`. → **Kein Upstash/KV nötig.** `src/studio/kv.ts` betreibt die
+   KV-Schicht auf Blob (gesalzene/gehashte Pfade, Reads ohne CDN-Cache).
+   Der alte öffentliche Store `alignum-studio` (`BLOB_READ_WRITE_TOKEN`) wird
+   von der App nicht mehr genutzt — nur noch von `scripts/migrate-private-blob.mjs`.
    Falls später echter Redis gewünscht: `UPSTASH_*`/`KV_*`-Env setzen, der Code
    nimmt dann automatisch Redis.
 2. **`AUTH_SECRET`** erzeugen und als Env (Production) setzen:

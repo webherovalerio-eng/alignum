@@ -1,6 +1,7 @@
 import { ImageResponse } from "next/og";
 import { guard } from "@/studio/api";
 import { getPost } from "@/studio/posts";
+import { readImageJpeg } from "@/studio/blob";
 import {
   postToSlideData,
   renderSlide,
@@ -37,6 +38,21 @@ export async function GET(req: Request, ctx: { params: Promise<{ id: string }> }
   const origin = fwdHost ? `${fwdProto}://${fwdHost}` : url.origin;
 
   const data = postToSlideData(post);
+  // Fotos liegen im PRIVATEN Store (keine öffentliche URL) → Bytes per Key
+  // serverseitig holen und Satori als Data-URI geben. Satori fetcht damit
+  // nichts Fremdes; 1620 px Kante reicht für 1080×1350.
+  const dataUri = new Map<string, string | undefined>();
+  await Promise.all(
+    [...new Set([data.coverKey, data.solutionKey, data.ideaKey])]
+      .filter((k): k is string => Boolean(k))
+      .map(async (k) => {
+        const buf = await readImageJpeg(k, 1620).catch(() => null);
+        dataUri.set(k, buf ? `data:image/jpeg;base64,${buf.toString("base64")}` : undefined);
+      }),
+  );
+  data.coverImg = data.coverKey ? dataUri.get(data.coverKey) : undefined;
+  data.solutionImg = data.solutionKey ? dataUri.get(data.solutionKey) : undefined;
+  data.ideaImg = data.ideaKey ? dataUri.get(data.ideaKey) : undefined;
   const assets = {
     logoLight: `${origin}/logo.png`,
     logoDark: `${origin}/logo-dark.png`,
