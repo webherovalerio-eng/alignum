@@ -1,3 +1,4 @@
+import { createHash, timingSafeEqual } from "crypto";
 import { kvGetJSON } from "@/studio/kv";
 
 /**
@@ -27,7 +28,11 @@ function ym(d = new Date()): string {
 function authorized(req: Request): boolean {
   const secret = process.env.REPORT_SECRET;
   const given = req.headers.get("x-report-secret");
-  return Boolean(secret && given && secret === given);
+  if (!secret || !given) return false;
+  // Zeitkonstant vergleichen; Hash vorher, damit auch die Länge nicht leakt.
+  const a = createHash("sha256").update(secret).digest();
+  const b = createHash("sha256").update(given).digest();
+  return timingSafeEqual(a, b);
 }
 
 export async function GET(req: Request) {
@@ -35,7 +40,10 @@ export async function GET(req: Request) {
     return Response.json({ error: "unauthorized" }, { status: 401 });
 
   const url = new URL(req.url);
-  const month = url.searchParams.get("month") || ym();
+  const qMonth = url.searchParams.get("month");
+  if (qMonth && !/^\d{4}-(0[1-9]|1[0-2])$/.test(qMonth))
+    return Response.json({ error: "bad month" }, { status: 400 });
+  const month = qMonth || ym();
   const [y, m] = month.split("-").map(Number);
   const prev = ym(new Date(y, (m || 1) - 2, 1));
 

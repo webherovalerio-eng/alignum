@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { listPosts } from "@/studio/posts";
+import { requireStudioUser } from "@/studio/dal";
 import { NewPostButton } from "./NewPostButton";
 import { StatusBadge } from "./StatusBadge";
 import { DeletePostButton } from "./DeletePostButton";
@@ -7,6 +8,9 @@ import { DeletePostButton } from "./DeletePostButton";
 export const dynamic = "force-dynamic";
 
 export default async function StudioHome() {
+  // Auth auch in der Page (nicht nur im Layout): RSC-Requests können das Layout
+  // überspringen; widerrufene Sessions prüft der Proxy nicht.
+  await requireStudioUser();
   const posts = await listPosts();
 
   return (

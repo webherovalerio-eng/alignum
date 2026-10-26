@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { getPost } from "@/studio/posts";
+import { requireStudioUser } from "@/studio/dal";
 import { getMonthlyUsage } from "@/studio/usage";
 import { CITIES } from "@/data/cities";
 import { PostEditor } from "./PostEditor";
@@ -12,6 +13,8 @@ export default async function PostPage({
 }: {
   params: Promise<{ id: string }>;
 }) {
+  // Auth auch in der Page (nicht nur im Layout) — siehe studio/page.tsx.
+  await requireStudioUser();
   const { id } = await params;
   const post = await getPost(id);
   if (!post) notFound();

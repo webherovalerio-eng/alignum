@@ -1,7 +1,9 @@
 /**
  * Session-Management: zustandslose, signierte JWT im HttpOnly-Cookie (jose,
  * HS256). Kein Session-Store nötig; Widerruf erfolgt über die Allowlist-Prüfung
- * im DAL bei jedem Request (siehe dal.ts).
+ * im DAL bei jedem Request (siehe dal.ts) UND über eine Token-Version pro
+ * Nutzer im KV: Logout erhöht die Version → alle bis dahin ausgestellten JWTs
+ * dieses Nutzers sind sofort ungültig (auch gestohlene Cookies).
  */
 import { SignJWT, jwtVerify } from "jose";
 import { cookies } from "next/headers";
@@ -10,8 +12,28 @@ import {
   SESSION_TTL_S,
   sessionCookieOptions,
   isProd,
+  normalizeEmail,
 } from "./config";
+import { kvGet, kvIncr } from "./kv";
+import { sha256Hex } from "./tokens";
 import type { SessionPayload } from "./types";
+
+// --- Token-Version (Session-Widerruf) ---------------------------------------
+async function versionKey(email: string): Promise<string> {
+  return `sess:ver:${await sha256Hex(normalizeEmail(email))}`;
+}
+
+/** Aktuelle Session-Version eines Nutzers (0, solange nie ausgeloggt). */
+export async function currentSessionVersion(email: string): Promise<number> {
+  const raw = await kvGet(await versionKey(email));
+  return raw ? parseInt(raw, 10) || 0 : 0;
+}
+
+/** Entwertet alle bisher ausgestellten Sessions des Nutzers. */
+export async function revokeSessions(email: string): Promise<void> {
+  // Lange TTL: die Version darf nicht vor den damit entwerteten JWTs verfallen.
+  await kvIncr(await versionKey(email), 60 * 60 * 24 * 365 * 5);
+}
 
 function key(): Uint8Array {
   const secret = process.env.AUTH_SECRET;
